@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaTesters", "BetaTesters\BetaTesters.csproj", "{1110E034-E8CF-45AC-A4A8-6E9FB00DFA28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetaTesters", "BetaTesters\BetaTesters.csproj", "{1110E034-E8CF-45AC-A4A8-6E9FB00DFA28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaTesters.Infrastructure", "BetaTesters.Infrastructure\BetaTesters.Infrastructure.csproj", "{32235CE3-4F9B-4FF4-A63F-51485B5C18F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetaTesters.Core", "BetaTesters.Core\BetaTesters.Core.csproj", "{FE036A46-BA08-4852-9E5C-C038F10B2E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{1110E034-E8CF-45AC-A4A8-6E9FB00DFA28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1110E034-E8CF-45AC-A4A8-6E9FB00DFA28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1110E034-E8CF-45AC-A4A8-6E9FB00DFA28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32235CE3-4F9B-4FF4-A63F-51485B5C18F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32235CE3-4F9B-4FF4-A63F-51485B5C18F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32235CE3-4F9B-4FF4-A63F-51485B5C18F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32235CE3-4F9B-4FF4-A63F-51485B5C18F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE036A46-BA08-4852-9E5C-C038F10B2E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE036A46-BA08-4852-9E5C-C038F10B2E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE036A46-BA08-4852-9E5C-C038F10B2E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE036A46-BA08-4852-9E5C-C038F10B2E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

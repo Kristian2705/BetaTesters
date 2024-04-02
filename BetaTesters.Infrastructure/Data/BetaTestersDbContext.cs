@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BetaTesters.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class BetaTestersDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public BetaTestersDbContext(DbContextOptions<BetaTestersDbContext> options)
             : base(options)
         {
         }
