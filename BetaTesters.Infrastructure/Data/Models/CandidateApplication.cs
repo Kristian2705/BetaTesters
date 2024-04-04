@@ -22,6 +22,7 @@ namespace BetaTesters.Infrastructure.Data.Models
         public ApplicationUser Candidate { get; set; } = null!;
         [Required]
         [Comment("Candidate's phone number")]
+        [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; } = string.Empty;
         [Required]
         [Comment("Candidate's age (they must be 18 or more)")]
