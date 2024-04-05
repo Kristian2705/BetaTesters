@@ -14,6 +14,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using static BetaTesters.Core.Constants.MessageConstants;
 using static BetaTesters.Infrastructure.Constants.DataConstants;
+using static BetaTesters.Core.Constants.CustomClaims;
 
 namespace BetaTesters.Areas.Identity.Pages.Account
 {
@@ -133,6 +134,7 @@ namespace BetaTesters.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(UserFullNameClaim, $"{user.FirstName} {user.LastName}"));
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
