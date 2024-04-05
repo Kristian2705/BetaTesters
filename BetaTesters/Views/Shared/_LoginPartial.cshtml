@@ -1,6 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    string userName = string.Empty;
+
+    if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.FindByIdAsync(User.Id());
+        userName = $"{user.FirstName} {user.LastName}";
+    }
+}
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
