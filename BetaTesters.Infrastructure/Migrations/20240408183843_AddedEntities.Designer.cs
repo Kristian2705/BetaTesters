@@ -4,6 +4,7 @@ using BetaTesters.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetaTesters.Infrastructure.Migrations
 {
     [DbContext(typeof(BetaTestersDbContext))]
-    partial class BetaTestersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408183843_AddedEntities")]
+    partial class AddedEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,8 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("decimal(18,2)");
 
                     b.Property<Guid?>("BetaProgramId")
                         .HasColumnType("uniqueidentifier");
@@ -202,7 +205,8 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Money")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("decimal(18,2)");
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uniqueidentifier");
@@ -260,7 +264,8 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Reward")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("decimal(18,2)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -285,7 +290,8 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Money")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnName("decimal(18,2)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");

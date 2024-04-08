@@ -22,7 +22,7 @@ namespace BetaTesters.Infrastructure.Data.Models
         [MustBeAdult]
         public int Age { get; set; }
 
-        [Column("decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; }
 
         public Guid? BetaProgramId { get; set; }
@@ -40,6 +40,12 @@ namespace BetaTesters.Infrastructure.Data.Models
 
         public IEnumerable<CandidateApplication> Applications { get; set; } = new HashSet<CandidateApplication>();
 
+        public IEnumerable<CandidateApplication> ReviewedApplications { get; set; } = new HashSet<CandidateApplication>();
+
+        [InverseProperty(nameof(Task.Contractor))]
         public IEnumerable<Task> Tasks { get; set; } = new HashSet<Task>();
+
+        [InverseProperty(nameof(Task.Creator))]
+        public IEnumerable<Task> CreatedTasks { get; set; } = new HashSet<Task>();
     }
 }

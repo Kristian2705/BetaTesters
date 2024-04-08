@@ -21,7 +21,7 @@ namespace BetaTesters.Infrastructure.Data.Models
         public ApplicationUser Receiver { get; set; } = null!;
 
         [Required]
-        [Column("decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Money { get; set; }
     }
 }

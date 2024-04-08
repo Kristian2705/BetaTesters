@@ -18,7 +18,7 @@ namespace BetaTesters.Infrastructure.Data.Models
         public TransactionType Type { get; set; }
 
         [Required]
-        [Column("decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Money { get; set; }
     }
 }

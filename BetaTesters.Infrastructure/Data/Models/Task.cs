@@ -50,7 +50,7 @@ namespace BetaTesters.Infrastructure.Data.Models
         public ApplicationUser? Contractor { get; set; } = null!;
 
         [Required]
-        [Column("decimal(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Reward { get; set; }
 
         public bool IsDeleted { get; set; }
