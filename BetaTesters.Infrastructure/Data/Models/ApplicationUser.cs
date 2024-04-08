@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BetaTesters.Infrastructure.ValidationAttributes;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static BetaTesters.Infrastructure.Constants.DataConstants;
@@ -7,15 +8,6 @@ namespace BetaTesters.Infrastructure.Data.Models
 {
     public class ApplicationUser : IdentityUser<Guid>
     {
-        public ApplicationUser()
-        {
-            Transactions = new HashSet<Transaction>();
-            SentPayments = new HashSet<Payment>();
-            ReceivedPayments = new HashSet<Payment>();
-            Credits = new HashSet<UsersCredits>();
-            Applications = new HashSet<CandidateApplication>();
-        }
-
         [Required]
         [MaxLength(ApplicationUserFirstNameMaxLength)]
         [PersonalData]
@@ -27,22 +19,27 @@ namespace BetaTesters.Infrastructure.Data.Models
         public string LastName { get; set; } = string.Empty;
 
         [PersonalData]
+        [MustBeAdult]
         public int Age { get; set; }
 
+        [Column("decimal(18,2)")]
         public decimal Balance { get; set; }
 
-        //Application to be added
+        public Guid? BetaProgramId { get; set; }
 
-        public IEnumerable<Transaction> Transactions { get; set; }
+        [ForeignKey(nameof(BetaProgramId))]
+        public BetaProgram? BetaProgram { get; set; }
+
+        public IEnumerable<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
 
         [InverseProperty(nameof(Payment.Sender))]
-        public IEnumerable<Payment> SentPayments { get; set; }
+        public IEnumerable<Payment> SentPayments { get; set; } = new HashSet<Payment>();
 
         [InverseProperty(nameof(Payment.Receiver))]
-        public IEnumerable<Payment> ReceivedPayments { get; set; }
+        public IEnumerable<Payment> ReceivedPayments { get; set; } = new HashSet<Payment>();
 
-        public IEnumerable<UsersCredits> Credits { get; set; }
+        public IEnumerable<CandidateApplication> Applications { get; set; } = new HashSet<CandidateApplication>();
 
-        public IEnumerable<CandidateApplication> Applications { get; set; }
+        public IEnumerable<Task> Tasks { get; set; } = new HashSet<Task>();
     }
 }

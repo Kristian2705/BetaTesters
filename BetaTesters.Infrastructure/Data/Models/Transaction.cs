@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using BetaTesters.Infrastructure.Data.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BetaTesters.Infrastructure.Data.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BetaTesters.Infrastructure.Data.Models
 {
@@ -13,10 +8,17 @@ namespace BetaTesters.Infrastructure.Data.Models
     {
         [Key]
         public Guid Id { get; set; }
+
+        [Required]
         public Guid UserId { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public ApplicationUser User { get; set; } = null!;
+
         public TransactionType Type { get; set; }
+
+        [Required]
+        [Column("decimal(18,2)")]
         public decimal Money { get; set; }
     }
 }

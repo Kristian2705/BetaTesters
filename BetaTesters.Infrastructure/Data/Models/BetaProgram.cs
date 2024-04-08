@@ -1,33 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static BetaTesters.Infrastructure.Constants.DataConstants;
 
 namespace BetaTesters.Infrastructure.Data.Models
 {
     public class BetaProgram
     {
-        public BetaProgram()
-        {
-            Tasks = new HashSet<Task>();
-            Moderators = new HashSet<ApplicationUser>();
-            Contractors = new HashSet<ApplicationUser>();
-            Applications = new HashSet<CandidateApplication>();
-        }
         [Key]
         public Guid Id { get; set; }
+
+        [Required]
         public Guid OwnerId { get; set; }
+
         [ForeignKey(nameof(OwnerId))]
         public ApplicationUser Owner { get; set; } = null!;
-        public string Name { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public IEnumerable<Task> Tasks { get; set; }
-        //Inverse property to be added
-        public IEnumerable<ApplicationUser> Moderators { get; set; }
-        public IEnumerable<ApplicationUser> Contractors { get; set; }
-        public IEnumerable<CandidateApplication> Applications { get; set; }
+
+        [Required]
+        [MaxLength(BetaProgramNameMaxLength)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(BetaProgramDescriptionMaxLength)]
+        public string Description { get; set; } = string.Empty;
+
+        public IEnumerable<Task> Tasks { get; set; } = new HashSet<Task>();
+
+        public IEnumerable<CandidateApplication> Applications { get; set; } = new HashSet<CandidateApplication>();
     }
 }
