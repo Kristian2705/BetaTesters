@@ -1,4 +1,4 @@
-﻿namespace BetaTesters.Core.Constants
+﻿namespace BetaTesters.Infrastructure.Constants
 {
     public static class CustomClaims
     {

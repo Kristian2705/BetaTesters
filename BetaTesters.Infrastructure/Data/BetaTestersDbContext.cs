@@ -30,6 +30,7 @@ namespace BetaTesters.Data
         {
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new IdentityUserClaimConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new BetaProgramConfiguration());

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using static BetaTesters.Core.Constants.MessageConstants;
 using static BetaTesters.Infrastructure.Constants.DataConstants;
-using static BetaTesters.Core.Constants.CustomClaims;
+using static BetaTesters.Infrastructure.Constants.CustomClaims;
 
 namespace BetaTesters.Areas.Identity.Pages.Account
 {
@@ -118,7 +118,7 @@ namespace BetaTesters.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.Age = Input.Age;
-                await _userStore.SetUserNameAsync(user, $"{Input.FirstName}{Input.LastName}", CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

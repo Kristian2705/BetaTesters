@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using BetaTesters.Infrastructure.Data.Enums;
 using static BetaTesters.Infrastructure.Constants.RoleConstants;
+using BetaTesters.Infrastructure.Constants;
 
 namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
 {
@@ -9,6 +10,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
         public SeedData()
         {
             SeedUsers();
+            SeedClaims();
             SeedRoles();
             SeedUserRoles();
             SeedCategories();
@@ -39,6 +41,39 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
         public List<IdentityRole<Guid>> Roles { get; set; } = new List<IdentityRole<Guid>>();
 
         public List<IdentityUserRole<Guid>> UsersRoles { get; set; } = new List<IdentityUserRole<Guid>>();
+
+        public List<IdentityUserClaim<Guid>> UsersClaims { get; set; } = new List<IdentityUserClaim<Guid>>();
+
+        private void SeedClaims()
+        {
+            var defaultUserClaim = new IdentityUserClaim<Guid>
+            {
+                Id = 2,
+                UserId = Guid.Parse("f903f113-d659-4848-87c5-97f49082ba46"),
+                ClaimType = CustomClaims.UserFullNameClaim,
+                ClaimValue = $"{DefaultUser.FirstName} {DefaultUser.LastName}"
+            };
+
+            var moderatorClaim = new IdentityUserClaim<Guid>
+            {
+                Id = 3,
+                UserId = Guid.Parse("38885cfb-4b65-4503-9958-6389ac64eb1a"),
+                ClaimType = CustomClaims.UserFullNameClaim,
+                ClaimValue = $"{Moderator.FirstName} {Moderator.LastName}"
+            };
+
+            var ownerClaim = new IdentityUserClaim<Guid>
+            {
+                Id = 4,
+                UserId = Guid.Parse("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
+                ClaimType = CustomClaims.UserFullNameClaim,
+                ClaimValue = $"{Owner.FirstName} {Owner.LastName}"
+            };
+
+            UsersClaims.Add(defaultUserClaim);
+            UsersClaims.Add(moderatorClaim);
+            UsersClaims.Add(ownerClaim);
+        }
 
         private void SeedRoles()
         {
@@ -100,8 +135,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
             DefaultUser = new ApplicationUser()
             {
                 Id = Guid.Parse("f903f113-d659-4848-87c5-97f49082ba46"),
-                UserName = "UserUserov",
-                NormalizedUserName = "UserUserov".ToUpper(),
+                UserName = "useroff@mail.com",
+                NormalizedUserName = "useroff@mail.com".ToUpper(),
                 Email = "useroff@mail.com",
                 NormalizedEmail = "useroff@mail.com".ToUpper(),
                 FirstName = "User",
@@ -118,8 +153,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
             Moderator = new ApplicationUser()
             {
                 Id = Guid.Parse("38885cfb-4b65-4503-9958-6389ac64eb1a"),
-                UserName = "ModeratorModov",
-                NormalizedUserName = "ModeratorModov".ToUpper(),
+                UserName = "modoff@mail.com",
+                NormalizedUserName = "modoff@mail.com".ToUpper(),
                 Email = "modoff@mail.com",
                 NormalizedEmail = "modoff@mail.com".ToUpper(),
                 FirstName = "Moderator",
@@ -136,8 +171,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
             Owner = new ApplicationUser()
             {
                 Id = Guid.Parse("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
-                UserName = "OwnerOnwerov",
-                NormalizedUserName = "OwnerOnwerov".ToUpper(),
+                UserName = "owneroff@mail.com",
+                NormalizedUserName = "owneroff@mail.com".ToUpper(),
                 Email = "owneroff@mail.com",
                 NormalizedEmail = "owneroff@mail.com".ToUpper(),
                 FirstName = "Owner",

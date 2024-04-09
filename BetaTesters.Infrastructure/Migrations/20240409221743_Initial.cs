@@ -307,9 +307,9 @@ namespace BetaTesters.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"), "6936cfcc-e45e-4646-85a0-65a83f178af1", "default user", "DEFAULT USER" },
-                    { new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"), "159e7e61-5fdc-4699-93d6-70d44b9b9799", "moderator", "MODERATOR" },
-                    { new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"), "72ad5017-625c-4188-bedf-794074d7f342", "owner", "OWNER" }
+                    { new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"), "6c27bd6f-ef06-4490-a4d0-048194ba1e0e", "default user", "DEFAULT USER" },
+                    { new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"), "22370da1-58f6-4d16-8e0c-6efae66d3036", "moderator", "MODERATOR" },
+                    { new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"), "eac5d73f-b7d7-41dd-8c32-8226ff000f99", "owner", "OWNER" }
                 });
 
             migrationBuilder.InsertData(
@@ -317,9 +317,9 @@ namespace BetaTesters.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Age", "Balance", "BetaProgramId", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), 0, 22, 0m, null, "c693be91-a700-49c0-a448-eb21db53cf13", "modoff@mail.com", false, "Moderator", "Modov", false, null, "MODOFF@MAIL.COM", "MODERATORMODOV", "AQAAAAEAACcQAAAAEPpCYJ02sH9DqE9P6QMQLr2BY8P51BsnNp3GEHgoL0kX4WauMsPkRq4YUeSwEoICwA==", "0891234561", false, "f267024e-7eec-4716-a29f-e7a1584b7844", false, "ModeratorModov" },
-                    { new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), 0, 31, 0m, null, "38fedf86-1b8f-4f58-b789-0341370f1429", "owneroff@mail.com", false, "Owner", "Ownerov", false, null, "OWNEROFF@MAIL.COM", "OWNERONWEROV", "AQAAAAEAACcQAAAAENvtqit5Cy9VECDf0J3MCEaW1M7Oq+7C4/+p2BZcLGIbqN8Xlw/cWphXSiSC7w6Y8g==", "0891231456", false, "47347e6d-4180-408f-802e-993951cdb9b0", false, "OwnerOnwerov" },
-                    { new Guid("f903f113-d659-4848-87c5-97f49082ba46"), 0, 18, 0m, null, "2a463f8c-f3f5-46ea-a380-1e6ac948342a", "useroff@mail.com", false, "User", "Userov", false, null, "USEROFF@MAIL.COM", "USERUSEROV", "AQAAAAEAACcQAAAAEAseOO3yP2oFNDa8ydStJtrB/NxEepa4Cu96G6mQPgqeQgXAO4azWtUd6r+1d8hXlw==", "0881234567", false, "7d5bdd9c-3728-4188-90e7-59b5fa579836", false, "UserUserov" }
+                    { new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), 0, 22, 0m, null, "84d915f3-7c14-4997-b28b-8aeacc76b20a", "modoff@mail.com", false, "Moderator", "Modov", false, null, "MODOFF@MAIL.COM", "MODOFF@MAIL.COM", "AQAAAAEAACcQAAAAEPtJ/xNgrFs0p5VgHJuHPEEt6Rl8WoS/K1EBKa9y+1FyZdZnb8+jbLIYFRnLQp1ndQ==", "0891234561", false, "00f84320-ef1f-45ff-a735-a08b501192d0", false, "modoff@mail.com" },
+                    { new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), 0, 31, 0m, null, "c54f6996-e6da-47f7-b70b-c0dfbf379fd7", "owneroff@mail.com", false, "Owner", "Ownerov", false, null, "OWNEROFF@MAIL.COM", "OWNEROFF@MAIL.COM", "AQAAAAEAACcQAAAAEHUFyiUJ+OyCmKhS3tF5vmT3XhMtI1Pq+NtFVXHsXIhuJULhQa/6041uMian8Oqffg==", "0891231456", false, "bd182ca6-24d2-447e-ad34-6f0262187d33", false, "owneroff@mail.com" },
+                    { new Guid("f903f113-d659-4848-87c5-97f49082ba46"), 0, 18, 0m, null, "0b24d7a1-b746-42ad-b57d-abc292f312b0", "useroff@mail.com", false, "User", "Userov", false, null, "USEROFF@MAIL.COM", "USEROFF@MAIL.COM", "AQAAAAEAACcQAAAAEPzYpPDQf8qiKVSQrEr+Wi3QX60dTMW3dFXBFqIYkgzXf1zokm1pRdEF2TSiHBf47g==", "0881234567", false, "2159bebc-3de2-42c6-bb77-97701d06d6f9", false, "useroff@mail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -350,17 +350,17 @@ namespace BetaTesters.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Tasks",
                 columns: new[] { "Id", "Approval", "AssignDate", "CategoryId", "ContractorId", "CreatorId", "Description", "FinishDate", "IsDeleted", "Name", "ProgramId", "Reward", "State" },
-                values: new object[] { new Guid("21d7761d-f095-4bee-aa80-dd789b671cf5"), 1, new DateTime(2024, 4, 10, 0, 32, 4, 554, DateTimeKind.Local).AddTicks(4968), 3, new Guid("f903f113-d659-4848-87c5-97f49082ba46"), new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Check if the update profile feature works properly", null, false, "Check profile update", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 15m, 2 });
+                values: new object[] { new Guid("d0807114-2c45-454e-b6f4-a733cec4ec19"), 1, new DateTime(2024, 4, 10, 1, 17, 42, 838, DateTimeKind.Local).AddTicks(2002), 3, new Guid("f903f113-d659-4848-87c5-97f49082ba46"), new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Check if the update profile feature works properly", null, false, "Check profile update", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 15m, 2 });
 
             migrationBuilder.InsertData(
                 table: "Tasks",
                 columns: new[] { "Id", "Approval", "AssignDate", "CategoryId", "ContractorId", "CreatorId", "Description", "FinishDate", "IsDeleted", "Name", "ProgramId", "Reward", "State" },
-                values: new object[] { new Guid("3701dac2-bd7f-4ed3-a348-71710bb9db39"), 1, null, 2, null, new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Users can't properly create a new post is now fixed", null, false, "Posts issue fix", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 20m, 3 });
+                values: new object[] { new Guid("d31fd8b2-beb4-4f93-a861-1655df58cfbb"), 1, new DateTime(2024, 4, 10, 1, 17, 42, 838, DateTimeKind.Local).AddTicks(1901), 1, new Guid("f903f113-d659-4848-87c5-97f49082ba46"), new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), "Added a new feature where users can chat with friends", null, false, "Added chat groups", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 30m, 2 });
 
             migrationBuilder.InsertData(
                 table: "Tasks",
                 columns: new[] { "Id", "Approval", "AssignDate", "CategoryId", "ContractorId", "CreatorId", "Description", "FinishDate", "IsDeleted", "Name", "ProgramId", "Reward", "State" },
-                values: new object[] { new Guid("a66dee5a-122d-453e-96a7-c0397739392e"), 1, new DateTime(2024, 4, 10, 0, 32, 4, 554, DateTimeKind.Local).AddTicks(4932), 1, new Guid("f903f113-d659-4848-87c5-97f49082ba46"), new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), "Added a new feature where users can chat with friends", null, false, "Added chat groups", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 30m, 2 });
+                values: new object[] { new Guid("d611141f-9b37-48e7-84e2-1b8a26a15195"), 1, null, 2, null, new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Users can't properly create a new post is now fixed", null, false, "Posts issue fix", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 20m, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
