@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetaTesters.Infrastructure.Migrations
 {
     [DbContext(typeof(BetaTestersDbContext))]
-    [Migration("20240408183843_AddedEntities")]
-    partial class AddedEntities
+    [Migration("20240409213204_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,7 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid?>("BetaProgramId")
                         .HasColumnType("uniqueidentifier");
@@ -110,6 +109,71 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
+                            AccessFailedCount = 0,
+                            Age = 18,
+                            Balance = 0m,
+                            ConcurrencyStamp = "2a463f8c-f3f5-46ea-a380-1e6ac948342a",
+                            Email = "useroff@mail.com",
+                            EmailConfirmed = false,
+                            FirstName = "User",
+                            LastName = "Userov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USEROFF@MAIL.COM",
+                            NormalizedUserName = "USERUSEROV",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAseOO3yP2oFNDa8ydStJtrB/NxEepa4Cu96G6mQPgqeQgXAO4azWtUd6r+1d8hXlw==",
+                            PhoneNumber = "0881234567",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7d5bdd9c-3728-4188-90e7-59b5fa579836",
+                            TwoFactorEnabled = false,
+                            UserName = "UserUserov"
+                        },
+                        new
+                        {
+                            Id = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
+                            AccessFailedCount = 0,
+                            Age = 22,
+                            Balance = 0m,
+                            ConcurrencyStamp = "c693be91-a700-49c0-a448-eb21db53cf13",
+                            Email = "modoff@mail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Moderator",
+                            LastName = "Modov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "MODOFF@MAIL.COM",
+                            NormalizedUserName = "MODERATORMODOV",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPpCYJ02sH9DqE9P6QMQLr2BY8P51BsnNp3GEHgoL0kX4WauMsPkRq4YUeSwEoICwA==",
+                            PhoneNumber = "0891234561",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "f267024e-7eec-4716-a29f-e7a1584b7844",
+                            TwoFactorEnabled = false,
+                            UserName = "ModeratorModov"
+                        },
+                        new
+                        {
+                            Id = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
+                            AccessFailedCount = 0,
+                            Age = 31,
+                            Balance = 0m,
+                            ConcurrencyStamp = "38fedf86-1b8f-4f58-b789-0341370f1429",
+                            Email = "owneroff@mail.com",
+                            EmailConfirmed = false,
+                            FirstName = "Owner",
+                            LastName = "Ownerov",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "OWNEROFF@MAIL.COM",
+                            NormalizedUserName = "OWNERONWEROV",
+                            PasswordHash = "AQAAAAEAACcQAAAAENvtqit5Cy9VECDf0J3MCEaW1M7Oq+7C4/+p2BZcLGIbqN8Xlw/cWphXSiSC7w6Y8g==",
+                            PhoneNumber = "0891231456",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "47347e6d-4180-408f-802e-993951cdb9b0",
+                            TwoFactorEnabled = false,
+                            UserName = "OwnerOnwerov"
+                        });
                 });
 
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.BetaProgram", b =>
@@ -123,10 +187,14 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
@@ -136,6 +204,16 @@ namespace BetaTesters.Infrastructure.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("BetaPrograms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                            Description = "This is the official beta testing program for Facebook",
+                            ImageUrl = "https://store-images.s-microsoft.com/image/apps.37935.9007199266245907.b029bd80-381a-4869-854f-bac6f359c5c9.91f8693c-c75b-4050-a796-63e1314d18c9?h=464",
+                            Name = "Facebook Beta Program",
+                            OwnerId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c")
+                        });
                 });
 
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.CandidateApplication", b =>
@@ -190,12 +268,29 @@ namespace BetaTesters.Infrastructure.Migrations
 
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryName = "New Feature"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryName = "Bug Fix"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryName = "Check State"
+                        });
                 });
 
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.Payment", b =>
@@ -205,8 +300,7 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Money")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uniqueidentifier");
@@ -264,8 +358,7 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Reward")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -281,6 +374,51 @@ namespace BetaTesters.Infrastructure.Migrations
                     b.HasIndex("ProgramId");
 
                     b.ToTable("Tasks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("3701dac2-bd7f-4ed3-a348-71710bb9db39"),
+                            Approval = 1,
+                            CategoryId = 2,
+                            CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
+                            Description = "Users can't properly create a new post is now fixed",
+                            IsDeleted = false,
+                            Name = "Posts issue fix",
+                            ProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                            Reward = 20m,
+                            State = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("a66dee5a-122d-453e-96a7-c0397739392e"),
+                            Approval = 1,
+                            AssignDate = new DateTime(2024, 4, 10, 0, 32, 4, 554, DateTimeKind.Local).AddTicks(4932),
+                            CategoryId = 1,
+                            ContractorId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
+                            CreatorId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
+                            Description = "Added a new feature where users can chat with friends",
+                            IsDeleted = false,
+                            Name = "Added chat groups",
+                            ProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                            Reward = 30m,
+                            State = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("21d7761d-f095-4bee-aa80-dd789b671cf5"),
+                            Approval = 1,
+                            AssignDate = new DateTime(2024, 4, 10, 0, 32, 4, 554, DateTimeKind.Local).AddTicks(4968),
+                            CategoryId = 3,
+                            ContractorId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
+                            CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
+                            Description = "Check if the update profile feature works properly",
+                            IsDeleted = false,
+                            Name = "Check profile update",
+                            ProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                            Reward = 15m,
+                            State = 2
+                        });
                 });
 
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.Transaction", b =>
@@ -290,8 +428,7 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Money")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnName("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -332,6 +469,29 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"),
+                            ConcurrencyStamp = "6936cfcc-e45e-4646-85a0-65a83f178af1",
+                            Name = "default user",
+                            NormalizedName = "DEFAULT USER"
+                        },
+                        new
+                        {
+                            Id = new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"),
+                            ConcurrencyStamp = "159e7e61-5fdc-4699-93d6-70d44b9b9799",
+                            Name = "moderator",
+                            NormalizedName = "MODERATOR"
+                        },
+                        new
+                        {
+                            Id = new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"),
+                            ConcurrencyStamp = "72ad5017-625c-4188-bedf-794074d7f342",
+                            Name = "owner",
+                            NormalizedName = "OWNER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -418,6 +578,23 @@ namespace BetaTesters.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
+                            RoleId = new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9")
+                        },
+                        new
+                        {
+                            UserId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
+                            RoleId = new Guid("b280f152-005b-49b2-a82a-7a1a142f898a")
+                        },
+                        new
+                        {
+                            UserId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
+                            RoleId = new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

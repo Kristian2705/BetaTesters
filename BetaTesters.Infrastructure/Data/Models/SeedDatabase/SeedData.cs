@@ -111,7 +111,9 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
             };
 
             DefaultUser.PasswordHash = hasher
-                .HashPassword(DefaultUser, "user123");
+                .HashPassword(DefaultUser, "user1");
+
+            DefaultUser.SecurityStamp = Guid.NewGuid().ToString();
 
             Moderator = new ApplicationUser()
             {
@@ -127,7 +129,9 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
             };
 
             Moderator.PasswordHash = hasher
-                .HashPassword(Moderator, "moderator123");
+                .HashPassword(Moderator, "moderator1");
+
+            Moderator.SecurityStamp = Guid.NewGuid().ToString();
 
             Owner = new ApplicationUser()
             {
@@ -138,12 +142,14 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "owneroff@mail.com".ToUpper(),
                 FirstName = "Owner",
                 LastName = "Ownerov",
-                PhoneNumber = "0891234561",
+                PhoneNumber = "0891231456",
                 Age = 31
             };
 
             Owner.PasswordHash = hasher
-                .HashPassword(Owner, "owner123");
+                .HashPassword(Owner, "owner1");
+
+            Owner.SecurityStamp = Guid.NewGuid().ToString();
         }
 
         private void SeedCategories()
