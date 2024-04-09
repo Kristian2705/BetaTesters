@@ -12,13 +12,13 @@
         public const int ApplicationUserLastNameMaxLength = 30;
         public const int ApplicationUserLastNameMinLength = 1;
 
-        public const int BetaProgramNameMaxLength = 15;
+        public const int BetaProgramNameMaxLength = 30;
         public const int BetaProgramNameMinLength = 1;
 
         public const int BetaProgramDescriptionMaxLength = 100;
         public const int BetaProgramDescriptionMinLength = 20;
 
-        public const int CategoryNameMaxLength = 10;
+        public const int CategoryNameMaxLength = 20;
 
         public const int TaskNameMaxLength = 20;
         public const int TaskNameMinLength = 2;

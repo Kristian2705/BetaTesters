@@ -4,6 +4,7 @@ using BetaTesters.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetaTesters.Infrastructure.Migrations
 {
     [DbContext(typeof(BetaTestersDbContext))]
-    partial class BetaTestersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240409205112_ToUpperUsers")]
+    partial class ToUpperUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,7 +117,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 18,
                             Balance = 0m,
-                            ConcurrencyStamp = "47353093-e64c-49d1-966a-a901694e7d24",
+                            ConcurrencyStamp = "c4307c76-c676-4751-bd1a-49e49a543817",
                             Email = "useroff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -123,7 +125,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USEROFF@MAIL.COM",
                             NormalizedUserName = "USERUSEROV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN6CV5HQuzJlMkOQZ0YMfp54JVy8tbk2r08bEtQusu4s+RrcOJZGOY53EajlmP+huQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDr3v8BQc5V1si79jSb25euvujbz3e/UnAZwt9BeaGynBsAKkjjWO+lA9LA8wFeKvA==",
                             PhoneNumber = "0881234567",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -135,7 +137,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 22,
                             Balance = 0m,
-                            ConcurrencyStamp = "618a51e3-c229-49fe-8f84-079b11007d76",
+                            ConcurrencyStamp = "fd4cd467-43e4-4d58-ab88-730d3d730bc4",
                             Email = "modoff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Moderator",
@@ -143,7 +145,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MODOFF@MAIL.COM",
                             NormalizedUserName = "MODERATORMODOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHeEAWOBsPdJLJho//DmfnwyAldksr1dbDEbwnxIN9OVu0pOuctKR/6UjYnrH6TI8g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFSMz1ntXJn+qIPLhLkD8itWKd9p40Y9KVz23dcwlwHHooyPS6E75GDgqz5PU2MEqQ==",
                             PhoneNumber = "0891234561",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -155,7 +157,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 31,
                             Balance = 0m,
-                            ConcurrencyStamp = "6a978913-7bc1-4a67-b377-5b8d2445df74",
+                            ConcurrencyStamp = "c2315ded-8e62-46be-b88b-f866bcb0a972",
                             Email = "owneroff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Owner",
@@ -163,7 +165,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "OWNEROFF@MAIL.COM",
                             NormalizedUserName = "OWNERONWEROV",
-                            PasswordHash = "AQAAAAEAACcQAAAAENNXOSrUpNXxwxzWl0ynnQpC+BHfXVrWhzC8zgXDa/nQjw/GCyow7WgmnFWZqu59kw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAw76b+xKqMzgmSkViDW20JQPVO+r2HfSyokMiC+bitDMtz7Xyf3tvWAdotI65OVsw==",
                             PhoneNumber = "0891234561",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
@@ -373,7 +375,7 @@ namespace BetaTesters.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("04eb7728-e1ea-447a-bf56-af491a1cdca6"),
+                            Id = new Guid("1047656a-df91-40d2-af79-c5611484660d"),
                             Approval = 1,
                             CategoryId = 2,
                             CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
@@ -386,9 +388,9 @@ namespace BetaTesters.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2a2b1400-27df-45a3-9ef1-b50658450f29"),
+                            Id = new Guid("5733b9e5-5cce-4007-b400-8bc3aed03d1c"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 9, 23, 53, 44, 759, DateTimeKind.Local).AddTicks(3849),
+                            AssignDate = new DateTime(2024, 4, 9, 23, 51, 12, 54, DateTimeKind.Local).AddTicks(3343),
                             CategoryId = 1,
                             ContractorId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
                             CreatorId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
@@ -401,9 +403,9 @@ namespace BetaTesters.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a094befb-efae-45e1-8c99-634974e54eae"),
+                            Id = new Guid("54fc2296-7656-4aa9-aab7-afbe7a90fcea"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 9, 23, 53, 44, 759, DateTimeKind.Local).AddTicks(3922),
+                            AssignDate = new DateTime(2024, 4, 9, 23, 51, 12, 54, DateTimeKind.Local).AddTicks(3482),
                             CategoryId = 3,
                             ContractorId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
                             CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
@@ -469,23 +471,23 @@ namespace BetaTesters.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"),
-                            ConcurrencyStamp = "c8320320-35bd-4a2f-9c64-e864f748620e",
+                            ConcurrencyStamp = "56fdbcdd-18f2-4dc7-b4b3-afa95fd32b9e",
                             Name = "default user",
-                            NormalizedName = "DEFAULT USER"
+                            NormalizedName = "default user"
                         },
                         new
                         {
                             Id = new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"),
-                            ConcurrencyStamp = "56d591ee-f95e-4ea5-949a-8a5a43687795",
+                            ConcurrencyStamp = "54a538d5-f112-41ff-96d7-796bc416bc19",
                             Name = "moderator",
-                            NormalizedName = "MODERATOR"
+                            NormalizedName = "moderator"
                         },
                         new
                         {
                             Id = new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"),
-                            ConcurrencyStamp = "95b9da22-a42d-451c-a0da-8fda54f2dbfa",
+                            ConcurrencyStamp = "010078cd-98ac-42eb-8581-21bd9afa7acb",
                             Name = "owner",
-                            NormalizedName = "OWNER"
+                            NormalizedName = "owner"
                         });
                 });
 
