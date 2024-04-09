@@ -23,6 +23,9 @@ namespace BetaTesters.Infrastructure.Data.Models
         [MaxLength(BetaProgramDescriptionMaxLength)]
         public string Description { get; set; } = string.Empty;
 
+        [Required]
+        public string ImageUrl { get; set; } = string.Empty;
+
         public IEnumerable<Task> Tasks { get; set; } = new HashSet<Task>();
 
         public IEnumerable<CandidateApplication> Applications { get; set; } = new HashSet<CandidateApplication>();
