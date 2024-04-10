@@ -1,6 +1,6 @@
 ﻿using BetaTesters.Infrastructure.Data.Models;
-using BetaTesters.Infrastructure.Data.Models.SeedDatabase.Entities;
-using BetaTesters.Infrastructure.Data.Models.SeedDatabase.Roles;
+using BetaTesters.Infrastructure.Data.Models.SeedDatabase.Configurations.Entities;
+using BetaTesters.Infrastructure.Data.Models.SeedDatabase.Configurations.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -29,11 +29,11 @@ namespace BetaTesters.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new BetaProgramConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new IdentityUserClaimConfiguration());
             builder.ApplyConfiguration(new UserRoleConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new BetaProgramConfiguration());
             builder.ApplyConfiguration(new TaskConfiguration());
 
             base.OnModelCreating(builder);

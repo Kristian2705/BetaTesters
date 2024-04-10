@@ -9,12 +9,12 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
     {
         public SeedData()
         {
+            SeedPrograms();
             SeedUsers();
             SeedClaims();
             SeedRoles();
             SeedUserRoles();
             SeedCategories();
-            SeedPrograms();
             SeedTasks();
         }
 
@@ -160,7 +160,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 FirstName = "Moderator",
                 LastName = "Modov",
                 PhoneNumber = "0891234561",
-                Age = 22
+                Age = 22,
+                BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e")
             };
 
             Moderator.PasswordHash = hasher
@@ -178,7 +179,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 FirstName = "Owner",
                 LastName = "Ownerov",
                 PhoneNumber = "0891231456",
-                Age = 31
+                Age = 31,
+                BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e")
             };
 
             Owner.PasswordHash = hasher
@@ -215,8 +217,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 Id = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 Name = "Facebook Beta Program",
                 Description = "This is the official beta testing program for Facebook",
-                ImageUrl = "https://store-images.s-microsoft.com/image/apps.37935.9007199266245907.b029bd80-381a-4869-854f-bac6f359c5c9.91f8693c-c75b-4050-a796-63e1314d18c9?h=464",
-                OwnerId = Guid.Parse("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
+                ImageUrl = "https://store-images.s-microsoft.com/image/apps.37935.9007199266245907.b029bd80-381a-4869-854f-bac6f359c5c9.91f8693c-c75b-4050-a796-63e1314d18c9?h=464"
             };
         }
 
@@ -240,13 +241,11 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 Id = Guid.NewGuid(),
                 Name = "Added chat groups",
                 Description = "Added a new feature where users can chat with friends",
-                State = TaskState.InProgress,
+                State = TaskState.Available,
                 CategoryId = NewFeatureCategory.Id,
                 Approval = Approval.Accepted,
                 ProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 CreatorId = Guid.Parse("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
-                ContractorId = Guid.Parse("f903f113-d659-4848-87c5-97f49082ba46"),
-                AssignDate = DateTime.Now,
                 Reward = 30
             };
 
@@ -255,13 +254,11 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 Id = Guid.NewGuid(),
                 Name = "Check profile update",
                 Description = "Check if the update profile feature works properly",
-                State = TaskState.InProgress,
+                State = TaskState.Available,
                 CategoryId = CheckStateCategory.Id,
                 Approval = Approval.Accepted,
                 ProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 CreatorId = Guid.Parse("38885cfb-4b65-4503-9958-6389ac64eb1a"),
-                ContractorId = Guid.Parse("f903f113-d659-4848-87c5-97f49082ba46"),
-                AssignDate = DateTime.Now,
                 Reward = 15
             };
         }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Entities
+namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Configurations.Entities
 {
     internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {

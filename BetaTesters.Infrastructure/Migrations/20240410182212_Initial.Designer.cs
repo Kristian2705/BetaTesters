@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetaTesters.Infrastructure.Migrations
 {
     [DbContext(typeof(BetaTestersDbContext))]
-    [Migration("20240409224400_SeedClaims")]
-    partial class SeedClaims
+    [Migration("20240410182212_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -117,7 +117,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 18,
                             Balance = 0m,
-                            ConcurrencyStamp = "b5cf8be2-dfec-4abf-aafb-5edce1005104",
+                            ConcurrencyStamp = "4ad57924-c709-4824-9d12-8ed04607abae",
                             Email = "useroff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -125,10 +125,10 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USEROFF@MAIL.COM",
                             NormalizedUserName = "USEROFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMO0CNIbuJ2aoimU3HmheFk7AmpeX/iuGlcAzyBwIqlXr07XPsMyVijGKNV0DW9ibg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDzlKaq0RA9rvQbCex7GtJY51YE2VhMMC95iMdqGD+oe1qIzWMiK+Y7tHvc6cjV7kQ==",
                             PhoneNumber = "0881234567",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "112bdeb8-0da4-4c0b-b68b-478c28dda654",
+                            SecurityStamp = "8ade1e25-ffb5-4253-b1e0-1dc75c493dc8",
                             TwoFactorEnabled = false,
                             UserName = "useroff@mail.com"
                         },
@@ -138,7 +138,8 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 22,
                             Balance = 0m,
-                            ConcurrencyStamp = "8f9bec3e-4fb9-4da3-b2f1-028e3a08073d",
+                            BetaProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                            ConcurrencyStamp = "82fbead4-e507-4f81-84dd-52ff9c068fe3",
                             Email = "modoff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Moderator",
@@ -146,10 +147,10 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MODOFF@MAIL.COM",
                             NormalizedUserName = "MODOFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHxNWybGh64dPSD/otNcBrD7FK06v2F7o87fPXWYunpazUjdcITXV/+CChel0cNGpA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDoJmv4iAeSyekLZilcDOxpmX2zduvToLt1prJ3pf1kO3mnBQ8egCl1E4iya2M0vrQ==",
                             PhoneNumber = "0891234561",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "469de715-ddaa-43d9-80d1-d962f80329f0",
+                            SecurityStamp = "9f733548-de69-4361-a41c-1072fa2c8fbd",
                             TwoFactorEnabled = false,
                             UserName = "modoff@mail.com"
                         },
@@ -159,7 +160,8 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 31,
                             Balance = 0m,
-                            ConcurrencyStamp = "6d1ae0a9-df48-4bf2-acd4-5ad1b5a6a3fd",
+                            BetaProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                            ConcurrencyStamp = "d0731660-9026-4413-a652-63f01271aa39",
                             Email = "owneroff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Owner",
@@ -167,10 +169,10 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "OWNEROFF@MAIL.COM",
                             NormalizedUserName = "OWNEROFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENXJorB+q6e6IYEShlaYvilf+DHeQIWppS5IEonI6RXWzhO1GPvUhAwuc0Rg3Kxd0w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJmo9suTn3VZe2hAmuRb4gNARPOe2XlwoG/5zehWGtlvAKJl021nTutiYWiNeWkcLQ==",
                             PhoneNumber = "0891231456",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0b4a2455-cb74-4f16-be2d-013c78a81933",
+                            SecurityStamp = "643dae24-9ba9-4804-b7f4-c6f30526dce7",
                             TwoFactorEnabled = false,
                             UserName = "owneroff@mail.com"
                         });
@@ -196,12 +198,7 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<Guid>("OwnerId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("BetaPrograms");
 
@@ -211,8 +208,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             Id = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                             Description = "This is the official beta testing program for Facebook",
                             ImageUrl = "https://store-images.s-microsoft.com/image/apps.37935.9007199266245907.b029bd80-381a-4869-854f-bac6f359c5c9.91f8693c-c75b-4050-a796-63e1314d18c9?h=464",
-                            Name = "Facebook Beta Program",
-                            OwnerId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c")
+                            Name = "Facebook Beta Program"
                         });
                 });
 
@@ -378,7 +374,7 @@ namespace BetaTesters.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4449b6db-47a4-4605-a13c-e17bc6f0c046"),
+                            Id = new Guid("809aa0a8-4cc9-4496-88e2-21dbdeae4659"),
                             Approval = 1,
                             CategoryId = 2,
                             CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
@@ -391,33 +387,29 @@ namespace BetaTesters.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("83a4bc34-bd7b-4913-98f6-58a7fca04bde"),
+                            Id = new Guid("87651f1e-7674-4a0c-9358-682d03aec694"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 10, 1, 44, 0, 220, DateTimeKind.Local).AddTicks(434),
                             CategoryId = 1,
-                            ContractorId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
                             CreatorId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
                             Description = "Added a new feature where users can chat with friends",
                             IsDeleted = false,
                             Name = "Added chat groups",
                             ProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                             Reward = 30m,
-                            State = 2
+                            State = 3
                         },
                         new
                         {
-                            Id = new Guid("ee0fcf1b-eb06-4394-a060-ef7841097d34"),
+                            Id = new Guid("08747fa7-57b0-439b-99a4-d4c17e94e867"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 10, 1, 44, 0, 220, DateTimeKind.Local).AddTicks(501),
                             CategoryId = 3,
-                            ContractorId = new Guid("f903f113-d659-4848-87c5-97f49082ba46"),
                             CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
                             Description = "Check if the update profile feature works properly",
                             IsDeleted = false,
                             Name = "Check profile update",
                             ProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                             Reward = 15m,
-                            State = 2
+                            State = 3
                         });
                 });
 
@@ -474,21 +466,21 @@ namespace BetaTesters.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"),
-                            ConcurrencyStamp = "c7ec694f-4332-4d79-8761-703c6907043f",
+                            ConcurrencyStamp = "606a66f1-8587-4f5a-b8a5-7af77e9d76dd",
                             Name = "default user",
                             NormalizedName = "DEFAULT USER"
                         },
                         new
                         {
                             Id = new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"),
-                            ConcurrencyStamp = "e63c1fe8-36c2-491b-bd86-d2a2ef02615d",
+                            ConcurrencyStamp = "88256f67-c620-400e-9e3c-9646c8f8e5d7",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
                             Id = new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"),
-                            ConcurrencyStamp = "d2aec9f5-2c3a-4916-b863-028bbc2f8943",
+                            ConcurrencyStamp = "8446bb88-242f-402b-8f61-b55a77589255",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         });
@@ -644,21 +636,10 @@ namespace BetaTesters.Infrastructure.Migrations
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.ApplicationUser", b =>
                 {
                     b.HasOne("BetaTesters.Infrastructure.Data.Models.BetaProgram", "BetaProgram")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("BetaProgramId");
 
                     b.Navigation("BetaProgram");
-                });
-
-            modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.BetaProgram", b =>
-                {
-                    b.HasOne("BetaTesters.Infrastructure.Data.Models.ApplicationUser", "Owner")
-                        .WithMany()
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.CandidateApplication", b =>
@@ -708,7 +689,7 @@ namespace BetaTesters.Infrastructure.Migrations
             modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.Task", b =>
                 {
                     b.HasOne("BetaTesters.Infrastructure.Data.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -821,6 +802,13 @@ namespace BetaTesters.Infrastructure.Migrations
                 {
                     b.Navigation("Applications");
 
+                    b.Navigation("Tasks");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("BetaTesters.Infrastructure.Data.Models.Category", b =>
+                {
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

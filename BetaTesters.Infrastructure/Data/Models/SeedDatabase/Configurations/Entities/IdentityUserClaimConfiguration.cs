@@ -2,15 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Entities
+namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Configurations.Entities
 {
     internal class IdentityUserClaimConfiguration : IEntityTypeConfiguration<IdentityUserClaim<Guid>>
     {
         public void Configure(EntityTypeBuilder<IdentityUserClaim<Guid>> builder)
         {
             var data = new SeedData();
-            builder
-                .HasData(data.UsersClaims);
+            builder.HasData(data.UsersClaims);
         }
     }
 }

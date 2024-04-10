@@ -11,5 +11,7 @@ namespace BetaTesters.Infrastructure.Data.Models
         [Required]
         [MaxLength(CategoryNameMaxLength)]
         public string CategoryName { get; set; } = null!;
+
+        public IEnumerable<Task> Tasks { get; set; } = new HashSet<Task>();
     }
 }

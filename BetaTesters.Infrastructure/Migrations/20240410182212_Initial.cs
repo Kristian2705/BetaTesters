@@ -24,6 +24,20 @@ namespace BetaTesters.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BetaPrograms",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BetaPrograms", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -58,53 +72,6 @@ namespace BetaTesters.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
-                {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
-                    table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
                 {
@@ -132,6 +99,76 @@ namespace BetaTesters.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_BetaPrograms_BetaProgramId",
+                        column: x => x.BetaProgramId,
+                        principalTable: "BetaPrograms",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -148,73 +185,6 @@ namespace BetaTesters.Infrastructure.Migrations
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "BetaPrograms",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BetaPrograms", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_BetaPrograms_AspNetUsers_OwnerId",
-                        column: x => x.OwnerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReceiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Money = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_ReceiverId",
-                        column: x => x.ReceiverId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_SenderId",
-                        column: x => x.SenderId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Money = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transactions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -252,6 +222,32 @@ namespace BetaTesters.Infrastructure.Migrations
                         name: "FK_CandidateApplications_BetaPrograms_BetaProgramId",
                         column: x => x.BetaProgramId,
                         principalTable: "BetaPrograms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReceiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Money = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_ReceiverId",
+                        column: x => x.ReceiverId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -302,25 +298,45 @@ namespace BetaTesters.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Money = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"), "6c27bd6f-ef06-4490-a4d0-048194ba1e0e", "default user", "DEFAULT USER" },
-                    { new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"), "22370da1-58f6-4d16-8e0c-6efae66d3036", "moderator", "MODERATOR" },
-                    { new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"), "eac5d73f-b7d7-41dd-8c32-8226ff000f99", "owner", "OWNER" }
+                    { new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"), "606a66f1-8587-4f5a-b8a5-7af77e9d76dd", "default user", "DEFAULT USER" },
+                    { new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"), "88256f67-c620-400e-9e3c-9646c8f8e5d7", "moderator", "MODERATOR" },
+                    { new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"), "8446bb88-242f-402b-8f61-b55a77589255", "owner", "OWNER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Age", "Balance", "BetaProgramId", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), 0, 22, 0m, null, "84d915f3-7c14-4997-b28b-8aeacc76b20a", "modoff@mail.com", false, "Moderator", "Modov", false, null, "MODOFF@MAIL.COM", "MODOFF@MAIL.COM", "AQAAAAEAACcQAAAAEPtJ/xNgrFs0p5VgHJuHPEEt6Rl8WoS/K1EBKa9y+1FyZdZnb8+jbLIYFRnLQp1ndQ==", "0891234561", false, "00f84320-ef1f-45ff-a735-a08b501192d0", false, "modoff@mail.com" },
-                    { new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), 0, 31, 0m, null, "c54f6996-e6da-47f7-b70b-c0dfbf379fd7", "owneroff@mail.com", false, "Owner", "Ownerov", false, null, "OWNEROFF@MAIL.COM", "OWNEROFF@MAIL.COM", "AQAAAAEAACcQAAAAEHUFyiUJ+OyCmKhS3tF5vmT3XhMtI1Pq+NtFVXHsXIhuJULhQa/6041uMian8Oqffg==", "0891231456", false, "bd182ca6-24d2-447e-ad34-6f0262187d33", false, "owneroff@mail.com" },
-                    { new Guid("f903f113-d659-4848-87c5-97f49082ba46"), 0, 18, 0m, null, "0b24d7a1-b746-42ad-b57d-abc292f312b0", "useroff@mail.com", false, "User", "Userov", false, null, "USEROFF@MAIL.COM", "USEROFF@MAIL.COM", "AQAAAAEAACcQAAAAEPzYpPDQf8qiKVSQrEr+Wi3QX60dTMW3dFXBFqIYkgzXf1zokm1pRdEF2TSiHBf47g==", "0881234567", false, "2159bebc-3de2-42c6-bb77-97701d06d6f9", false, "useroff@mail.com" }
-                });
+                values: new object[] { new Guid("f903f113-d659-4848-87c5-97f49082ba46"), 0, 18, 0m, null, "4ad57924-c709-4824-9d12-8ed04607abae", "useroff@mail.com", false, "User", "Userov", false, null, "USEROFF@MAIL.COM", "USEROFF@MAIL.COM", "AQAAAAEAACcQAAAAEDzlKaq0RA9rvQbCex7GtJY51YE2VhMMC95iMdqGD+oe1qIzWMiK+Y7tHvc6cjV7kQ==", "0881234567", false, "8ade1e25-ffb5-4253-b1e0-1dc75c493dc8", false, "useroff@mail.com" });
+
+            migrationBuilder.InsertData(
+                table: "BetaPrograms",
+                columns: new[] { "Id", "Description", "ImageUrl", "Name" },
+                values: new object[] { new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), "This is the official beta testing program for Facebook", "https://store-images.s-microsoft.com/image/apps.37935.9007199266245907.b029bd80-381a-4869-854f-bac6f359c5c9.91f8693c-c75b-4050-a796-63e1314d18c9?h=464", "Facebook Beta Program" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -333,34 +349,51 @@ namespace BetaTesters.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[] { 2, "user:fullname", "User Userov", new Guid("f903f113-d659-4848-87c5-97f49082ba46") });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"), new Guid("f903f113-d659-4848-87c5-97f49082ba46") });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "Age", "Balance", "BetaProgramId", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), 0, 22, 0m, new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), "82fbead4-e507-4f81-84dd-52ff9c068fe3", "modoff@mail.com", false, "Moderator", "Modov", false, null, "MODOFF@MAIL.COM", "MODOFF@MAIL.COM", "AQAAAAEAACcQAAAAEDoJmv4iAeSyekLZilcDOxpmX2zduvToLt1prJ3pf1kO3mnBQ8egCl1E4iya2M0vrQ==", "0891234561", false, "9f733548-de69-4361-a41c-1072fa2c8fbd", false, "modoff@mail.com" },
+                    { new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), 0, 31, 0m, new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), "d0731660-9026-4413-a652-63f01271aa39", "owneroff@mail.com", false, "Owner", "Ownerov", false, null, "OWNEROFF@MAIL.COM", "OWNEROFF@MAIL.COM", "AQAAAAEAACcQAAAAEJmo9suTn3VZe2hAmuRb4gNARPOe2XlwoG/5zehWGtlvAKJl021nTutiYWiNeWkcLQ==", "0891231456", false, "643dae24-9ba9-4804-b7f4-c6f30526dce7", false, "owneroff@mail.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "UserId" },
+                values: new object[,]
+                {
+                    { 3, "user:fullname", "Moderator Modov", new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a") },
+                    { 4, "user:fullname", "Owner Ownerov", new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c") }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
                     { new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"), new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a") },
-                    { new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"), new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c") },
-                    { new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"), new Guid("f903f113-d659-4848-87c5-97f49082ba46") }
+                    { new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"), new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c") }
                 });
 
             migrationBuilder.InsertData(
-                table: "BetaPrograms",
-                columns: new[] { "Id", "Description", "ImageUrl", "Name", "OwnerId" },
-                values: new object[] { new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), "This is the official beta testing program for Facebook", "https://store-images.s-microsoft.com/image/apps.37935.9007199266245907.b029bd80-381a-4869-854f-bac6f359c5c9.91f8693c-c75b-4050-a796-63e1314d18c9?h=464", "Facebook Beta Program", new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c") });
-
-            migrationBuilder.InsertData(
                 table: "Tasks",
                 columns: new[] { "Id", "Approval", "AssignDate", "CategoryId", "ContractorId", "CreatorId", "Description", "FinishDate", "IsDeleted", "Name", "ProgramId", "Reward", "State" },
-                values: new object[] { new Guid("d0807114-2c45-454e-b6f4-a733cec4ec19"), 1, new DateTime(2024, 4, 10, 1, 17, 42, 838, DateTimeKind.Local).AddTicks(2002), 3, new Guid("f903f113-d659-4848-87c5-97f49082ba46"), new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Check if the update profile feature works properly", null, false, "Check profile update", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 15m, 2 });
-
-            migrationBuilder.InsertData(
-                table: "Tasks",
-                columns: new[] { "Id", "Approval", "AssignDate", "CategoryId", "ContractorId", "CreatorId", "Description", "FinishDate", "IsDeleted", "Name", "ProgramId", "Reward", "State" },
-                values: new object[] { new Guid("d31fd8b2-beb4-4f93-a861-1655df58cfbb"), 1, new DateTime(2024, 4, 10, 1, 17, 42, 838, DateTimeKind.Local).AddTicks(1901), 1, new Guid("f903f113-d659-4848-87c5-97f49082ba46"), new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), "Added a new feature where users can chat with friends", null, false, "Added chat groups", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 30m, 2 });
-
-            migrationBuilder.InsertData(
-                table: "Tasks",
-                columns: new[] { "Id", "Approval", "AssignDate", "CategoryId", "ContractorId", "CreatorId", "Description", "FinishDate", "IsDeleted", "Name", "ProgramId", "Reward", "State" },
-                values: new object[] { new Guid("d611141f-9b37-48e7-84e2-1b8a26a15195"), 1, null, 2, null, new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Users can't properly create a new post is now fixed", null, false, "Posts issue fix", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 20m, 3 });
+                values: new object[,]
+                {
+                    { new Guid("08747fa7-57b0-439b-99a4-d4c17e94e867"), 1, null, 3, null, new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Check if the update profile feature works properly", null, false, "Check profile update", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 15m, 3 },
+                    { new Guid("809aa0a8-4cc9-4496-88e2-21dbdeae4659"), 1, null, 2, null, new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"), "Users can't properly create a new post is now fixed", null, false, "Posts issue fix", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 20m, 3 },
+                    { new Guid("87651f1e-7674-4a0c-9358-682d03aec694"), 1, null, 1, null, new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"), "Added a new feature where users can chat with friends", null, false, "Added chat groups", new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"), 30m, 3 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -405,11 +438,6 @@ namespace BetaTesters.Infrastructure.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BetaPrograms_OwnerId",
-                table: "BetaPrograms",
-                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CandidateApplications_BetaProgramId",
@@ -460,45 +488,10 @@ namespace BetaTesters.Infrastructure.Migrations
                 name: "IX_Transactions_UserId",
                 table: "Transactions",
                 column: "UserId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                table: "AspNetUserRoles",
-                column: "UserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AspNetUsers_BetaPrograms_BetaProgramId",
-                table: "AspNetUsers",
-                column: "BetaProgramId",
-                principalTable: "BetaPrograms",
-                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_BetaPrograms_AspNetUsers_OwnerId",
-                table: "BetaPrograms");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 

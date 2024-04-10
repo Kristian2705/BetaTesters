@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Roles
+namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Configurations.Roles
 {
     internal class RoleConfiguration : IEntityTypeConfiguration<IdentityRole<Guid>>
     {
