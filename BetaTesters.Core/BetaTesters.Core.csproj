@@ -10,9 +10,4 @@
     <ProjectReference Include="..\BetaTesters.Infrastructure\BetaTesters.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

@@ -1,0 +1,22 @@
+﻿@model CandidateApplicationFormModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Motivation"></label>
+                <textarea asp-for="Motivation" rows="4" class="form-control" placeholder="Your motivation..."></textarea>
+                <span asp-validation-for="Motivation" class="small text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="+359888888888">
+                <span asp-validation-for="PhoneNumber" class="small text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <input class="btn btn-primary mt-3" type="submit" value="Send" />
+            </div>
+        </form>
+    </div>
+</div>

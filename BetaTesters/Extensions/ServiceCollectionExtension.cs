@@ -1,4 +1,7 @@
-﻿using BetaTesters.Data;
+﻿using BetaTesters.Core.Contracts;
+using BetaTesters.Core.Services;
+using BetaTesters.Data;
+using BetaTesters.Infrastructure.Data.Common;
 using BetaTesters.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<ICandidateApplicationService, CandidateApplicationService>();
             return services;
         }
 
@@ -18,6 +22,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddDbContext<BetaTestersDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            services.AddScoped<IRepository, Repository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

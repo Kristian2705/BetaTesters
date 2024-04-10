@@ -3,6 +3,7 @@
     public class DataConstants
     {
         public const int CandidateApplicationMotivationMaxLength = 500;
+        public const int CandidateApplicationMotivationMinLength = 30;
 
         public const int PhoneNumberLength = 10;
 
