@@ -18,16 +18,18 @@ namespace BetaTesters.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Add(string id)
         {
-            //TempData to save the program id should be implemented
-            var model = new CandidateApplicationFormModel();
+            var model = new CandidateApplicationFormModel
+            {
+                BetaProgramId = id
+            };
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CandidateApplicationFormModel model, [FromQuery]string programId)
+        public async Task<IActionResult> Add(CandidateApplicationFormModel model)
         {
             if(!ModelState.IsValid)
             {
@@ -36,14 +38,14 @@ namespace BetaTesters.Controllers
 
             try
             {
-                await candidateApplicationService.CreateAsync(model, User.Id(), programId);
+                await candidateApplicationService.CreateAsync(model, User.Id(), model.BetaProgramId);
             }
             catch(Exception)
             {
                 GeneralError();
             }
 
-            return RedirectToAction(nameof(HomeController.Index));
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }

@@ -19,5 +19,7 @@ namespace BetaTesters.Core.Models.CandidateApplication
         [Display(Name = "Phone number")]
         [Phone]
         public string PhoneNumber { get; set; } = string.Empty;
+
+        public string BetaProgramId { get; set; } = string.Empty;
     }
 }
