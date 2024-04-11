@@ -1,4 +1,4 @@
-﻿using BetaTesters.Core.Models;
+﻿using BetaTesters.Core.Models.CandidateApplication;
 
 namespace BetaTesters.Core.Contracts
 {

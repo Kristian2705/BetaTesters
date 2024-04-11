@@ -1,5 +1,5 @@
 ﻿using BetaTesters.Core.Contracts;
-using BetaTesters.Core.Models;
+using BetaTesters.Core.Models.CandidateApplication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -17,21 +17,17 @@ namespace BetaTesters.Controllers
             candidateApplicationService = _candidateApplicationService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Add()
         {
+            //TempData to save the program id should be implemented
             var model = new CandidateApplicationFormModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CandidateApplicationFormModel model, string programId)
+        public async Task<IActionResult> Add(CandidateApplicationFormModel model, [FromQuery]string programId)
         {
             if(!ModelState.IsValid)
             {

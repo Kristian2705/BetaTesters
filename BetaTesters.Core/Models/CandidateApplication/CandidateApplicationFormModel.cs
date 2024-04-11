@@ -2,12 +2,12 @@
 using static BetaTesters.Infrastructure.Constants.DataConstants;
 using static BetaTesters.Core.Constants.MessageConstants;
 
-namespace BetaTesters.Core.Models
+namespace BetaTesters.Core.Models.CandidateApplication
 {
     public class CandidateApplicationFormModel
     {
         [Required(ErrorMessage = RequiredMessage)]
-        [StringLength(CandidateApplicationMotivationMaxLength, 
+        [StringLength(CandidateApplicationMotivationMaxLength,
             MinimumLength = CandidateApplicationMotivationMinLength,
             ErrorMessage = LengthMessage)]
         public string Motivation { get; set; } = string.Empty;
