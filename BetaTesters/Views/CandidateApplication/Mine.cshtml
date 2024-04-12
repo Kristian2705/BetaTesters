@@ -1,0 +1,22 @@
+﻿@model IEnumerable<CandidateApplicationViewModel>
+
+@{
+    ViewBag.Title = "My Applications";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var application in Model)
+        {
+            <partial name="_CandidateApplicationPartial" model="@application" />
+        }
+    </div>
+}
+else
+{
+    <h3 class="text-center">You have no applications yet!</h3>
+}

@@ -20,13 +20,13 @@
             <p>@Model.Description</p>
             <p>Total users in this program: <b>@Model.TotalParticipants</b></p>
             <p>Total tasks completed: <b>@Model.TotalTasksCompleted</b></p>
-            @if(await candidateApplicationService.HasApplicationForCurrentUserAndProgramAsync(User.Id(), Model.Id.ToString()) == false)
+            @if(candidateApplicationService.HasApplicationForCurrentUserAndProgram(User.Id(), Model.Id.ToString()))
             {
-                <a asp-controller="CandidateApplication" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-success">Candidate</a>
+                <p><b>You have already submitted your application for our program!</b></p>
             }
             else
             {
-                <p><b>You have already submitted your application for our program!</b></p>
+                <a asp-controller="CandidateApplication" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-success">Candidate</a>
             }
             <div class="form-inline">
             </div>

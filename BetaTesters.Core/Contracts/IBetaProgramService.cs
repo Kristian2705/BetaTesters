@@ -1,4 +1,5 @@
 ﻿using BetaTesters.Core.Models.BetaProgram;
+using BetaTesters.Infrastructure.Data.Models;
 
 namespace BetaTesters.Core.Contracts
 {
@@ -9,5 +10,7 @@ namespace BetaTesters.Core.Contracts
 		Task<BetaProgramDetailsServiceModel> BetaProgramDetailsByIdAsync(string id);
 
 		Task<bool> ExistsAsync(string id);
+
+		Task<BetaProgram> BetaProgramByIdAsync(string id);
     }
 }

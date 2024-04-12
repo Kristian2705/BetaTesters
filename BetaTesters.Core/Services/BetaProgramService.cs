@@ -11,7 +11,7 @@ using BetaTesters.Infrastructure.Data.Enums;
 
 namespace BetaTesters.Core.Services
 {
-	public class BetaProgramService : IBetaProgramService
+    public class BetaProgramService : IBetaProgramService
 	{
 		private readonly IRepository repository;
 		public BetaProgramService(IRepository _repository)
@@ -36,6 +36,12 @@ namespace BetaTesters.Core.Services
 				TotalBetaProgramsCount = totalBetaPrograms
 			};
 		}
+
+        public async Task<BetaProgram> BetaProgramByIdAsync(string id)
+        {
+            return await repository.AllReadOnly<BetaProgram>()
+				.FirstAsync(b => b.Id == Guid.Parse(id));
+        }
 
         public async Task<BetaProgramDetailsServiceModel> BetaProgramDetailsByIdAsync(string id)
         {

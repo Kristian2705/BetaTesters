@@ -4,6 +4,7 @@ using BetaTesters.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetaTesters.Infrastructure.Migrations
 {
     [DbContext(typeof(BetaTestersDbContext))]
-    partial class BetaTestersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240412191731_RemovedIsDeletedFromApplication")]
+    partial class RemovedIsDeletedFromApplication
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

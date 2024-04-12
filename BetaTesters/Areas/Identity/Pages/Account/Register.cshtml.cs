@@ -11,6 +11,7 @@ using System.ComponentModel.DataAnnotations;
 using static BetaTesters.Core.Constants.MessageConstants;
 using static BetaTesters.Infrastructure.Constants.DataConstants;
 using static BetaTesters.Infrastructure.Constants.CustomClaims;
+using static BetaTesters.Infrastructure.Constants.RoleConstants;
 
 namespace BetaTesters.Areas.Identity.Pages.Account
 {
@@ -126,7 +127,7 @@ namespace BetaTesters.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(UserFullNameClaim, $"{user.FirstName} {user.LastName}"));
-
+                    await _userManager.AddToRoleAsync(user, DefaultUserRole);
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

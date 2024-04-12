@@ -20,6 +20,6 @@ namespace BetaTesters.Core.Models.CandidateApplication
         [Phone]
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public string BetaProgramId { get; set; } = string.Empty;
+        public string? BetaProgramId { get; set; } = string.Empty;
     }
 }

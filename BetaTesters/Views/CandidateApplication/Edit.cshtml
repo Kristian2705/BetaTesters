@@ -1,0 +1,12 @@
+﻿@model CandidateApplicationFormModel
+@{
+	ViewBag.Title = "Edit your application";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_CandidateApplicationFormPartial" model="@Model" />
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -25,10 +25,10 @@ namespace BetaTesters.Infrastructure.Data.Common
         public async Task<int> SaveChangesAsync()
             => await context.SaveChangesAsync();
 
-        public async Task<T?> GetByIdAsync<T>(int id) where T : class
+        public async Task<T?> GetByIdAsync<T>(Guid id) where T : class
             => await DbSet<T>().FindAsync(id);
 
-        public async Task DeleteAsync<T>(int id) where T : class
+        public async Task DeleteAsync<T>(Guid id) where T : class
         {
             T? entity = await GetByIdAsync<T>(id);
 

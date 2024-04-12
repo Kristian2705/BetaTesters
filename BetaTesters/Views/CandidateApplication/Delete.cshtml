@@ -1,0 +1,42 @@
+﻿@model CandidateApplicationViewModel
+@inject IBetaProgramService betaProgramService
+@{
+    ViewBag.Title = "Delete your application";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">@(betaProgramService.BetaProgramByIdAsync(Model.BetaProgramId!).Result.Name) Application</h3>
+                <p class="mb-0"><strong>Motivation:</strong> @Model.Motivation</p>
+                <p class="mb-0"><strong>Phone number:</strong> @Model.PhoneNumber</p>
+                @if ((int)Model.Approval == 1)
+                {
+                    <p class="mb-0 alert-success"><strong>State:</strong> Approved</p>
+                }
+                else if ((int)Model.Approval == 2)
+                {
+                    <p class="mb-0 alert-danger"><strong>State:</strong> Rejected</p>
+                }
+                else
+                {
+                    <p class="mb-0 alert-info"><strong>State:</strong> To be reviewed</p>
+                }
+                <p class="text-danger mt-3">"Are you sure you want to delete this application?"</p>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    @if (User.IsInRole(RoleConstants.DefaultUserRole))
+                    {
+                        <a asp-action="Mine" class="btn btn-secondary">Cancel</a>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace BetaTesters.Attributes
 {
-    public class NotSubmittedApplication : ActionFilterAttribute
+    public class IsNotReviewed : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
@@ -21,9 +21,9 @@ namespace BetaTesters.Attributes
                 context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
 
-            string programId = context.HttpContext.Request.RouteValues["id"].ToString();
+            string applicationId = context.HttpContext.Request.RouteValues["id"].ToString();
 
-            if(candidateApplicationService != null && candidateApplicationService.HasApplicationForCurrentUserAndProgram(context.HttpContext.User.Id(), programId!))
+            if (candidateApplicationService != null && candidateApplicationService.GetById(applicationId).Approval != 0)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
             }

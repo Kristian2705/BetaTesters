@@ -37,7 +37,5 @@ namespace BetaTesters.Infrastructure.Data.Models
         public ApplicationUser? Reviewer { get; set; }
 
         public Approval Approval { get; set; }
-
-        public bool IsDeleted {  get; set; }
     }
 }

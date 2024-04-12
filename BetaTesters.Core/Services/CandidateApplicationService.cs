@@ -1,6 +1,6 @@
 ﻿using BetaTesters.Core.Contracts;
-using BetaTesters.Infrastructure.Data.Models;
 using BetaTesters.Infrastructure.Data.Enums;
+using BetaTesters.Infrastructure.Data.Models;
 
 namespace BetaTesters.Core.Services
 {
@@ -15,6 +15,22 @@ namespace BetaTesters.Core.Services
         {
             repository = _repository;
         }
+
+        public async Task<IEnumerable<CandidateApplicationViewModel>> ApplicationsByUserIdAsync(string userId)
+        {
+            return await repository.AllReadOnly<CandidateApplication>()
+                .Where(c => c.CandidateId == Guid.Parse(userId))
+                .Select(c => new CandidateApplicationViewModel()
+                {
+                    Id = c.Id,
+                    Motivation = c.Motivation,
+                    Approval = c.Approval,
+                    BetaProgramId = c.BetaProgramId.ToString(),
+                    PhoneNumber = c.PhoneNumber
+                })
+                .ToListAsync();
+        }
+
         public async Task CreateAsync(CandidateApplicationFormModel model, string candidateId, string programId)
         {
             var application = new CandidateApplication()
@@ -23,18 +39,77 @@ namespace BetaTesters.Core.Services
                 CandidateId = Guid.Parse(candidateId),
                 BetaProgramId = Guid.Parse(programId),
                 PhoneNumber = model.PhoneNumber,
-                Approval = Approval.ToBeReviewed,
-                IsDeleted = false
+                Approval = Approval.ToBeReviewed
             };
             
             await repository.AddAsync(application);
             await repository.SaveChangesAsync();
         }
 
-        public async Task<bool> HasApplicationForCurrentUserAndProgramAsync(string userId, string programId)
+        public async Task EditAsync(string id, CandidateApplicationFormModel model)
+        {
+            var application = await repository.GetByIdAsync<CandidateApplication>(Guid.Parse(id));
+
+            if (application != null)
+            {
+                application.Motivation = model.Motivation;
+                application.PhoneNumber = model.PhoneNumber;
+
+                await repository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> ExistsAsync(string id)
         {
             return await repository.AllReadOnly<CandidateApplication>()
-                .AnyAsync(a => a.BetaProgramId == Guid.Parse(programId) && a.CandidateId == Guid.Parse(userId));
+                .AnyAsync(c => c.Id == Guid.Parse(id));
+        }
+
+        public async Task<CandidateApplicationFormModel> GetCandidateApplicationFormModelByIdAsync(string id)
+        {
+            var application = await repository.AllReadOnly<CandidateApplication>()
+                .Where(c => c.Id == Guid.Parse(id))
+                .Select(c => new CandidateApplicationFormModel()
+                {
+                    Motivation = c.Motivation,
+                    PhoneNumber = c.PhoneNumber,
+                })
+                .FirstAsync();
+
+            return application;
+        }
+
+        public bool HasApplicationForCurrentUserAndProgram(string userId, string programId)
+        {
+            return repository.AllReadOnly<CandidateApplication>()
+                .Any(a => a.BetaProgramId == Guid.Parse(programId) && a.CandidateId == Guid.Parse(userId));
+        }
+
+        public async Task DeleteAsync(string id)
+        {
+            await repository.DeleteAsync<CandidateApplication>(Guid.Parse(id));
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<CandidateApplicationViewModel> CandidateApplicationDetailsByIdAsync(string id)
+        {
+            return await repository.AllReadOnly<CandidateApplication>()
+                .Where(c => c.Id == Guid.Parse(id))
+                .Select(c => new CandidateApplicationViewModel()
+                {
+                    Id = c.Id,
+                    Motivation = c.Motivation,
+                    PhoneNumber = c.PhoneNumber,
+                    BetaProgramId = c.BetaProgramId.ToString(),
+                    Approval = c.Approval
+                })
+                .FirstAsync();
+        }
+
+        public CandidateApplication GetById(string id)
+        {
+            return repository.AllReadOnly<CandidateApplication>()
+                .First(a => a.Id == Guid.Parse(id));
         }
     }
 }

@@ -1,0 +1,31 @@
+﻿@model CandidateApplicationViewModel
+@inject IBetaProgramService betaProgramService
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h3><b>@(betaProgramService.BetaProgramByIdAsync(Model.BetaProgramId).Result.Name) Application</b></h3>
+            <h4>Motivation: @Model.Motivation</h4>
+            <br />
+            <h5>Your phone number: @Model.PhoneNumber</h5>
+            @if((int)Model.Approval == 1)
+            {
+                <h6 class="alert-success">State: Approved</h6>
+            }
+            else if((int)Model.Approval == 2)
+            {
+                <h6 class="alert-danger">State: Rejected</h6>
+                <a asp-controller="CandidateApplication" asp-action="Delete" asp-route-id="@Model.Id.ToString()"
+                   class="btn btn-danger">Delete and send new</a>
+            }
+            else
+            {
+                <h6 class="alert-info">State: Not reviewed yet</h6>
+                <a asp-controller="CandidateApplication" asp-action="Edit" asp-route-id="@Model.Id.ToString()"
+                   class="btn btn-warning">Edit</a>
+                <a asp-controller="CandidateApplication" asp-action="Delete" asp-route-id="@Model.Id.ToString()"
+                   class="btn btn-danger">Delete</a>
+            }
+        </div>
+    </div>
+</div>
