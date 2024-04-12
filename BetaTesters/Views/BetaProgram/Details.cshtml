@@ -1,5 +1,6 @@
 ﻿@model BetaProgramDetailsServiceModel
 @inject IBetaProgramService betaProgramService
+@inject ICandidateApplicationService candidateApplicationService
 
 @{
     ViewBag.Title = "Beta Program Details";
@@ -19,7 +20,14 @@
             <p>@Model.Description</p>
             <p>Total users in this program: <b>@Model.TotalParticipants</b></p>
             <p>Total tasks completed: <b>@Model.TotalTasksCompleted</b></p>
-            <a asp-controller="CandidateApplication" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-success">Candidate</a>
+            @if(await candidateApplicationService.HasApplicationForCurrentUserAndProgramAsync(User.Id(), Model.Id.ToString()) == false)
+            {
+                <a asp-controller="CandidateApplication" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-success">Candidate</a>
+            }
+            else
+            {
+                <p><b>You have already submitted your application for our program!</b></p>
+            }
             <div class="form-inline">
             </div>
             <p></p>

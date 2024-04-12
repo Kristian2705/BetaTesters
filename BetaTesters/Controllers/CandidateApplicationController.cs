@@ -3,6 +3,7 @@ using BetaTesters.Core.Models.CandidateApplication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using BetaTesters.Attributes;
 using static BetaTesters.Infrastructure.Constants.RoleConstants;
 
 namespace BetaTesters.Controllers
@@ -18,6 +19,7 @@ namespace BetaTesters.Controllers
         }
 
         [HttpGet]
+        [NotSubmittedApplication]
         public IActionResult Add(string id)
         {
             var model = new CandidateApplicationFormModel
@@ -29,6 +31,7 @@ namespace BetaTesters.Controllers
         }
 
         [HttpPost]
+        [NotSubmittedApplication]
         public async Task<IActionResult> Add(CandidateApplicationFormModel model)
         {
             if(!ModelState.IsValid)

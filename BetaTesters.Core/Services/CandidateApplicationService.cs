@@ -6,6 +6,7 @@ namespace BetaTesters.Core.Services
 {
     using BetaTesters.Core.Models.CandidateApplication;
     using BetaTesters.Infrastructure.Data.Common;
+    using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
     public class CandidateApplicationService : ICandidateApplicationService
     {
@@ -28,6 +29,12 @@ namespace BetaTesters.Core.Services
             
             await repository.AddAsync(application);
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<bool> HasApplicationForCurrentUserAndProgramAsync(string userId, string programId)
+        {
+            return await repository.AllReadOnly<CandidateApplication>()
+                .AnyAsync(a => a.BetaProgramId == Guid.Parse(programId) && a.CandidateId == Guid.Parse(userId));
         }
     }
 }
