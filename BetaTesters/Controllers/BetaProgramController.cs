@@ -115,7 +115,7 @@ namespace BetaTesters.Controllers
                 return View(null);
             }
 
-            var model = await betaProgramService.BetaProgramByOwnerId(userId);
+            var model = await betaProgramService.BetaProgramByUserId(userId);
 
             return View(model);
         }

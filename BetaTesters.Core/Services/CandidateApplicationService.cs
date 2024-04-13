@@ -11,9 +11,12 @@ namespace BetaTesters.Core.Services
     public class CandidateApplicationService : ICandidateApplicationService
     {
         private readonly IRepository repository;
-        public CandidateApplicationService(IRepository _repository)
+        private readonly IApplicationUserService applicationUserService;
+        public CandidateApplicationService(IRepository _repository,
+            IApplicationUserService _applicationUserService)
         {
             repository = _repository;
+            applicationUserService = _applicationUserService;
         }
 
         public async Task<IEnumerable<CandidateApplicationViewModel>> ApplicationsByUserIdAsync(string userId)
@@ -126,9 +129,13 @@ namespace BetaTesters.Core.Services
                 .ToListAsync();
         }
 
-        public async Task ApproveApplication(string applicationId, string userId)
+        public async Task ApproveApplicationAsync(string applicationId, string userId, string programId)
         {
-            await DeleteAsync(applicationId);
+            var user = await applicationUserService.GetApplicationUserByIdAsync(userId);
+
+            await applicationUserService.SetProgramIdAsync(user, programId);
+
+            await applicationUserService.ClearUserApplicationsAsync(user);
         }
 
         public async Task<CandidateApplicationInspectModel> CandidateApplicationInspectDetailsByIdAsync(string applicationId)
@@ -144,11 +151,6 @@ namespace BetaTesters.Core.Services
                     BetaProgramId = c.BetaProgramId
                 })
                 .FirstAsync();
-        }
-
-        public Task ApproveApplication(string applicationId, string userId, string programId)
-        {
-            throw new NotImplementedException();
         }
     }
 }

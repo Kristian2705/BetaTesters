@@ -17,8 +17,10 @@
                 <p>"Are you sure you want to <span class="text-success mt-3 fw-bold">approve</span> this application?"</p>
             </div>
             <div class="card-footer">
-                <form method="post">
+                <form asp-route-candidateId="@Model.Candidate.Id.ToString()" method="post">
                     <button type="submit" class="btn btn-success">Confirm Approval</button>
+                    <label asp-for="BetaProgramId" hidden="true"></label>
+                    <input asp-for="BetaProgramId" hidden="true" />
                     <a asp-action="AllCurrentProgram" asp-route-id="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>

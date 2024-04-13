@@ -161,6 +161,22 @@ namespace BetaTesters.Controllers
             return View(application);
         }
 
+        [HttpPost]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Approve(string candidateId, CandidateApplicationInspectModel model)
+        {
+            if(model == null)
+            {
+                return BadRequest();
+            }
+
+            var betaProgramId = model.BetaProgramId.ToString();
+
+            await candidateApplicationService.ApproveApplicationAsync(model.Id.ToString(), candidateId, betaProgramId);
+
+            return RedirectToAction(nameof(Mine), "BetaProgram");
+        }
+
         [HttpGet]
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Reject(string id)

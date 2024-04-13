@@ -76,6 +76,21 @@ namespace BetaTesters.Core.Services
                 .FirstAsync();
         }
 
+        public async Task<BetaProgramDataModel> BetaProgramByUserId(string userId)
+        {
+            var program = await repository.AllReadOnly<BetaProgram>()
+                .FirstAsync(b => b.Users.Any(u => u.Id == Guid.Parse(userId)));
+
+            return await repository.AllReadOnly<BetaProgram>()
+                .Where(p => p.Id == program.Id)
+                .Select(p => new BetaProgramDataModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                })
+                .FirstAsync();
+        }
+
         public async Task<BetaProgramDetailsServiceModel> BetaProgramDetailsByIdAsync(string id)
         {
 			var owners = await repository.All<IdentityUserRole<Guid>>()

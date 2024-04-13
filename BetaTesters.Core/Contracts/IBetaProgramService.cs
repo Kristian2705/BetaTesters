@@ -21,5 +21,7 @@ namespace BetaTesters.Core.Contracts
 		Task<Guid> GetOwnerIdAsync(string programId);
 
 		Task<BetaProgramDetailsServiceModel> BetaProgramByOwnerId(string ownerId);
+
+        Task<BetaProgramDataModel> BetaProgramByUserId(string userId);
     }
 }

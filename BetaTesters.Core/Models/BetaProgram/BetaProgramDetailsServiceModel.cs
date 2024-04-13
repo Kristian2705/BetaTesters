@@ -1,5 +1,4 @@
 ﻿using BetaTesters.Core.Models.BetaProgram.Owner;
-using System.Diagnostics;
 
 namespace BetaTesters.Core.Models.BetaProgram
 {
