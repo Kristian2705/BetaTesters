@@ -8,7 +8,5 @@ namespace BetaTesters.Core.Contracts
 		Task<ApplicationUser> GetApplicationUserByIdAsync(string id);
 
 		Task SetProgramIdAsync(ApplicationUser user, string programId);
-
-		Task ClearUserApplicationsAsync(ApplicationUser user);
 	}
 }

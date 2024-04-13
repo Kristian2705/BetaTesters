@@ -13,5 +13,7 @@
         Task<T?> GetByIdAsync<T>(Guid id) where T : class;
 
         Task DeleteAsync<T>(Guid id) where T : class;
+
+        void DeleteRange<T>(IEnumerable<T> items) where T : class;
     }
 }

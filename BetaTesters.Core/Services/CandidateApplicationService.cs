@@ -5,6 +5,7 @@ using BetaTesters.Infrastructure.Data.Models;
 namespace BetaTesters.Core.Services
 {
     using BetaTesters.Core.Models.CandidateApplication;
+    using BetaTesters.Data;
     using BetaTesters.Infrastructure.Data.Common;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace BetaTesters.Core.Services
             };
             
             await repository.AddAsync(application);
+
             await repository.SaveChangesAsync();
         }
 
@@ -135,7 +137,11 @@ namespace BetaTesters.Core.Services
 
             await applicationUserService.SetProgramIdAsync(user, programId);
 
-            await applicationUserService.ClearUserApplicationsAsync(user);
+            var applications = await GetAllApplicationsByUserId(userId);
+
+            repository.DeleteRange(applications);
+
+            await repository.SaveChangesAsync();
         }
 
         public async Task<CandidateApplicationInspectModel> CandidateApplicationInspectDetailsByIdAsync(string applicationId)
@@ -151,6 +157,13 @@ namespace BetaTesters.Core.Services
                     BetaProgramId = c.BetaProgramId
                 })
                 .FirstAsync();
+        }
+
+        public async Task<IEnumerable<CandidateApplication>> GetAllApplicationsByUserId(string userId)
+        {
+            return await repository.AllReadOnly<CandidateApplication>()
+                .Where(c => c.CandidateId == Guid.Parse(userId))
+                .ToListAsync();
         }
     }
 }

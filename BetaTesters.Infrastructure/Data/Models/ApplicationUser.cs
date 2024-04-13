@@ -39,8 +39,6 @@ namespace BetaTesters.Infrastructure.Data.Models
         public IEnumerable<Payment> ReceivedPayments { get; set; } = new HashSet<Payment>();
 
         public IEnumerable<CandidateApplication> Applications { get; set; } = new HashSet<CandidateApplication>();
-        //This field might become useless
-        public IEnumerable<CandidateApplication> ReviewedApplications { get; set; } = new HashSet<CandidateApplication>();
 
         [InverseProperty(nameof(Task.Contractor))]
         public IEnumerable<Task> Tasks { get; set; } = new HashSet<Task>();

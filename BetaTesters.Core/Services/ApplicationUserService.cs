@@ -14,13 +14,6 @@ namespace BetaTesters.Core.Services
 			repository = _repository;
 		}
 
-        public async Task ClearUserApplicationsAsync(ApplicationUser user)
-        {
-			user.Applications = new HashSet<CandidateApplication>();
-
-		    await repository.SaveChangesAsync();
-        }
-
         public async Task<ApplicationUser> GetApplicationUserByIdAsync(string id)
 		{
 			return await repository

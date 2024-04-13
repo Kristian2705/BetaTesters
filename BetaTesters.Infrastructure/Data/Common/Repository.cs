@@ -37,5 +37,10 @@ namespace BetaTesters.Infrastructure.Data.Common
                 DbSet<T>().Remove(entity);
             }
         }
+
+        public void DeleteRange<T>(IEnumerable<T> items) where T : class
+        {
+            DbSet<T>().RemoveRange(items);
+        }
     }
 }

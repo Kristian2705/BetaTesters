@@ -31,11 +31,6 @@ namespace BetaTesters.Infrastructure.Data.Models
         [ForeignKey(nameof(BetaProgramId))]
         public BetaProgram BetaProgram { get; set; } = null!;
 
-        public Guid? ReviewerId { get; set; }
-
-        [ForeignKey(nameof(ReviewerId))]
-        public ApplicationUser? Reviewer { get; set; }
-
         public Approval Approval { get; set; }
     }
 }
