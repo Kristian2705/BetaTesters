@@ -33,6 +33,7 @@ namespace BetaTesters.Controllers
             }
 		}
 
+        [HttpGet]
 		public async Task<IActionResult> Details(string id)
 		{
             if (await betaProgramService.ExistsAsync(id) == false)

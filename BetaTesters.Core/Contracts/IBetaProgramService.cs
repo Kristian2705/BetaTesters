@@ -12,5 +12,7 @@ namespace BetaTesters.Core.Contracts
 		Task<bool> ExistsAsync(string id);
 
 		Task<BetaProgram> BetaProgramByIdAsync(string id);
+
+        System.Threading.Tasks.Task CreateAsync(BetaProgramFormModel model);
     }
 }

@@ -30,6 +30,8 @@ namespace BetaTesters.Controllers
             return View(model);
         }
 
+
+        //When an application is sent to another program and they accept you in the first one, the others should be automatically deleted
         [HttpPost]
         [NotSubmittedApplication]
         public async Task<IActionResult> Add(CandidateApplicationFormModel model)
@@ -75,6 +77,11 @@ namespace BetaTesters.Controllers
                 return BadRequest();
             }
 
+            if (candidateApplicationService.GetById(id).CandidateId != Guid.Parse(User.Id()))
+            {
+                return Unauthorized();
+            }
+
             var model = await candidateApplicationService.GetCandidateApplicationFormModelByIdAsync(id);
 
             return View(model);
@@ -84,12 +91,17 @@ namespace BetaTesters.Controllers
         [IsNotReviewed]
 		public async Task<IActionResult> Edit(string id, CandidateApplicationFormModel application)
         {
-			if (await candidateApplicationService.ExistsAsync(id) == false)
+            if (await candidateApplicationService.ExistsAsync(id) == false)
 			{
 				return BadRequest();
 			}
 
-			if (!ModelState.IsValid)
+            if (candidateApplicationService.GetById(id).CandidateId != Guid.Parse(User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            if (!ModelState.IsValid)
 			{
 				return View(application);
 			}
@@ -102,6 +114,11 @@ namespace BetaTesters.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
+            if (candidateApplicationService.GetById(id).CandidateId != Guid.Parse(User.Id()))
+            {
+                return Unauthorized();
+            }
+
             var application = await candidateApplicationService.CandidateApplicationDetailsByIdAsync(id);
 
             return View(application);
@@ -110,7 +127,12 @@ namespace BetaTesters.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(CandidateApplicationViewModel model)
         {
-            if(model == null)
+            if (candidateApplicationService.GetById(model.Id.ToString()).CandidateId != Guid.Parse(User.Id()))
+            {
+                return Unauthorized();
+            }
+
+            if (model == null)
             {
                 return BadRequest();
             }

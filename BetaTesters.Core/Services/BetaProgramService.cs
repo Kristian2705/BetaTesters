@@ -83,6 +83,11 @@ namespace BetaTesters.Core.Services
                 .FirstAsync();
         }
 
+        public System.Threading.Tasks.Task CreateAsync(BetaProgramFormModel model)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> ExistsAsync(string id)
         {
             return await repository.AllReadOnly<BetaProgram>()
