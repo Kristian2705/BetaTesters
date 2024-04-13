@@ -1,0 +1,17 @@
+﻿@model CandidateApplicationInspectModel
+@inject IBetaProgramService betaProgramService
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h3><b>From @($"{Model.Candidate.FirstName} {Model.Candidate.LastName}")</b></h3>
+            <h4>Motivation: @Model.Motivation</h4>
+            <br />
+            <h5>Phone number: @Model.PhoneNumber</h5>
+            <a asp-controller="CandidateApplication" asp-action="Approve" asp-route-id="@Model.Id.ToString()"
+                class="btn btn-success">Approve</a>
+            <a asp-controller="CandidateApplication" asp-action="Reject" asp-route-id="@Model.Id.ToString()"
+                class="btn btn-danger">Reject</a>
+        </div>
+    </div>
+</div>

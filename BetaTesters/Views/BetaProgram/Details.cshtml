@@ -1,6 +1,7 @@
 ﻿@model BetaProgramDetailsServiceModel
 @inject IBetaProgramService betaProgramService
 @inject ICandidateApplicationService candidateApplicationService
+@inject IApplicationUserService applicatioUserService
 
 @{
     ViewBag.Title = "Beta Program Details";
@@ -31,6 +32,14 @@
             else if (User.IsInRole(RoleConstants.OwnerRole))
             {
                 <p><b>You are an owner so you can't candidate!</b></p>
+            }
+            else if (User.IsInRole(RoleConstants.ModeratorRole))
+            {
+                <p><b>You are a moderator and you have a program so you can't candidate!</b></p>
+            }
+            else if((await applicatioUserService.GetApplicationUserByIdAsync(User.Id())).BetaProgramId != null)
+            {
+                <p><b>You have a program so you can't candidate!</b></p>
             }
             else
             {

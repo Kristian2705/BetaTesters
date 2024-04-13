@@ -8,7 +8,6 @@ using static BetaTesters.Infrastructure.Constants.RoleConstants;
 
 namespace BetaTesters.Controllers
 {
-    [Authorize(Roles = DefaultUserRole)]
     public class CandidateApplicationController : BaseController
     {
         public readonly ICandidateApplicationService candidateApplicationService;
@@ -20,6 +19,7 @@ namespace BetaTesters.Controllers
 
         [HttpGet]
         [NotSubmittedApplication]
+        [Authorize(Roles = DefaultUserRole)]
         public IActionResult Add(string id)
         {
             var model = new CandidateApplicationFormModel
@@ -34,6 +34,7 @@ namespace BetaTesters.Controllers
         //When an application is sent to another program and they accept you in the first one, the others should be automatically deleted
         [HttpPost]
         [NotSubmittedApplication]
+        [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Add(CandidateApplicationFormModel model)
         {
             if(!ModelState.IsValid)
@@ -141,5 +142,32 @@ namespace BetaTesters.Controllers
 
             return RedirectToAction(nameof(Mine));
         }
-	}
+
+        [HttpGet]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> AllCurrentProgram(string id)
+        {
+            var models = await candidateApplicationService.ApplicationsByProgramIdAsync(id);
+
+            return View(models);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Approve(string id)
+        {
+            var application = await candidateApplicationService.CandidateApplicationInspectDetailsByIdAsync(id);
+
+            return View(application);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Reject(string id)
+        {
+            var application = await candidateApplicationService.CandidateApplicationInspectDetailsByIdAsync(id);
+
+            return View(application);
+        }
+    }
 }

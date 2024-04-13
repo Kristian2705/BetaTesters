@@ -1,0 +1,27 @@
+﻿@model CandidateApplicationInspectModel
+@inject IBetaProgramService betaProgramService
+@{
+    ViewBag.Title = "Approve application";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">From @($"{Model.Candidate.FirstName} {Model.Candidate.LastName}")</h3>
+                <p class="mb-0"><strong>Motivation:</strong> @Model.Motivation</p>
+                <p class="mb-0"><strong>Phone number:</strong> @Model.PhoneNumber</p>
+                <p>"Are you sure you want to <span class="text-success mt-3 fw-bold">approve</span> this application?"</p>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    <button type="submit" class="btn btn-success">Confirm Approval</button>
+                    <a asp-action="AllCurrentProgram" asp-route-id="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -111,5 +111,44 @@ namespace BetaTesters.Core.Services
             return repository.AllReadOnly<CandidateApplication>()
                 .First(a => a.Id == Guid.Parse(id));
         }
+
+        public async Task<IEnumerable<CandidateApplicationInspectModel>> ApplicationsByProgramIdAsync(string programId)
+        {
+            return await repository.AllReadOnly<CandidateApplication>()
+                .Where(c => c.BetaProgramId == Guid.Parse(programId))
+                .Select(c => new CandidateApplicationInspectModel()
+                {
+                    Id = c.Id,
+                    Motivation = c.Motivation,
+                    PhoneNumber = c.PhoneNumber,
+                    Candidate =  c.Candidate
+                })
+                .ToListAsync();
+        }
+
+        public async Task ApproveApplication(string applicationId, string userId)
+        {
+            await DeleteAsync(applicationId);
+        }
+
+        public async Task<CandidateApplicationInspectModel> CandidateApplicationInspectDetailsByIdAsync(string applicationId)
+        {
+            return await repository.AllReadOnly<CandidateApplication>()
+                .Where(c => c.Id == Guid.Parse(applicationId))
+                .Select(c => new CandidateApplicationInspectModel()
+                {
+                    Id = c.Id,
+                    Motivation = c.Motivation,
+                    PhoneNumber = c.PhoneNumber,
+                    Candidate = c.Candidate,
+                    BetaProgramId = c.BetaProgramId
+                })
+                .FirstAsync();
+        }
+
+        public Task ApproveApplication(string applicationId, string userId, string programId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

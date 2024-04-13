@@ -8,6 +8,7 @@
             <h4>Motivation: @Model.Motivation</h4>
             <br />
             <h5>Your phone number: @Model.PhoneNumber</h5>
+@*             This might be deleted later because on approval or rejection the program should be deleted. *@
             @if((int)Model.Approval == 1)
             {
                 <h6 class="alert-success">State: Approved</h6>
