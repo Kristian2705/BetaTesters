@@ -101,6 +101,10 @@ namespace BetaTesters.Areas.Identity.Pages.Account
             [Display(Name = "Age")]
             [MustBeAdult(ErrorMessage = AgeMessage)]
             public int Age { get; set; }
+
+            [Required]
+            [Display(Name = "Account Type")]
+            public string AccountType { get; set; }
         }
 
 
@@ -127,7 +131,14 @@ namespace BetaTesters.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddClaimAsync(user, new System.Security.Claims.Claim(UserFullNameClaim, $"{user.FirstName} {user.LastName}"));
-                    await _userManager.AddToRoleAsync(user, DefaultUserRole);
+                    if(Input.AccountType == "owner")
+                    {
+                        await _userManager.AddToRoleAsync(user, OwnerRole);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, DefaultUserRole);
+                    }
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }

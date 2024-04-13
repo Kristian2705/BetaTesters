@@ -28,6 +28,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="CandidateApplication" asp-action="Mine">My Applications</a>
                             </li>
                         }
+                        @if (User.IsInRole(RoleConstants.OwnerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Add">Create Program</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

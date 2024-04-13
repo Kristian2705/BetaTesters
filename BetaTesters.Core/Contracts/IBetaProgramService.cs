@@ -3,7 +3,9 @@ using BetaTesters.Infrastructure.Data.Models;
 
 namespace BetaTesters.Core.Contracts
 {
-	public interface IBetaProgramService
+	using System.Threading.Tasks;
+
+    public interface IBetaProgramService
 	{
 		Task<BetaProgramQueryServiceModel> AllAsync(int currentPage = 1, int programsPerPage = 1);
 
@@ -13,6 +15,6 @@ namespace BetaTesters.Core.Contracts
 
 		Task<BetaProgram> BetaProgramByIdAsync(string id);
 
-        System.Threading.Tasks.Task CreateAsync(BetaProgramFormModel model);
+        Task<Guid> CreateAsync(BetaProgramFormModel model);
     }
 }

@@ -11,6 +11,7 @@ using BetaTesters.Infrastructure.Data.Enums;
 
 namespace BetaTesters.Core.Services
 {
+	using System.Threading.Tasks;
     public class BetaProgramService : IBetaProgramService
 	{
 		private readonly IRepository repository;
@@ -83,9 +84,19 @@ namespace BetaTesters.Core.Services
                 .FirstAsync();
         }
 
-        public System.Threading.Tasks.Task CreateAsync(BetaProgramFormModel model)
+        public async Task<Guid> CreateAsync(BetaProgramFormModel model)
         {
-            throw new NotImplementedException();
+			var betaProgram = new BetaProgram()
+			{
+				Name = model.Name,
+				Description = model.Description,
+				ImageUrl = model.ImageUrl
+			};
+
+            await repository.AddAsync(betaProgram);
+            await repository.SaveChangesAsync();
+
+			return betaProgram.Id;
         }
 
         public async Task<bool> ExistsAsync(string id)
