@@ -24,6 +24,14 @@
             {
                 <p><b>You have already submitted your application for our program!</b></p>
             }
+            else if(await betaProgramService.GetOwnerIdAsync(Model.Id.ToString()) == Guid.Parse(User.Id()))
+            {
+                <p><b>You are the owner of this program!</b></p>
+            }
+            else if (User.IsInRole(RoleConstants.OwnerRole))
+            {
+                <p><b>You are an owner so you can't candidate!</b></p>
+            }
             else
             {
                 <a asp-controller="CandidateApplication" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-success">Candidate</a>

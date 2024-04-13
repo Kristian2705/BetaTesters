@@ -3,7 +3,8 @@ using BetaTesters.Infrastructure.Data.Models;
 
 namespace BetaTesters.Core.Contracts
 {
-	using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+    using System.Threading.Tasks;
 
     public interface IBetaProgramService
 	{
@@ -16,5 +17,9 @@ namespace BetaTesters.Core.Contracts
 		Task<BetaProgram> BetaProgramByIdAsync(string id);
 
         Task<Guid> CreateAsync(BetaProgramFormModel model);
+
+		Task<Guid> GetOwnerIdAsync(string programId);
+
+		Task<BetaProgramDetailsServiceModel> BetaProgramByOwnerId(string ownerId);
     }
 }

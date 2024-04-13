@@ -1,0 +1,19 @@
+﻿@model BetaProgramDetailsServiceModel
+
+@{
+    ViewBag.Title = "My Program";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if(Model != null)
+{
+    <div class="row">
+        <partial name="_BetaProgramPartial" model="Model" />
+    </div>
+}
+else
+{
+    <h3 class="text-center">@ViewBag.DisplayMessage</h3>
+}

@@ -60,8 +60,13 @@ namespace BetaTesters.Controllers
 
         [HttpGet]
         [Authorize(Roles = OwnerRole)]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            if((await applicationUserService.GetApplicationUserByIdAsync(User.Id())).BetaProgramId != null)
+            {
+                return BadRequest();
+            }
+
             var model = new BetaProgramFormModel();
 
             return View(model);
@@ -91,5 +96,28 @@ namespace BetaTesters.Controllers
 
 			return RedirectToAction(nameof(All));
 		}
+
+        [HttpGet]
+        public async Task<IActionResult> Mine()
+        {
+            var userId = User.Id();
+
+            if ((await applicationUserService.GetApplicationUserByIdAsync(User.Id())).BetaProgramId == null)
+            {
+                if (User.IsInRole(OwnerRole))
+                {
+                    ViewBag.DisplayMessage = "You have not created a program yet!";
+                }
+                else
+                {
+                    ViewBag.DisplayMessage = "You have not joined a program yet!";
+                }
+                return View(null);
+            }
+
+            var model = await betaProgramService.BetaProgramByOwnerId(userId);
+
+            return View(model);
+        }
     }
 }
