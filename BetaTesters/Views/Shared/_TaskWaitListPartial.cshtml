@@ -1,0 +1,20 @@
+﻿@model TaskWaitListViewModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>@Model.Name</h4>
+            <h5>Description: <b>@Model.Description</b></h5>
+            <h6>
+                Reward:
+                <b>@String.Format("{0:f2}", Model.Reward) BGN</b>
+            </h6>
+            <br />
+            <h5>Creator: @($"{Model.Creator.FirstName} {Model.Creator.LastName}")</h5>
+            <a asp-controller="Task" asp-action="Approve" asp-route-taskId="@Model.Id.ToString()"
+               class="btn btn-success">Approve</a>
+            <a asp-controller="Task" asp-action="Reject" asp-route-taskId="@Model.Id.ToString()"
+               class="btn btn-danger">Reject</a>
+        </div>
+    </div>
+</div>

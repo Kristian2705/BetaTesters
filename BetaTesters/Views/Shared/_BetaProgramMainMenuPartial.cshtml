@@ -29,7 +29,7 @@
     }
     @if (User.IsInRole(RoleConstants.OwnerRole))
     {
-        <a asp-area="" asp-controller="Task" asp-action="Review" class="btn btn-primary btn-lg">Task Waitlist</a>
+        <a asp-area="" asp-controller="Task" asp-action="VisitWaitlist" asp-route-programId="@Model.Id.ToString()" class="btn btn-primary btn-lg">Task Waitlist</a>
     }
     <span> | </span>
     <a asp-area="" asp-controller="BetaProgram" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">Details</a>

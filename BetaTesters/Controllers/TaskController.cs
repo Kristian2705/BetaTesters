@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using BetaTesters.Infrastructure.Data.Enums;
+using BetaTesters.Core.Services;
+using BetaTesters.Core.Models.CandidateApplication;
 
 namespace BetaTesters.Controllers
 {
@@ -108,11 +110,69 @@ namespace BetaTesters.Controllers
             return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
         }
 
-        //[HttpGet]
-        //[Authorize(Roles = OwnerRole)]
-        //public async Task<IActionResult> VisitWaitlist()
-        //{
+        [HttpGet]
+        [Authorize(Roles = OwnerRole)]
+        public async Task<IActionResult> VisitWaitlist(string programId)
+        {
+            var tasks = await taskService.TaskWaitListByProgramIdAsync(programId);
 
-        //}
+            return View(tasks);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = OwnerRole)]
+        public async Task<IActionResult> Approve(string taskId)
+        {
+            var task = await taskService.TaskWaitListViewModelInspectByIdAsync(taskId);
+
+            if (task.Approval != Approval.ToBeReviewed)
+            {
+                return BadRequest();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = OwnerRole)]
+        public async Task<IActionResult> Approve(string taskId, TaskWaitListViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            await taskService.ApproveTaskAsync(taskId);
+
+            return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = OwnerRole)]
+        public async Task<IActionResult> Reject(string taskId)
+        {
+            var task = await taskService.TaskWaitListViewModelInspectByIdAsync(taskId);
+
+            if (task.Approval != Approval.ToBeReviewed)
+            {
+                return BadRequest();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = OwnerRole)]
+        public async Task<IActionResult> Reject(string taskId, TaskWaitListViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            await taskService.RejectTaskAsync(taskId);
+
+            return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
     }
 }

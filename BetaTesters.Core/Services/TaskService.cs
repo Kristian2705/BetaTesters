@@ -7,8 +7,10 @@ using BetaTesters.Infrastructure.Data.Enums;
 namespace BetaTesters.Core.Services
 {
     using BetaTesters.Core.Extensions;
+    using BetaTesters.Core.Models.CandidateApplication;
     using Infrastructure.Data.Models;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
 
     public class TaskService : ITaskService
@@ -86,6 +88,19 @@ namespace BetaTesters.Core.Services
                 .ToListAsync();
         }
 
+        public async System.Threading.Tasks.Task ApproveTaskAsync(string taskId)
+        {
+            var task = await repository.GetByIdAsync<Task>(Guid.Parse(taskId));
+
+            task.AssignDate = DateTime.Now;
+
+            task.Approval = Approval.Accepted;
+
+            task.State = TaskState.Available;
+
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<bool> CategoryExistsAsync(int categoryId)
         {
             return await repository.AllReadOnly<Category>()
@@ -111,11 +126,50 @@ namespace BetaTesters.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task<int> GetAllTasksCountForCurrentProgram(string programId)
+        public async Task<int> GetAllTasksCountForCurrentProgramAsync(string programId)
         {
             return await repository.AllReadOnly<Task>()
                 .Where(t => t.ProgramId == Guid.Parse(programId))
                 .CountAsync();
+        }
+
+        public async System.Threading.Tasks.Task RejectTaskAsync(string taskId)
+        {
+            await repository.DeleteAsync<Task>(Guid.Parse(taskId));
+
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TaskWaitListViewModel>> TaskWaitListByProgramIdAsync(string programId)
+        {
+            return await repository.AllReadOnly<Task>()
+                .Where(t => t.ProgramId == Guid.Parse(programId) && t.State == TaskState.ToBeApproved)
+                .Select(t => new TaskWaitListViewModel()
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Description = t.Description,
+                    Reward = t.Reward,
+                    Creator = t.Creator
+                })
+                .ToListAsync();
+        }
+
+        public async Task<TaskWaitListViewModel> TaskWaitListViewModelInspectByIdAsync(string taskId)
+        {
+            return await repository.AllReadOnly<Task>()
+                .Where(t => t.Id == Guid.Parse(taskId))
+                .Select(t => new TaskWaitListViewModel()
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Description = t.Description,
+                    Creator = t.Creator,
+                    Approval = t.Approval,
+                    BetaProgramId = t.ProgramId,
+                    Reward = t.Reward
+                })
+                .FirstAsync();
         }
     }
 }

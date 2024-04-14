@@ -1,4 +1,5 @@
 ﻿using BetaTesters.Core.Enums;
+using BetaTesters.Core.Models.CandidateApplication;
 using BetaTesters.Core.Models.Task;
 
 namespace BetaTesters.Core.Contracts
@@ -17,10 +18,18 @@ namespace BetaTesters.Core.Contracts
 
         Task<IEnumerable<string>> AllCategoriesNameAsync();
 
-        Task<int> GetAllTasksCountForCurrentProgram(string programId);
+        Task<int> GetAllTasksCountForCurrentProgramAsync(string programId);
 
         Task CreateAsync(TaskFormModel model, string creatorId, DateTime? assignDate);
 
         Task<bool> CategoryExistsAsync(int categoryId);
+
+        Task<IEnumerable<TaskWaitListViewModel>> TaskWaitListByProgramIdAsync(string programId);
+
+        Task<TaskWaitListViewModel> TaskWaitListViewModelInspectByIdAsync(string taskId);
+
+        Task ApproveTaskAsync(string taskId);
+
+        Task RejectTaskAsync(string taskId);
     }
 }

@@ -8,7 +8,7 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-@if(await taskService.GetAllTasksCountForCurrentProgram(Model.BetaProgramId) == 0)
+@if(await taskService.GetAllTasksCountForCurrentProgramAsync(Model.BetaProgramId) == 0)
 {
     <h2 class="text-center">@ViewBag.TaskCountMessage</h2>
 }

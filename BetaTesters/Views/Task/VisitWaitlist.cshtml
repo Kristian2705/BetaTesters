@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TaskWaitListViewModel>
+
+@{
+    ViewBag.Title = "Task waitlist";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var task in Model)
+        {
+            <partial name="_TaskWaitListPartial" model="@task" />
+        }
+    </div>
+}
+else
+{
+    <h3 class="text-center">Your program currently has no tasks waiting to be reviewed!</h3>
+}
