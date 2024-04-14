@@ -231,6 +231,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 State = TaskState.Available,
                 CategoryId = BugFixCategory.Id,
                 Approval = Approval.Accepted,
+                AssignDate = DateTime.Now,
                 ProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 CreatorId = Guid.Parse("38885cfb-4b65-4503-9958-6389ac64eb1a"),
                 Reward = 20,
@@ -244,6 +245,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 State = TaskState.Available,
                 CategoryId = NewFeatureCategory.Id,
                 Approval = Approval.Accepted,
+                AssignDate = DateTime.Now,
                 ProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 CreatorId = Guid.Parse("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
                 Reward = 30
@@ -257,6 +259,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 State = TaskState.Available,
                 CategoryId = CheckStateCategory.Id,
                 Approval = Approval.Accepted,
+                AssignDate = DateTime.Now,
                 ProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 CreatorId = Guid.Parse("38885cfb-4b65-4503-9958-6389ac64eb1a"),
                 Reward = 15

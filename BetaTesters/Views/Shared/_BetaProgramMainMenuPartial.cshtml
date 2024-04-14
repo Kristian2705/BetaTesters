@@ -18,7 +18,7 @@
         <p class="lead mb-1 mt-3"> Welcome to the @Model.Name Program - you can <b>see all tasks</b>, <b>your tasks</b> and <b>see program details</b><br />You can also <b>leave</b> the program.</p>
     }
     <hr class="my-4">
-    <a asp-area="" asp-controller="Task" asp-action="All" class="btn btn-primary btn-lg">See All Tasks</a>
+    <a asp-area="" asp-controller="Task" asp-action="All" asp-route-id="@Model.Id.ToString()" class="btn btn-primary btn-lg">See All Tasks</a>
     @if (User.IsInRole(RoleConstants.DefaultUserRole))
     {
         <a asp-area="" asp-controller="Task" asp-action="Mine" class="btn btn-primary btn-lg">My Tasks</a>

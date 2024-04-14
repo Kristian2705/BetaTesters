@@ -1,0 +1,102 @@
+﻿@model AllTasksQueryModel
+@inject ITaskService taskService
+
+@{
+    ViewBag.Title = "All Tasks";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if(await taskService.GetAllTasksCountForCurrentProgram(Model.BetaProgramId) == 0)
+{
+    <h2 class="text-center">@ViewBag.TaskCountMessage</h2>
+}
+else
+{
+        <form method="get">
+        <div class="row">
+            <div class="form-group col-md-3 d-flex justify-content-between">
+                <div class="form-group">
+                    <label asp-for="Category"></label>
+                    <select asp-for="Category" class="form-control">
+                        <option value="">All</option>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <option value="@category">@category</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <div class="form-group">
+                    <label asp-for="TaskSorting"></label>
+                    <select asp-for="TaskSorting" class="form-control">
+                        <option value="0">Available</option>
+                        <option value="1">In Progress</option>
+                        <option value="2">Completed</option>
+                        <option value="3">Date Ascending</option>
+                        <option value="4">Date Descending</option>
+                        <option value="5">Reward Ascending</option>
+                        <option value="6">Reward Desscending</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group mt-4 p-2">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalTasksCount /
+        AllTasksQueryModel.TasksPerPage);
+
+    <div class="row mb-5">
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+               asp-controller="House"
+               asp-action="All"
+               asp-route-currentPage="@previousPage"
+               asp-route-category="@Model.Category"
+               asp-route-sorting="@((int)Model.TaskSorting)">@("<<")</a>
+        </div>
+
+        @{
+            var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+            !Model.Tasks.Any();
+        }
+
+        <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary
+               @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+               asp-controller="House"
+               asp-action="All"
+               asp-route-currentPage="@(Model.CurrentPage + 1)"
+               asp-route-category="@Model.Category"
+               asp-route-sorting="@((int)Model.TaskSorting)">>></a>
+        </div>
+    </div>
+
+    @if (!Model.Tasks.Any())
+    {
+        <h2 class="text-center">No tasks found by the given criteria!</h2>
+    }
+
+    <div class="row">
+        @foreach (var task in Model.Tasks)
+        {
+            <partial name="_TaskPartial" model="@task" />
+        }
+    </div>   
+}

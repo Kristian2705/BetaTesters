@@ -1,0 +1,18 @@
+﻿@model TaskServiceModel
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>@Model.Name</h4>
+            <h5>Description: <b>@Model.Description</b></h5>
+            <h6>
+                Rewared:
+                <b>@String.Format("{0:f2}", Model.Reward) BGN</b>
+            </h6>
+            <p>Assigned on: @Model.AssignDate</p>
+            <p>Finished on: @(Model.FinishDate ?? "Not Finished")</p>
+            <p>State: @Model.State</p
+            <br />
+        </div>
+    </div>
+</div>

@@ -26,5 +26,7 @@
 
         public const int TaskDescriptionMaxLength = 100;
         public const int TaskDescriptionMinLength = 10;
+
+        public const string DateFormat = "dd/MM/yyyy HH:mm";
     } 
 }
