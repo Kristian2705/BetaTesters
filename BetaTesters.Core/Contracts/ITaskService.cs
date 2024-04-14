@@ -18,5 +18,9 @@ namespace BetaTesters.Core.Contracts
         Task<IEnumerable<string>> AllCategoriesNameAsync();
 
         Task<int> GetAllTasksCountForCurrentProgram(string programId);
+
+        Task CreateAsync(TaskFormModel model, string creatorId, DateTime? assignDate);
+
+        Task<bool> CategoryExistsAsync(int categoryId);
     }
 }

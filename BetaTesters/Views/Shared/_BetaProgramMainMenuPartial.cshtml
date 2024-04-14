@@ -7,15 +7,15 @@
     <h2 class="display-4">Hello, @User.FindFirstValue(CustomClaims.UserFullNameClaim)!</h2>
     @if (User.IsInRole(RoleConstants.OwnerRole))
     {
-        <p class="lead mb-1 mt-3"> Welcome to the @Model.Name Program - you can <b>see all tasks</b>, <b>add a task</b>, <b>see program details</b>, <b>see applications</b>, <b>see users info</b> and <b>make payments</b></p>
+        <p class="lead mb-1 mt-3"> Welcome to the @Model.Name - you can <b>see all tasks</b>, <b>add a task</b>, <b>see task waitlist</b>, <b>see program details</b>, <b>see applications</b>, <b>see users info</b> and <b>make payments</b></p>
     }
     else if (User.IsInRole(RoleConstants.ModeratorRole))
     {
-        <p class="lead mb-1 mt-3"> Welcome to the @Model.Name Program - you can <b>see all tasks</b>, <b>add a task</b>, <b>see program details</b>, <b>see applications</b> and <b>see users info</b>><br />You can also <b>leave</b> the program</p>
+        <p class="lead mb-1 mt-3"> Welcome to the @Model.Name - you can <b>see all tasks</b>, <b>add a task</b>, <b>see program details</b>, <b>see applications</b> and <b>see users info</b>><br />You can also <b>leave</b> the program</p>
     }
     else
     {
-        <p class="lead mb-1 mt-3"> Welcome to the @Model.Name Program - you can <b>see all tasks</b>, <b>your tasks</b> and <b>see program details</b><br />You can also <b>leave</b> the program.</p>
+        <p class="lead mb-1 mt-3"> Welcome to the @Model.Name - you can <b>see all tasks</b>, <b>your tasks</b> and <b>see program details</b><br />You can also <b>leave</b> the program.</p>
     }
     <hr class="my-4">
     <a asp-area="" asp-controller="Task" asp-action="All" asp-route-id="@Model.Id.ToString()" class="btn btn-primary btn-lg">See All Tasks</a>
@@ -25,7 +25,11 @@
     }
     else
     {
-        <a asp-area="" asp-controller="Task" asp-action="Add" class="btn btn-primary btn-lg">Add Task</a>
+        <a asp-area="" asp-controller="Task" asp-action="Add" asp-route-programId="@Model.Id.ToString()" class="btn btn-primary btn-lg">Add Task</a>
+    }
+    @if (User.IsInRole(RoleConstants.OwnerRole))
+    {
+        <a asp-area="" asp-controller="Task" asp-action="Review" class="btn btn-primary btn-lg">Task Waitlist</a>
     }
     <span> | </span>
     <a asp-area="" asp-controller="BetaProgram" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">Details</a>

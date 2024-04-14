@@ -1,4 +1,5 @@
 ﻿@model TaskServiceModel
+@inject IApplicationUserService applicationUserService
 
 <div class="col-md-4">
     <div class="card mb-3">
@@ -6,12 +7,27 @@
             <h4>@Model.Name</h4>
             <h5>Description: <b>@Model.Description</b></h5>
             <h6>
-                Rewared:
+                Reward:
                 <b>@String.Format("{0:f2}", Model.Reward) BGN</b>
             </h6>
-            <p>Assigned on: @Model.AssignDate</p>
-            <p>Finished on: @(Model.FinishDate ?? "Not Finished")</p>
-            <p>State: @Model.State</p
+            <p>Assigned on: <b>@Model.AssignDate</b></p>
+            <p>Finished on: <b>@(Model.FinishDate ?? "Not Finished")</b></p>
+            @if(Model.State == TaskState.Available)
+            {
+                <p>State: <span class="alert-info fw-bold">@Model.State</span></p>
+            }
+            else if(Model.State == TaskState.InProgress)
+            {
+                var contractor = await applicationUserService.GetApplicationUserByIdAsync(Model.ContractorId!);
+                <p>State: <span class="alert-warning fw-bold">@Model.State</span></p>
+                <p>Contractor: @($"{contractor.FirstName} {contractor.LastName}") </p>
+            }
+            else if(Model.State == TaskState.Completed)
+            {
+                var contractor = await applicationUserService.GetApplicationUserByIdAsync(Model.ContractorId!);
+                <p>State: <span class="alert-success fw-bold">@Model.State</span></p>
+                <p>Contractor: @($"{contractor.FirstName} {contractor.LastName}") </p>
+            }
             <br />
         </div>
     </div>

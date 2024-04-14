@@ -14,10 +14,13 @@ namespace BetaTesters.Core.Services
     public class TaskService : ITaskService
     {
         private readonly IRepository repository;
+        private readonly IApplicationUserService applicationUserService;
 
-        public TaskService(IRepository _repository)
+        public TaskService(IRepository _repository,
+            IApplicationUserService _applicationUserService)
         {
             repository = _repository;
+            applicationUserService = _applicationUserService;
         }
 
         public async Task<TaskQueryServiceModel> AllByProgramIdAsync(string programId, string? category, TaskSorting taskSorting = TaskSorting.Available, int currentPage = 1, int tasksPerPage = 1)
@@ -81,6 +84,31 @@ namespace BetaTesters.Core.Services
                 .Select(c => c.CategoryName)
                 .Distinct()
                 .ToListAsync();
+        }
+
+        public async Task<bool> CategoryExistsAsync(int categoryId)
+        {
+            return await repository.AllReadOnly<Category>()
+                .AnyAsync(c => c.Id == categoryId);
+        }
+
+        public async System.Threading.Tasks.Task CreateAsync(TaskFormModel model, string creatorId, DateTime? assignDate)
+        {
+            var task = new Task()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Approval = model.Approval,
+                CategoryId = model.CategoryId,
+                Reward = model.Reward,
+                AssignDate = assignDate,
+                State = model.TaskState,
+                CreatorId = Guid.Parse(creatorId),
+                ProgramId = Guid.Parse(model.ProgramId)
+            };
+
+            await repository.AddAsync(task);
+            await repository.SaveChangesAsync();
         }
 
         public async Task<int> GetAllTasksCountForCurrentProgram(string programId)
