@@ -3,7 +3,7 @@ using BetaTesters.Infrastructure.Data.Models;
 
 namespace BetaTesters.Core.Models.Task
 {
-    public class TaskWaitListViewModel
+    public class TaskInspectViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -13,6 +13,10 @@ namespace BetaTesters.Core.Models.Task
         public decimal Reward {  get; set; }
 
         public Approval Approval { get; set; }
+
+        public TaskState State { get; set; }
+
+        public string? ContractorId { get; set; }
 
         public Guid? BetaProgramId { get; set; }
 

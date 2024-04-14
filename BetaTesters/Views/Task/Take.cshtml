@@ -1,6 +1,6 @@
 ﻿@model TaskInspectViewModel
 @{
-    ViewBag.Title = "Approve task";
+    ViewBag.Title = "Take task";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -10,19 +10,19 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title text-center">Submitted by: @($"{Model.Creator.FirstName} {Model.Creator.LastName}")</h3>
+                <h3 class="card-title text-center">Created by: @($"{Model.Creator.FirstName} {Model.Creator.LastName}")</h3>
                 <p class="mb-0"><strong>Name: </strong>@Model.Name</p>
                 <p class="mb-0"><strong>Description: </strong>@Model.Description</p>
                 <p>
                     Reward:
                     <b>@String.Format("{0:f2}", Model.Reward) BGN</b>
                 </p>
-                <p>"Are you sure you want to <span class="text-success mt-3 fw-bold">approve</span> this task?"</p>
+                <p>"Are you sure you want to <span class="text-info mt-3 fw-bold">take</span> this task?"</p>
             </div>
             <div class="card-footer">
                 <form asp-route-taskId="@Model.Id.ToString()" method="post">
-                    <button type="submit" class="btn btn-success">Confirm Approval</button>
-                    <a asp-action="VisitWaitlist" asp-route-programId="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-info">Confirm</button>
+                    <a asp-action="All" asp-route-id="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

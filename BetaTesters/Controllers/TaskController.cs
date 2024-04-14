@@ -123,7 +123,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Approve(string taskId)
         {
-            var task = await taskService.TaskWaitListViewModelInspectByIdAsync(taskId);
+            var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
 
             if (task.Approval != Approval.ToBeReviewed)
             {
@@ -135,7 +135,7 @@ namespace BetaTesters.Controllers
 
         [HttpPost]
         [Authorize(Roles = OwnerRole)]
-        public async Task<IActionResult> Approve(string taskId, TaskWaitListViewModel model)
+        public async Task<IActionResult> Approve(string taskId, TaskInspectViewModel model)
         {
             if (model == null)
             {
@@ -151,7 +151,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Reject(string taskId)
         {
-            var task = await taskService.TaskWaitListViewModelInspectByIdAsync(taskId);
+            var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
 
             if (task.Approval != Approval.ToBeReviewed)
             {
@@ -163,7 +163,7 @@ namespace BetaTesters.Controllers
 
         [HttpPost]
         [Authorize(Roles = OwnerRole)]
-        public async Task<IActionResult> Reject(string taskId, TaskWaitListViewModel model)
+        public async Task<IActionResult> Reject(string taskId, TaskInspectViewModel model)
         {
             if (model == null)
             {
@@ -171,6 +171,69 @@ namespace BetaTesters.Controllers
             }
 
             await taskService.RejectTaskAsync(taskId);
+
+            return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Take(string taskId)
+        {
+            var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
+
+            if (task.Approval != Approval.Accepted && task.State != TaskState.Available)
+            {
+                return BadRequest();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Take(string taskId, TaskInspectViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            await taskService.TakeTaskAsync(taskId, User.Id());
+
+            return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Complete(string taskId)
+        {
+            var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
+
+            if (task.Approval != Approval.Accepted && task.State != TaskState.InProgress)
+            {
+                return BadRequest();
+            }
+
+            var userId = User.Id();
+
+            if (task.ContractorId.ToLower() != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Complete(string taskId, TaskInspectViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            await taskService.CompleteTaskAsync(taskId);
 
             return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
         }

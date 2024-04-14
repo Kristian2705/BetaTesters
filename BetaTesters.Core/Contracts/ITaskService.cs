@@ -24,12 +24,16 @@ namespace BetaTesters.Core.Contracts
 
         Task<bool> CategoryExistsAsync(int categoryId);
 
-        Task<IEnumerable<TaskWaitListViewModel>> TaskWaitListByProgramIdAsync(string programId);
+        Task<IEnumerable<TaskInspectViewModel>> TaskWaitListByProgramIdAsync(string programId);
 
-        Task<TaskWaitListViewModel> TaskWaitListViewModelInspectByIdAsync(string taskId);
+        Task<TaskInspectViewModel> TaskInspectViewModelByIdAsync(string taskId);
 
         Task ApproveTaskAsync(string taskId);
 
         Task RejectTaskAsync(string taskId);
+
+        Task TakeTaskAsync(string taskId, string userId);
+
+        Task CompleteTaskAsync(string taskId);
     }
 }

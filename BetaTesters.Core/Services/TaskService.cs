@@ -140,11 +140,11 @@ namespace BetaTesters.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TaskWaitListViewModel>> TaskWaitListByProgramIdAsync(string programId)
+        public async Task<IEnumerable<TaskInspectViewModel>> TaskWaitListByProgramIdAsync(string programId)
         {
             return await repository.AllReadOnly<Task>()
                 .Where(t => t.ProgramId == Guid.Parse(programId) && t.State == TaskState.ToBeApproved)
-                .Select(t => new TaskWaitListViewModel()
+                .Select(t => new TaskInspectViewModel()
                 {
                     Id = t.Id,
                     Name = t.Name,
@@ -155,21 +155,45 @@ namespace BetaTesters.Core.Services
                 .ToListAsync();
         }
 
-        public async Task<TaskWaitListViewModel> TaskWaitListViewModelInspectByIdAsync(string taskId)
+        public async Task<TaskInspectViewModel> TaskInspectViewModelByIdAsync(string taskId)
         {
             return await repository.AllReadOnly<Task>()
                 .Where(t => t.Id == Guid.Parse(taskId))
-                .Select(t => new TaskWaitListViewModel()
+                .Select(t => new TaskInspectViewModel()
                 {
                     Id = t.Id,
                     Name = t.Name,
                     Description = t.Description,
                     Creator = t.Creator,
                     Approval = t.Approval,
+                    State = t.State,
                     BetaProgramId = t.ProgramId,
+                    ContractorId = t.ContractorId.ToString(),
                     Reward = t.Reward
                 })
                 .FirstAsync();
+        }
+
+        public async System.Threading.Tasks.Task TakeTaskAsync(string taskId, string userId)
+        {
+            var task = await repository.GetByIdAsync<Task>(Guid.Parse(taskId));
+
+            task.State = TaskState.InProgress;
+
+            task.ContractorId = Guid.Parse(userId);
+
+            await repository.SaveChangesAsync();
+        }
+
+        public async System.Threading.Tasks.Task CompleteTaskAsync(string taskId)
+        {
+            var task = await repository.GetByIdAsync<Task>(Guid.Parse(taskId));
+
+            task.State = TaskState.Completed;
+
+            task.FinishDate = DateTime.Now;
+
+            await repository.SaveChangesAsync();
         }
     }
 }

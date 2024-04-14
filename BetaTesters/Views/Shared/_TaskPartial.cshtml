@@ -15,12 +15,24 @@
             @if(Model.State == TaskState.Available)
             {
                 <p>State: <span class="alert-info fw-bold">@Model.State</span></p>
+                if (User.IsInRole(RoleConstants.DefaultUserRole))
+                {
+                    <a asp-controller="Task" asp-action="Take" asp-route-taskId="@Model.Id.ToString()"
+                       class="btn btn-info">Take</a>
+                }
             }
             else if(Model.State == TaskState.InProgress)
             {
                 var contractor = await applicationUserService.GetApplicationUserByIdAsync(Model.ContractorId!);
                 <p>State: <span class="alert-warning fw-bold">@Model.State</span></p>
                 <p>Contractor: @($"{contractor.FirstName} {contractor.LastName}") </p>
+                if (User.IsInRole(RoleConstants.DefaultUserRole))
+                {
+                    <a asp-controller="Task" asp-action="Complete" asp-route-taskId="@Model.Id.ToString()"
+                       class="btn btn-info">Complete</a>
+                    <a asp-controller="Task" asp-action="Forfeit" asp-route-taskId="@Model.Id.ToString()"
+                       class="btn btn-danger">Forfeit</a>
+                }
             }
             else if(Model.State == TaskState.Completed)
             {
