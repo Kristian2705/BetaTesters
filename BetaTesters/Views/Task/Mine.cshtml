@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TaskServiceModel>
+
+@{
+    ViewBag.Title = "My Tasks";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <div class="row">
+        @foreach (var application in Model)
+        {
+            <partial name="_TaskMinePartial" model="@application" />
+        }
+    </div>
+}
+else
+{
+    <h3 class="text-center">You have no tasks yet!</h3>
+}

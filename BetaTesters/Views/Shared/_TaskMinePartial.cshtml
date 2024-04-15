@@ -1,0 +1,38 @@
+﻿@model TaskServiceModel
+@inject IApplicationUserService applicationUserService
+
+@{
+    var contractor = await applicationUserService.GetApplicationUserByIdAsync(Model.ContractorId!);
+}
+
+<div class="col-md-4">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h4>@Model.Name</h4>
+            <h5>Description: <b>@Model.Description</b></h5>
+            <h6>
+                Reward:
+                <b>@String.Format("{0:f2}", Model.Reward) BGN</b>
+            </h6>
+            <p>Assigned on: <b>@Model.AssignDate</b></p>
+            <p>Finished on: <b>@(Model.FinishDate ?? "Not Finished")</b></p>
+            @if(Model.State == TaskState.InProgress)
+            {
+                <p>State: <span class="alert-warning fw-bold">@Model.State</span></p>
+            }
+            else
+            {
+                <p>State: <span class="alert-success fw-bold">@Model.State</span></p>
+            }
+            <p>Contractor: @($"{contractor.FirstName} {contractor.LastName}") </p>
+            @if (Model.State == TaskState.InProgress)
+            {
+                <a asp-controller="Task" asp-action="Complete" asp-route-taskId="@Model.Id.ToString()"
+                    class="btn btn-info">Complete</a>
+                <a asp-controller="Task" asp-action="Forfeit" asp-route-taskId="@Model.Id.ToString()"
+                    class="btn btn-danger">Forfeit</a>
+            }
+            <br />
+        </div>
+    </div>
+</div>

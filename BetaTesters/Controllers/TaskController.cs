@@ -15,7 +15,7 @@ namespace BetaTesters.Controllers
         private readonly ITaskService taskService;
         private readonly IApplicationUserService applicationUserService;
 
-        public TaskController(ITaskService _taskService, 
+        public TaskController(ITaskService _taskService,
             IApplicationUserService _applicationUserService)
         {
             taskService = _taskService;
@@ -75,7 +75,7 @@ namespace BetaTesters.Controllers
                 ModelState.AddModelError(nameof(model.CategoryId), "Category does not exits");
             }
 
-            if(model.ProgramId == null)
+            if (model.ProgramId == null)
             {
                 ModelState.AddModelError(nameof(model.CategoryId), "Beta program does not exits");
             }
@@ -236,6 +236,22 @@ namespace BetaTesters.Controllers
             await taskService.CompleteTaskAsync(taskId);
 
             return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Mine(string programId)
+        {
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if(user.BetaProgramId.ToString() != programId)
+            {
+                return Unauthorized();
+            }
+
+            var myTasks = await taskService.GetTasksByUserIdAndProgramId(user.Id.ToString(), programId);
+
+            return View(myTasks);
         }
     }
 }

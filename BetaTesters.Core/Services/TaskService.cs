@@ -3,13 +3,14 @@ using BetaTesters.Core.Enums;
 using BetaTesters.Core.Models.Task;
 using BetaTesters.Infrastructure.Data.Common;
 using BetaTesters.Infrastructure.Data.Enums;
+using BetaTesters.Infrastructure.Constants;
 
 namespace BetaTesters.Core.Services
 {
     using BetaTesters.Core.Extensions;
-    using BetaTesters.Core.Models.CandidateApplication;
     using Infrastructure.Data.Models;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.VisualBasic;
     using System;
     using System.Collections.Generic;
 
@@ -194,6 +195,24 @@ namespace BetaTesters.Core.Services
             task.FinishDate = DateTime.Now;
 
             await repository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TaskServiceModel>> GetTasksByUserIdAndProgramId(string userId, string programId)
+        {
+            return await repository.AllReadOnly<Task>()
+                .Where(t => t.ContractorId == Guid.Parse(userId) && t.ProgramId == Guid.Parse(programId))
+                .Select(t => new TaskServiceModel()
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Description = t.Description,
+                    AssignDate = t.AssignDate.Value.ToString(DataConstants.DateFormat),
+                    FinishDate = t.FinishDate.Value.ToString(DataConstants.DateFormat),
+                    ContractorId = t.ContractorId.ToString(),
+                    Reward = t.Reward,
+                    State = t.State
+                })
+                .ToListAsync();
         }
     }
 }

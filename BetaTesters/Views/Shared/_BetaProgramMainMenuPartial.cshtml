@@ -21,7 +21,7 @@
     <a asp-area="" asp-controller="Task" asp-action="All" asp-route-id="@Model.Id.ToString()" class="btn btn-primary btn-lg">See All Tasks</a>
     @if (User.IsInRole(RoleConstants.DefaultUserRole))
     {
-        <a asp-area="" asp-controller="Task" asp-action="Mine" class="btn btn-primary btn-lg">My Tasks</a>
+        <a asp-area="" asp-controller="Task" asp-action="Mine" asp-route-programId="@Model.Id.ToString()" class="btn btn-primary btn-lg">My Tasks</a>
     }
     else
     {
