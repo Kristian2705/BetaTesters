@@ -1,0 +1,12 @@
+﻿@model TaskFormModel
+@{
+	ViewBag.Title = "Edit task";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_TaskEditPartial" model="@Model" />
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

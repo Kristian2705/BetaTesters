@@ -17,6 +17,7 @@ namespace BetaTesters.Core.Extensions
                     AssignDate = t.AssignDate.Value.ToString(DateFormat),
                     FinishDate = t.FinishDate.Value.ToString(DateFormat),
                     ContractorId = t.ContractorId.ToString(),
+                    CreatorId = t.CreatorId.ToString(),
                     Reward = t.Reward,
                     State = t.State,
                 });

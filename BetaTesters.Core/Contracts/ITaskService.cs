@@ -37,5 +37,11 @@ namespace BetaTesters.Core.Contracts
         Task CompleteTaskAsync(string taskId);
 
         Task<IEnumerable<TaskServiceModel>> GetTasksByUserIdAndProgramId(string userId, string programId);
+
+        Task<bool> ExistsAsync(string id);
+
+        Task<TaskFormModel> GetTaskFormModelByIdAsync(string taskId);
+
+        Task EditAsync(string taskId, TaskFormModel model);
     }
 }

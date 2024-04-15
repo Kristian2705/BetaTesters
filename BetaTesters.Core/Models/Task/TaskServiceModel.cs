@@ -27,6 +27,8 @@ namespace BetaTesters.Core.Models.Task
 
         public string? ContractorId { get; set; }
 
+        public string? CreatorId { get; set; }
+
         [EnumDataType(typeof(TaskState))]
         public TaskState State { get; set; }
 

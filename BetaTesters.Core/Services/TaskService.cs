@@ -1,16 +1,15 @@
 ﻿using BetaTesters.Core.Contracts;
 using BetaTesters.Core.Enums;
 using BetaTesters.Core.Models.Task;
+using BetaTesters.Infrastructure.Constants;
 using BetaTesters.Infrastructure.Data.Common;
 using BetaTesters.Infrastructure.Data.Enums;
-using BetaTesters.Infrastructure.Constants;
 
 namespace BetaTesters.Core.Services
 {
     using BetaTesters.Core.Extensions;
     using Infrastructure.Data.Models;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.VisualBasic;
     using System;
     using System.Collections.Generic;
 
@@ -201,18 +200,53 @@ namespace BetaTesters.Core.Services
         {
             return await repository.AllReadOnly<Task>()
                 .Where(t => t.ContractorId == Guid.Parse(userId) && t.ProgramId == Guid.Parse(programId))
-                .Select(t => new TaskServiceModel()
+                .ProjectToTaskServiceModel()
+                .ToListAsync();
+        }
+
+        public async Task<bool> ExistsAsync(string id)
+        {
+            return await repository.AllReadOnly<Task>()
+                .AnyAsync(c => c.Id == Guid.Parse(id));
+        }
+
+        public async Task<TaskFormModel> GetTaskFormModelByIdAsync(string taskId)
+        {
+            var task = await repository.AllReadOnly<Task>()
+                .Where(t => t.Id == Guid.Parse(taskId))
+                .Select(t => new TaskFormModel()
                 {
-                    Id = t.Id,
                     Name = t.Name,
                     Description = t.Description,
-                    AssignDate = t.AssignDate.Value.ToString(DataConstants.DateFormat),
-                    FinishDate = t.FinishDate.Value.ToString(DataConstants.DateFormat),
-                    ContractorId = t.ContractorId.ToString(),
+                    TaskState = t.State,
+                    Approval = t.Approval,
+                    ProgramId = t.ProgramId.ToString(),
                     Reward = t.Reward,
-                    State = t.State
+                    CreatorId = t.CreatorId.ToString()
                 })
-                .ToListAsync();
+                .FirstAsync();
+
+            if(task != null)
+            {
+                task.Categories = await AllCategoriesAsync();
+            }
+
+            return task;
+        }
+
+        public async System.Threading.Tasks.Task EditAsync(string taskId, TaskFormModel model)
+        {
+            var task = await repository.GetByIdAsync<Task>(Guid.Parse(taskId));
+
+            if (task != null)
+            {
+                task.Name = model.Name;
+                task.Description = model.Description;
+                task.Reward = model.Reward;
+                task.CategoryId = model.CategoryId;
+
+                await repository.SaveChangesAsync();
+            }
         }
     }
 }

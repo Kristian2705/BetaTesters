@@ -26,7 +26,7 @@ namespace BetaTesters.Core.Models.Task
         [Display(Name = "Category")]
         public int CategoryId { get; set; }
 
-        //public string CreatorId { get; set; } = null!;
+        public string? CreatorId { get; set; }
 
         public string ProgramId {  get; set; } = string.Empty;
 

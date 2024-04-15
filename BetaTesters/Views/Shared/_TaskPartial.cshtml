@@ -18,7 +18,20 @@
                 if (User.IsInRole(RoleConstants.DefaultUserRole))
                 {
                     <a asp-controller="Task" asp-action="Take" asp-route-taskId="@Model.Id.ToString()"
-                       class="btn btn-info">Take</a>
+                    class="btn btn-info">Take</a>
+                }
+                else if(User.IsInRole(RoleConstants.ModeratorRole))
+                {
+                    if (User.Id().ToString() == Model.CreatorId.ToLower())
+                    {
+                        <a asp-controller="Task" asp-action="Edit" asp-route-taskId="@Model.Id.ToString()"
+                        class="btn btn-warning">Edit</a>
+                    }
+                }
+                else
+                {
+                    <a asp-controller="Task" asp-action="Edit" asp-route-taskId="@Model.Id.ToString()"
+                       class="btn btn-warning">Edit</a>
                 }
             }
             else if(Model.State == TaskState.InProgress)

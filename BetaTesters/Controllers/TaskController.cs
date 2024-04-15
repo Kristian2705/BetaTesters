@@ -111,6 +111,83 @@ namespace BetaTesters.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Edit(string taskId)
+        {
+            if(await taskService.ExistsAsync(taskId) == false)
+            {
+                return BadRequest();
+            }
+
+            var task = await taskService.GetTaskFormModelByIdAsync(taskId);
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if(user.BetaProgramId != Guid.Parse(task.ProgramId))
+            {
+                return Unauthorized();
+            }
+
+            if(task.TaskState != TaskState.Available || task.Approval != Approval.Accepted)
+            {
+                return BadRequest();
+            }
+            //Moderators can edit a task even if they are not the creators of it
+
+            if (User.IsInRole(ModeratorRole))
+            {
+                if(task.CreatorId.ToLower() != User.Id())
+                {
+                    return Unauthorized();
+                }
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Edit(string taskId, TaskFormModel model)
+        {
+            if (await taskService.ExistsAsync(taskId) == false)
+            {
+                return BadRequest();
+            }
+
+            var task = await taskService.GetTaskFormModelByIdAsync(taskId);
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if (user.BetaProgramId != Guid.Parse(task.ProgramId))
+            {
+                return Unauthorized();
+            }
+
+            if (task.TaskState != TaskState.Available || task.Approval != Approval.Accepted)
+            {
+                return BadRequest();
+            }
+
+            if (User.IsInRole(ModeratorRole))
+            {
+                if (task.CreatorId.ToLower() != User.Id())
+                {
+                    return Unauthorized();
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await taskService.AllCategoriesAsync();
+                return View(model);
+            }
+
+            await taskService.EditAsync(taskId, model);
+
+            return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
+
+        [HttpGet]
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> VisitWaitlist(string programId)
         {
