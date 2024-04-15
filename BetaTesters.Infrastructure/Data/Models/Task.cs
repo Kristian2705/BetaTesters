@@ -53,6 +53,6 @@ namespace BetaTesters.Infrastructure.Data.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Reward { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool IsPaidFor { get; set; }
     }
 }

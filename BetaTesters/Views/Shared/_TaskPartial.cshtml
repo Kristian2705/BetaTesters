@@ -41,10 +41,13 @@
                 <p>Contractor: @($"{contractor.FirstName} {contractor.LastName}") </p>
                 if (User.IsInRole(RoleConstants.DefaultUserRole))
                 {
-                    <a asp-controller="Task" asp-action="Complete" asp-route-taskId="@Model.Id.ToString()"
-                       class="btn btn-info">Complete</a>
-                    <a asp-controller="Task" asp-action="Forfeit" asp-route-taskId="@Model.Id.ToString()"
-                       class="btn btn-danger">Forfeit</a>
+                    if(contractor.Id == Guid.Parse(User.Id()))
+                    {
+                        <a asp-controller="Task" asp-action="Complete" asp-route-taskId="@Model.Id.ToString()"
+                           class="btn btn-info">Complete</a>
+                        <a asp-controller="Task" asp-action="Forfeit" asp-route-taskId="@Model.Id.ToString()"
+                           class="btn btn-danger">Forfeit</a>
+                    }
                 }
             }
             else if(Model.State == TaskState.Completed)

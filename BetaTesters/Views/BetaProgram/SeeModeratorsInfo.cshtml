@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ApplicationUserViewModel>
+
+@{
+    ViewBag.Title = "All Moderators";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><label>Email</label></th>
+                <th><label>Full Name</label></th>
+                <th><label>Created Tasks</label></th>
+                <th><label>Actions</label></th>
+                <th><label></label></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td><label>@user.Email</label></td>
+                    <td><label>@($"{user.FirstName} {user.LastName}")</label></td>
+                    <td><label>@user.CreatedTasksCount</label></td>
+                    <td><a asp-controller="Payment" asp-action="Create" asp-route-userId="@user.Id.ToString()" class="btn btn-info btn-lg">Pay</a></td>
+                    <td><a asp-controller="Payment" asp-action="Kick" asp-route-userId="@user.Id.ToString()" class="btn btn-danger btn-lg">Kick</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3 class="text-center">Your program currently has no moderators!</h3>
+}
+

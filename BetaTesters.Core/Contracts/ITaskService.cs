@@ -36,6 +36,8 @@ namespace BetaTesters.Core.Contracts
 
         Task CompleteTaskAsync(string taskId);
 
+        Task ForfeitTaskAsync(string taskId);
+
         Task<IEnumerable<TaskServiceModel>> GetTasksByUserIdAndProgramId(string userId, string programId);
 
         Task<bool> ExistsAsync(string id);

@@ -37,15 +37,15 @@
     {
         <span> | </span>
         <a asp-area="" asp-controller="CandidateApplication" asp-action="AllCurrentProgram" asp-route-id="@Model.Id.ToString()" class="btn btn-warning btn-lg">Applications</a>
-        <a asp-area="" asp-controller="BetaProgram" asp-action="UsersInfo" class="btn btn-warning btn-lg">Users Info</a>
+        <a asp-area="" asp-controller="BetaProgram" asp-action="SeeUsersInfo" asp-route-programId="@Model.Id.ToString()" class="btn btn-warning btn-lg">Users Info</a>
     }
     @if (User.IsInRole(RoleConstants.OwnerRole))
     {
-        <a asp-area="" asp-controller="Payment" asp-action="Create" class="btn btn-warning btn-lg">Make Payment</a>
+        <a asp-area="" asp-controller="BetaProgram" asp-action="SeeModeratorsInfo" asp-route-programId="@Model.Id.ToString()" class="btn btn-warning btn-lg">Moderators Info</a>
     }
     @if (!User.IsInRole(RoleConstants.OwnerRole))
     {
         <span> | </span>
-        <a asp-area="" asp-controller="BetaProgram" asp-action="Leave" class="btn btn-danger btn-lg">Leave</a>
+        <a asp-area="" asp-controller="BetaProgram" asp-action="Leave" asp-route-programId="@Model.Id.ToString()" class="btn btn-danger btn-lg">Leave</a>
     }
 </div>

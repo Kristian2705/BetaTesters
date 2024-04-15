@@ -1,0 +1,39 @@
+﻿@model BetaProgramDetailsServiceModel
+
+@{
+    ViewBag.Title = "Leave Beta Program";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="House Image">
+        </div>
+        <div class="card col-8 border-0">
+            <p style="font-size:25px;"><u>@Model.Name</u></p>
+            <p>@Model.Description</p>
+            <p>Total users in this program: <b>@Model.TotalParticipants</b></p>
+            <p>Total tasks completed: <b>@Model.TotalTasksCompleted</b></p>
+            <p>"Are you sure you want to <span class="text-danger mt-3 fw-bold">leave</span> this program?"</p>
+            <form asp-route-programId="@Model.Id.ToString()" method="post">
+                <button type="submit" class="btn btn-danger">Leave</button>
+                <a asp-action="Mine" class="btn btn-secondary">Cancel</a>
+            </form>
+            <div class="form-inline">
+            </div>
+            <p></p>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Owner Info</h5>
+                    <p class="card-text">Email:  @Model.Owner.Email</p>
+                    <p class="card-text">Full name: @($"{Model.Owner.FirstName} {Model.Owner.LastName}")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

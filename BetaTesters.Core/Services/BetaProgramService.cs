@@ -11,16 +11,23 @@ using BetaTesters.Infrastructure.Data.Enums;
 
 namespace BetaTesters.Core.Services
 {
-	using System.Threading.Tasks;
+    using BetaTesters.Infrastructure.Constants;
+    using System.Threading.Tasks;
     public class BetaProgramService : IBetaProgramService
 	{
 		private readonly IRepository repository;
 		private readonly IApplicationUserService applicationUserService;
-		public BetaProgramService(IRepository _repository,
-			IApplicationUserService _applicationUserService)
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        public BetaProgramService(IRepository _repository,
+			IApplicationUserService _applicationUserService,
+            UserManager<ApplicationUser> _userManager,
+            SignInManager<ApplicationUser> _signInManager)
 		{
 			repository = _repository;
 			applicationUserService = _applicationUserService;
+            userManager = _userManager;
+            signInManager = _signInManager;
 		}
 		public async Task<BetaProgramQueryServiceModel> AllAsync(int currentPage = 1, int programsPerPage = 1)
 		{
@@ -166,6 +173,22 @@ namespace BetaTesters.Core.Services
                 .FirstOrDefaultAsync(u => ownerIds.Contains(u.Id) && u.BetaProgramId == Guid.Parse(programId));
 
 			return currentProgramOwner.Id;
+        }
+
+        public async Task LeaveAsync(string userId)
+        {
+            var user = await applicationUserService.GetApplicationUserByIdAsync(userId);
+
+            if(await userManager.IsInRoleAsync(user, ModeratorRole))
+            {
+                await userManager.RemoveFromRoleAsync(user, ModeratorRole);
+                await userManager.AddToRoleAsync(user, DefaultUserRole);
+                await signInManager.SignInAsync(user, false);
+            }
+
+            user.BetaProgramId = null;
+
+            await repository.SaveChangesAsync();
         }
     }
 }

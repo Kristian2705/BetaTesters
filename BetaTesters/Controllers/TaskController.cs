@@ -330,5 +330,40 @@ namespace BetaTesters.Controllers
 
             return View(myTasks);
         }
+
+        [HttpGet]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Forfeit(string taskId)
+        {
+            var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
+
+            if (task.Approval != Approval.Accepted && task.State != TaskState.InProgress)
+            {
+                return BadRequest();
+            }
+
+            var userId = User.Id();
+
+            if (task.ContractorId.ToLower() != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(task);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = DefaultUserRole)]
+        public async Task<IActionResult> Forfeit(string taskId, TaskInspectViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            await taskService.ForfeitTaskAsync(taskId);
+
+            return RedirectToAction(nameof(BetaProgramController.Mine), "BetaProgram");
+        }
     }
 }

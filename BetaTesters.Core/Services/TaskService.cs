@@ -248,5 +248,16 @@ namespace BetaTesters.Core.Services
                 await repository.SaveChangesAsync();
             }
         }
+
+        public async System.Threading.Tasks.Task ForfeitTaskAsync(string taskId)
+        {
+            var task = await repository.GetByIdAsync<Task>(Guid.Parse(taskId));
+
+            task.State = TaskState.Available;
+
+            task.ContractorId = null;
+
+            await repository.SaveChangesAsync();
+        }
     }
 }

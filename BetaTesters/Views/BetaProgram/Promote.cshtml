@@ -1,0 +1,25 @@
+﻿@model ApplicationUserViewModel
+@{
+    ViewBag.Title = "Promote user";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">User: @($"{Model.FirstName} {Model.LastName}")</h3>
+                <p class="mb-0"><strong>Email: </strong>@Model.Email</p>
+                <p>"Are you sure you want to <span class="text-success mt-3 fw-bold">promote</span> this user to moderator?"</p>
+            </div>
+            <div class="card-footer">
+                <form asp-route-userId="@Model.Id.ToString()" method="post">
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                    <a asp-action="SeeUsersInfo" asp-route-programId="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

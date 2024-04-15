@@ -157,7 +157,7 @@ namespace BetaTesters.Controllers
         public async Task<IActionResult> Approve(string id)
         {
             var application = await candidateApplicationService.CandidateApplicationInspectDetailsByIdAsync(id);
-
+            
             return View(application);
         }
 

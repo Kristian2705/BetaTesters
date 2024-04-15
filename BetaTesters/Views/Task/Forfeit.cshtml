@@ -1,0 +1,30 @@
+﻿@model TaskInspectViewModel
+@{
+    ViewBag.Title = "Forfeit task";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">Created by: @($"{Model.Creator.FirstName} {Model.Creator.LastName}")</h3>
+                <p class="mb-0"><strong>Name: </strong>@Model.Name</p>
+                <p class="mb-0"><strong>Description: </strong>@Model.Description</p>
+                <p>
+                    Reward:
+                    <b>@String.Format("{0:f2}", Model.Reward) BGN</b>
+                </p>
+                <p>"Are you sure you want to <span class="text-danger mt-3 fw-bold">forfeit</span> this task?"</p>
+            </div>
+            <div class="card-footer">
+                <form asp-route-taskId="@Model.Id.ToString()" method="post">
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                    <a asp-action="All" asp-route-id="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
