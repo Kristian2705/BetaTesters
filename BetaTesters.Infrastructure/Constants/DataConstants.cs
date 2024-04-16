@@ -20,6 +20,7 @@
         public const int BetaProgramDescriptionMinLength = 20;
 
         public const int CategoryNameMaxLength = 20;
+        public const int CategoryNameMinLength = 2;
 
         public const int TaskNameMaxLength = 20;
         public const int TaskNameMinLength = 2;

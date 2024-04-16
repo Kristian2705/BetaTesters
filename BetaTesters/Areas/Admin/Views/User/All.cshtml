@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ApplicationUserViewModel>
+@inject IBetaProgramService betaProgramService
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Email</label></th>
+            <th><label>Full Name</label></th>
+            <th><label>Beta Program</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            var userBetaProgramName = string.Empty;
+            if(user.BetaProgramId == null)
+            {
+                userBetaProgramName = "Not in a program";
+            }
+            else
+            {
+                userBetaProgramName = (await betaProgramService.BetaProgramByUserId(user.Id.ToString())).Name;
+            }
+            <tr>
+                <td><label>@user.Email</label></td>
+                <td><label>@($"{user.FirstName} {user.LastName}")</label></td>
+                <td><label>@userBetaProgramName</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

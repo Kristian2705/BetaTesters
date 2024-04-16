@@ -164,5 +164,19 @@ namespace BetaTesters.Core.Services
 
 			await repository.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<ApplicationUserViewModel>> GetAllApplicationUsersViewModelsAsync()
+        {
+            return await repository.AllReadOnly<ApplicationUser>()
+                .Select(u => new ApplicationUserViewModel()
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    BetaProgramId = u.BetaProgramId.ToString(),
+                })
+                .ToListAsync();
+        }
     }
 }

@@ -46,6 +46,7 @@ namespace BetaTesters.Controllers
 		}
 
         [HttpGet]
+        [AllowAnonymous]
 		public async Task<IActionResult> Details(string id)
 		{
             if (await betaProgramService.ExistsAsync(id) == false)
@@ -107,6 +108,11 @@ namespace BetaTesters.Controllers
         [HttpGet]
         public async Task<IActionResult> Mine()
         {
+            if (User.IsInRole(AdminRole))
+            {
+                return Forbid();
+            }
+
             var userId = User.Id();
 
             if ((await applicationUserService.GetApplicationUserByIdAsync(User.Id())).BetaProgramId == null)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using static BetaTesters.Infrastructure.Constants.RoleConstants;
 
 namespace BetaTesters.Controllers
 {
@@ -17,6 +18,11 @@ namespace BetaTesters.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User.IsInRole(AdminRole))
+            {
+                return RedirectToAction(nameof(Index), "Home", new { area = "Admin"} );
+            }
+
             return View();
         }
 

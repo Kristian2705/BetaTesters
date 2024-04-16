@@ -23,5 +23,7 @@ namespace BetaTesters.Core.Contracts
         Task<ApplicationUserViewModel> GetApplicationUserViewModelByUserId(string userId);
 
         Task<ApplicationUser> GetApplicationUserWithTasksByIdAsync(string userId);
+
+        Task<IEnumerable<ApplicationUserViewModel>> GetAllApplicationUsersViewModelsAsync();
     }
 }

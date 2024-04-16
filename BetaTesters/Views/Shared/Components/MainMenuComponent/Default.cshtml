@@ -4,41 +4,44 @@
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="All">All Programs</a>
     </li>
-    @if (User.IsInRole(RoleConstants.DefaultUserRole))
+    @if (!User.IsInRole(RoleConstants.AdminRole))
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="CandidateApplication" asp-action="Mine">My Applications</a>
-        </li>
-    }
-    @if (User.IsInRole(RoleConstants.OwnerRole))
-    {
-        var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
-        if(user.BetaProgramId == null)
+        @if (User.IsInRole(RoleConstants.DefaultUserRole))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Add">Create Program</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="CandidateApplication" asp-action="Mine">My Applications</a>
             </li>
         }
-    }
-    @if (this.User?.Identity?.IsAuthenticated ?? false)
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Mine">My Program</a>
-        </li>
-        @if (User.IsInRole(RoleConstants.DefaultUserRole) || User.IsInRole(RoleConstants.ModeratorRole))
+        @if (User.IsInRole(RoleConstants.OwnerRole))
         {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Received" asp-route-receiverId="@User.Id()">Received Payments</a>
-            </li>
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+            if (user.BetaProgramId == null)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Add">Create Program</a>
+                </li>
+            }
         }
-        else
+        @if (this.User?.Identity?.IsAuthenticated ?? false)
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Sent" asp-route-ownerId="@User.Id()">Sent Payments</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Mine">My Program</a>
             </li>
-            <li>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Mine">Made Transactions</a>
-            </li>
+            @if (User.IsInRole(RoleConstants.DefaultUserRole) || User.IsInRole(RoleConstants.ModeratorRole))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Received" asp-route-receiverId="@User.Id()">Received Payments</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Sent" asp-route-ownerId="@User.Id()">Sent Payments</a>
+                </li>
+                <li>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Mine">Made Transactions</a>
+                </li>
+            }
         }
     }
 </ul>

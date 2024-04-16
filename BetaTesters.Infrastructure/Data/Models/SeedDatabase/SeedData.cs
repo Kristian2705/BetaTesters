@@ -24,6 +24,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
 
         public ApplicationUser Owner { get; set; } = null!;
 
+        public ApplicationUser Admin { get; set; } = null!;
+
         public Category NewFeatureCategory { get; set; } = null!;
 
         public Category BugFixCategory { get; set; } = null!;
@@ -70,9 +72,18 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 ClaimValue = $"{Owner.FirstName} {Owner.LastName}"
             };
 
+            var adminClaim = new IdentityUserClaim<Guid>
+            {
+                Id = 1011,
+                UserId = Guid.Parse("7051fdf0-f598-412c-8d48-3a0c65f0ceac"),
+                ClaimType = CustomClaims.UserFullNameClaim,
+                ClaimValue = $"{Admin.FirstName} {Admin.LastName}"
+            };
+
             UsersClaims.Add(defaultUserClaim);
             UsersClaims.Add(moderatorClaim);
             UsersClaims.Add(ownerClaim);
+            UsersClaims.Add(adminClaim);
         }
 
         private void SeedRoles()
@@ -98,9 +109,17 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedName = OwnerRole.ToUpper()
             };
 
+            IdentityRole<Guid> adminRole = new IdentityRole<Guid>()
+            {
+                Id = Guid.Parse("521aa62a-965e-44e7-a258-784118befe1c"),
+                Name = AdminRole,
+                NormalizedName = AdminRole.ToUpper()
+            };
+
             Roles.Add(defaultUserRole);
             Roles.Add(moderatorRole);
             Roles.Add(ownerRole);
+            Roles.Add(adminRole);
         }
 
         private void SeedUserRoles()
@@ -123,9 +142,16 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 UserId = Guid.Parse("dac439da-96ea-4ca5-aa3b-f059bd94c92c")
             };
 
+            var adminRoleToUser = new IdentityUserRole<Guid>()
+            {
+                RoleId = Guid.Parse("521aa62a-965e-44e7-a258-784118befe1c"),
+                UserId = Guid.Parse("7051fdf0-f598-412c-8d48-3a0c65f0ceac")
+            };
+
             UsersRoles.Add(defaultUserRoleToUser);
             UsersRoles.Add(moderatorRoleToUser);
             UsersRoles.Add(ownerRoleToUser);
+            UsersRoles.Add(adminRoleToUser);
         }
 
         private void SeedUsers()
@@ -141,7 +167,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "useroff@mail.com".ToUpper(),
                 FirstName = "User",
                 LastName = "Userov",
-                PhoneNumber = "0881234567",
+                //PhoneNumber = "0881234567",
                 Age = 18
             };
 
@@ -159,7 +185,7 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "modoff@mail.com".ToUpper(),
                 FirstName = "Moderator",
                 LastName = "Modov",
-                PhoneNumber = "0891234561",
+                //PhoneNumber = "0891234561",
                 Age = 22,
                 BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e")
             };
@@ -178,15 +204,33 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "owneroff@mail.com".ToUpper(),
                 FirstName = "Owner",
                 LastName = "Ownerov",
-                PhoneNumber = "0891231456",
+                //PhoneNumber = "0891231456",
                 Age = 31,
-                BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e")
+                BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
+                Balance = 500.00m
             };
 
             Owner.PasswordHash = hasher
                 .HashPassword(Owner, "owner1");
 
             Owner.SecurityStamp = Guid.NewGuid().ToString();
+
+            Admin = new ApplicationUser()
+            {
+                Id = Guid.Parse("7051fdf0-f598-412c-8d48-3a0c65f0ceac"),
+                UserName = "adminoff@mail.com",
+                NormalizedUserName = "adminoff@mail.com".ToUpper(),
+                Email = "adminoff@mail.com",
+                NormalizedEmail = "adminoff@mail.com".ToUpper(),
+                FirstName = "Admin",
+                LastName = "Adminov",
+                Age = 25
+            };
+
+            Admin.PasswordHash = hasher
+                .HashPassword(Admin, "admin1");
+
+            Admin.SecurityStamp = Guid.NewGuid().ToString();
         }
 
         private void SeedCategories()

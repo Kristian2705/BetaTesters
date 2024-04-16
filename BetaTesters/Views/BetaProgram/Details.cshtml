@@ -41,6 +41,10 @@
             {
                 <p><b>You have a program so you can't candidate!</b></p>
             }
+            else if ((User.IsInRole(RoleConstants.AdminRole)))
+            {
+                <p><b>You are the Grear Admin so you can't candidate!</b></p>
+            }
             else
             {
                 <a asp-controller="CandidateApplication" asp-action="Add" asp-route-id="@Model.Id.ToString()" class="btn btn-success">Candidate</a>

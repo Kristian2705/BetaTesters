@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="mt-4 p-5 bg-light text-center">
+    <h2 class="display-4">Hello, Admin!</h2>
+    <p class="lead mb-1 mt-3">
+        This is your administrator area - you can <b>see</b> and <b>add new categories</b>.
+    </p>
+    <p class="lead mt-1">
+        You can also see <b>all registered users</b> in the system.
+    </p>
+    <hr class="my-4">
+    <a asp-area="Admin" asp-controller="Category" asp-action="All"
+       class="btn btn-primary btn-lg">All Categories</a>
+    <a asp-area="Admin" asp-controller="Category" asp-action="Add"
+       class="btn btn-primary btn-lg">Add Category</a>
+    <a asp-area="Admin" asp-controller="User" asp-action="All"
+       class="btn btn-primary btn-lg">All Users</a>
+</div>

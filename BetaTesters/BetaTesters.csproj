@@ -23,4 +23,8 @@
     <ProjectReference Include="..\BetaTesters.Core\BetaTesters.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
 </Project>

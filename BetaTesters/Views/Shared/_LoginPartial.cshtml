@@ -23,9 +23,12 @@
             <a class="nav-link text-dark" asp-controller="Transaction" asp-action="Create">Add funds</a>
         </li>
     }
-    <li class="nav-item">
-        <a class="nav-link text-dark">Balance: @($"{user.Balance:F2}") BGN</a>
-    </li>
+    if(!User.IsInRole(RoleConstants.AdminRole))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark">Balance: @($"{user.Balance:F2}") BGN</a>
+        </li>
+    }
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @userName!</a>
     </li>

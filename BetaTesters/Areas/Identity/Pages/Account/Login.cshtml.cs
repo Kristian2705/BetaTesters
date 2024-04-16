@@ -8,20 +8,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using static BetaTesters.Infrastructure.Constants.RoleConstants;
 
 namespace BetaTesters.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<LoginModel> _logger;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> _userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            userManager = _userManager;
         }
 
         /// <summary>
@@ -93,6 +96,12 @@ namespace BetaTesters.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, true, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await userManager.FindByEmailAsync(Input.Email);
+
+                    if (await userManager.IsInRoleAsync(user, AdminRole))
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

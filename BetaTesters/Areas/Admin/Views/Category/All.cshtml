@@ -1,0 +1,24 @@
+﻿@model IEnumerable<CategoryFormModel>
+
+@{
+    ViewBag.Title = "All Categories";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Name</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td><label>@category.Name</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

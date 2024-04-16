@@ -12,6 +12,8 @@ using static BetaTesters.Core.Constants.MessageConstants;
 using static BetaTesters.Infrastructure.Constants.DataConstants;
 using static BetaTesters.Infrastructure.Constants.CustomClaims;
 using static BetaTesters.Infrastructure.Constants.RoleConstants;
+using Microsoft.Extensions.Caching.Memory;
+using BetaTesters.Areas.Admin;
 
 namespace BetaTesters.Areas.Identity.Pages.Account
 {
@@ -22,18 +24,21 @@ namespace BetaTesters.Areas.Identity.Pages.Account
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly IMemoryCache _memoryCache;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger,
+            IMemoryCache memoryCache)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
+            _memoryCache = memoryCache;
         }
 
         /// <summary>
@@ -140,6 +145,7 @@ namespace BetaTesters.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, DefaultUserRole);
                     }
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    _memoryCache.Remove(AdminConstants.UsersCacheKey);
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

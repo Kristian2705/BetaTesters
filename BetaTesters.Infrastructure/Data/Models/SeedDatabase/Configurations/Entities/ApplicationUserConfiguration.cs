@@ -12,7 +12,8 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase.Configurations.Ent
             {
                 data.DefaultUser,
                 data.Moderator,
-                data.Owner
+                data.Owner,
+                data.Admin
             });
         }
     }

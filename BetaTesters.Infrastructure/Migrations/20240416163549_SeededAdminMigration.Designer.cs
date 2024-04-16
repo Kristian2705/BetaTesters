@@ -4,6 +4,7 @@ using BetaTesters.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetaTesters.Infrastructure.Migrations
 {
     [DbContext(typeof(BetaTestersDbContext))]
-    partial class BetaTestersDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240416163549_SeededAdminMigration")]
+    partial class SeededAdminMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,7 +117,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 18,
                             Balance = 0m,
-                            ConcurrencyStamp = "bbe47911-7b46-42d7-9798-a467b12b935c",
+                            ConcurrencyStamp = "746b2611-3860-46be-8a17-61f018e0a83e",
                             Email = "useroff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -123,9 +125,9 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USEROFF@MAIL.COM",
                             NormalizedUserName = "USEROFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEC9mpenXZRfheIl05iQVyIS91DNnh/R4BcEQpf4/6gVHtX9PCAtikmo6MZk0Af2Rhg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP326henxwuQ4K3uOER9sRcIbTDdYX5AaqtDKOGpV7h2MfS3gab+3mHki5U0444h9g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "14ae61bc-343b-486c-8bd5-5558ca8842a9",
+                            SecurityStamp = "f9aa01a2-f244-46a8-a442-ed161cd2696a",
                             TwoFactorEnabled = false,
                             UserName = "useroff@mail.com"
                         },
@@ -136,7 +138,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             Age = 22,
                             Balance = 0m,
                             BetaProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
-                            ConcurrencyStamp = "a8e559d3-35cc-4a9a-b47f-11f38e586799",
+                            ConcurrencyStamp = "2a66126a-e5a0-4315-a335-3187071c4a4d",
                             Email = "modoff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Moderator",
@@ -144,9 +146,9 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MODOFF@MAIL.COM",
                             NormalizedUserName = "MODOFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE4yPDVARqlFGPOLplTx+QhKjrZPsCSeFgsw7Q/yzmB4ILE1m+SYUG/uXuVvVe8gDw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFdKmnaQl5pcCeS/J6g+IBYDik2d0vjDNx+C9kn56cHgadct5AR7oLwJWsYqrDzGng==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "12b0ca84-c0e6-422e-b997-82887e4bb10f",
+                            SecurityStamp = "d280c093-7e5d-4076-9466-0922a103a8ea",
                             TwoFactorEnabled = false,
                             UserName = "modoff@mail.com"
                         },
@@ -157,7 +159,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             Age = 31,
                             Balance = 500.00m,
                             BetaProgramId = new Guid("f47b6e5c-46b8-4961-a809-787515b7d37e"),
-                            ConcurrencyStamp = "53f40176-d940-4d37-a40e-0939c52f05c0",
+                            ConcurrencyStamp = "4e712c7b-0979-45f1-bcc6-fc7bb404c1a5",
                             Email = "owneroff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Owner",
@@ -165,9 +167,9 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "OWNEROFF@MAIL.COM",
                             NormalizedUserName = "OWNEROFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHaerl4YKth068FT8nPSn5kb0oxCpo8uxnwLMWLOxtddtLrl5SynYIPkVsEio+VBrg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOhJhFyE2Jl7bJsp36SjMrTV6A7OYXjHE1i9G52CT2mURDWjIkMrL94m3LFHwAvZ3Q==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "72377f23-f6de-4bf1-bd1b-68950a9e96e0",
+                            SecurityStamp = "e0125494-5404-481f-9d7b-b69bc2a97ac6",
                             TwoFactorEnabled = false,
                             UserName = "owneroff@mail.com"
                         },
@@ -177,7 +179,7 @@ namespace BetaTesters.Infrastructure.Migrations
                             AccessFailedCount = 0,
                             Age = 25,
                             Balance = 0m,
-                            ConcurrencyStamp = "55ee2bd4-ff69-4ffc-b7b6-5d7686599e46",
+                            ConcurrencyStamp = "21712f13-0f97-4de8-a50c-832ff7968d0c",
                             Email = "adminoff@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Admin",
@@ -185,9 +187,9 @@ namespace BetaTesters.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMINOFF@MAIL.COM",
                             NormalizedUserName = "ADMINOFF@MAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBHMaUi19XqQbxOv1Sy/Y0RgkH5wIV6wyWK24TO7xRQXg/tySiv5SPbLHSMsuOu+zg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP6CVqPgQVu+3YsmuNZcHUy5qXEW2SwEPMnB3TG4eX7JNhUwFMWZnGKZRJvJexO5UA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bdf8018b-70fe-454b-9788-a2c296b5a632",
+                            SecurityStamp = "61027a66-3514-41bd-84b6-bcaeefc64ed5",
                             TwoFactorEnabled = false,
                             UserName = "adminoff@mail.com"
                         });
@@ -275,9 +277,6 @@ namespace BetaTesters.Infrastructure.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CategoryName")
-                        .IsUnique();
 
                     b.ToTable("Categories");
 
@@ -384,9 +383,9 @@ namespace BetaTesters.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0df6eea5-bc28-499e-9882-70058fcba1bb"),
+                            Id = new Guid("24c3faf7-0316-4933-b23f-96d587e668e7"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 16, 22, 19, 8, 791, DateTimeKind.Local).AddTicks(6216),
+                            AssignDate = new DateTime(2024, 4, 16, 19, 35, 48, 599, DateTimeKind.Local).AddTicks(1279),
                             CategoryId = 2,
                             CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
                             Description = "Users can't properly create a new post is now fixed",
@@ -398,9 +397,9 @@ namespace BetaTesters.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e05f4064-cd72-4ed9-82c0-8a147ec9f655"),
+                            Id = new Guid("b4b04335-41d3-4f03-913f-d4ed30d3e0df"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 16, 22, 19, 8, 791, DateTimeKind.Local).AddTicks(6261),
+                            AssignDate = new DateTime(2024, 4, 16, 19, 35, 48, 599, DateTimeKind.Local).AddTicks(1323),
                             CategoryId = 1,
                             CreatorId = new Guid("dac439da-96ea-4ca5-aa3b-f059bd94c92c"),
                             Description = "Added a new feature where users can chat with friends",
@@ -412,9 +411,9 @@ namespace BetaTesters.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("99af6dc4-7983-43b8-b802-2c3b1a0a1801"),
+                            Id = new Guid("c4f33bc4-7678-481a-86da-cdb47329fbc9"),
                             Approval = 1,
-                            AssignDate = new DateTime(2024, 4, 16, 22, 19, 8, 791, DateTimeKind.Local).AddTicks(6264),
+                            AssignDate = new DateTime(2024, 4, 16, 19, 35, 48, 599, DateTimeKind.Local).AddTicks(1326),
                             CategoryId = 3,
                             CreatorId = new Guid("38885cfb-4b65-4503-9958-6389ac64eb1a"),
                             Description = "Check if the update profile feature works properly",
@@ -479,28 +478,28 @@ namespace BetaTesters.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("1c69a1cd-0a41-4e4d-a00a-a08d18c2cea9"),
-                            ConcurrencyStamp = "6a454538-aa95-433b-8a2c-002412205744",
+                            ConcurrencyStamp = "96a8a98d-6a93-482b-a08a-feecee9b2b83",
                             Name = "default user",
                             NormalizedName = "DEFAULT USER"
                         },
                         new
                         {
                             Id = new Guid("b280f152-005b-49b2-a82a-7a1a142f898a"),
-                            ConcurrencyStamp = "99e707cf-7c81-43c7-8ccd-02b1c1311c18",
+                            ConcurrencyStamp = "c2c8d571-eb64-4995-afa3-2e210e750653",
                             Name = "moderator",
                             NormalizedName = "MODERATOR"
                         },
                         new
                         {
                             Id = new Guid("cd3cbaa6-1e80-45a4-a2ef-6de3fee4ed59"),
-                            ConcurrencyStamp = "bf004a91-b079-4bea-b9e3-e75c2a0027fb",
+                            ConcurrencyStamp = "e2af2702-f078-425f-a84b-eb3f9ca31621",
                             Name = "owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = new Guid("521aa62a-965e-44e7-a258-784118befe1c"),
-                            ConcurrencyStamp = "f24e4f1c-6150-44b1-8051-da99c8d48ab9",
+                            ConcurrencyStamp = "67b4a0fa-11c8-4765-bb0f-f2e078136ffd",
                             Name = "administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -579,7 +578,7 @@ namespace BetaTesters.Infrastructure.Migrations
                         {
                             Id = 1011,
                             ClaimType = "user:fullname",
-                            ClaimValue = "Admin Adminov",
+                            ClaimValue = "Owner Ownerov",
                             UserId = new Guid("7051fdf0-f598-412c-8d48-3a0c65f0ceac")
                         });
                 });

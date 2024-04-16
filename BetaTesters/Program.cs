@@ -35,7 +35,21 @@ namespace BetaTesters
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapDefaultControllerRoute();
+            app.UseEndpoints(config =>
+            {
+                config.MapControllerRoute(
+                    name: "areas",
+                    pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                config.MapControllerRoute(
+                    name: "default",
+                    pattern: "/{controller=Home}/{action=Index}/{id?}");
+
+                config.MapDefaultControllerRoute();
+
+                app.MapRazorPages();
+            });
+
             app.MapRazorPages();
 
             app.Run();

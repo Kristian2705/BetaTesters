@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using static BetaTesters.Infrastructure.Constants.DataConstants;
 
 namespace BetaTesters.Infrastructure.Data.Models
 {
+    [Index(nameof(CategoryName), IsUnique = true)]
     public class Category
     {
         [Key]
