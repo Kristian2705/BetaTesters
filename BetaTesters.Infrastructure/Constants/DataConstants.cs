@@ -34,6 +34,9 @@
         public const double PaymentAmountMaxValue = 999999.99;
         public const double PaymentAmountMinValue = 1.00;
 
+        public const double TransactionAmountMaxValue = 999999.99;
+        public const double TransactionAmountMinValue = 1.00;
+
         public const string DateFormat = "dd/MM/yyyy HH:mm";
     } 
 }

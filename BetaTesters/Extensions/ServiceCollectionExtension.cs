@@ -3,6 +3,7 @@ using BetaTesters.Core.Services;
 using BetaTesters.Data;
 using BetaTesters.Infrastructure.Data.Common;
 using BetaTesters.Infrastructure.Data.Models;
+using BetaTesters.PaymentIntegration.Stripe;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +50,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<BetaTestersDbContext>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddPaymentIntegration(this IServiceCollection services, IConfiguration config)
+        {
+            services.Configure<StripeSettings>(config.GetSection("StripeSettings"));
 
             return services;
         }

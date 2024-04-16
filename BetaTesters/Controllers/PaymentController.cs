@@ -7,7 +7,7 @@ using BetaTesters.Core.Models.Payment;
 
 namespace BetaTesters.Controllers
 {
-    public class PaymentController : Controller
+    public class PaymentController : BaseController
     {
         private readonly IPaymentService paymentService;
         private readonly IApplicationUserService applicationUserService;

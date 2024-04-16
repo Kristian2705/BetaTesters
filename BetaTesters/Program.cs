@@ -13,6 +13,7 @@ namespace BetaTesters
             builder.Services.AddApplicationDbContext(builder.Configuration);
             builder.Services.AddApplicationIdentity(builder.Configuration);
             builder.Services.AddApplicationServices();
+            builder.Services.AddPaymentIntegration(builder.Configuration);
 
             var app = builder.Build();
 
