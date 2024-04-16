@@ -33,7 +33,7 @@ namespace BetaTesters.Core.Models.Task
         public TaskState State { get; set; }
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(0.00, 999999.99)]
+        [Range(TaskRewardMinValue, TaskRewardMaxValue)]
         public decimal Reward { get; set; }
     }
 }

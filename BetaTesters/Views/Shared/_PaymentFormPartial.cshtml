@@ -1,0 +1,50 @@
+﻿@model PaymentServiceModel
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Money"></label>
+                @if(Model.Receiver!.Role == RoleConstants.DefaultUserRole)
+                {
+                    <input asp-for="Money" class="form-control" disabled value="@Model.Money">
+                }
+                else
+                {
+                    <input asp-for="Money" class="form-control" value="00.00">
+                }
+                <span asp-validation-for="Money" class="small text-danger"></span>
+            </div>
+
+            <label asp-for="Money" hidden="true"></label>
+            <input asp-for="Money" hidden="true">
+
+
+            <label asp-for="ReceiverId" hidden="true"></label>
+            <input asp-for="ReceiverId" hidden="true" />
+
+            <br />
+
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">To: @($"{Model.Receiver.FirstName} {Model.Receiver.LastName}")</h3>
+                    <p class="text-center">"Are you sure you want to <span class="text-primary mt-3 fw-bold">create the payment</span>"</p>
+                </div>
+
+                <div class="card-footer">
+                    <div class="text-center">
+                        <input class="btn btn-primary mt-3" type="submit" value="Send Money" />
+                    </div>
+                    @if (Model.Receiver.Role == RoleConstants.DefaultUserRole)
+                    {
+                        <a asp-controller="BetaProgram" asp-action="SeeUsersInfo" asp-route-programId="@Model.Receiver.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="BetaProgram" asp-action="SeeModeratorsInfo" asp-route-programId="@Model.Receiver.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

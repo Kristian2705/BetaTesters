@@ -16,6 +16,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IBetaProgramService, BetaProgramService>();
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             return services;
         }

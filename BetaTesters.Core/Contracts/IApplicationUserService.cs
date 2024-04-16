@@ -19,5 +19,9 @@ namespace BetaTesters.Core.Contracts
         ApplicationUserViewModel GetApplicationUserViewModelByUser(ApplicationUser user);
 
         Task KickUserFromProgramAsync(ApplicationUser user);
+
+        Task<ApplicationUserViewModel> GetApplicationUserViewModelByUserId(string userId);
+
+        Task<ApplicationUser> GetApplicationUserWithTasksByIdAsync(string userId);
     }
 }

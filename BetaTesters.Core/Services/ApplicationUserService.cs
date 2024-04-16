@@ -6,7 +6,6 @@ using static BetaTesters.Infrastructure.Constants.RoleConstants;
 namespace BetaTesters.Core.Services
 {
     using BetaTesters.Core.Models.ApplicationUserModels;
-    using BetaTesters.Infrastructure.Constants;
     using BetaTesters.Infrastructure.Data.Enums;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
@@ -29,6 +28,14 @@ namespace BetaTesters.Core.Services
 				.GetByIdAsync<ApplicationUser>(Guid.Parse(id));
 		}
 
+        public async Task<ApplicationUser> GetApplicationUserWithTasksByIdAsync(string userId)
+        {
+            return await repository.All<ApplicationUser>()
+                .Where(u => u.Id == Guid.Parse(userId))
+                .Include(u => u.Tasks)
+                .FirstAsync();
+        }
+
         public ApplicationUserViewModel GetApplicationUserViewModelByUser(ApplicationUser user)
         {
             var userViewModel = new ApplicationUserViewModel()
@@ -41,6 +48,27 @@ namespace BetaTesters.Core.Services
             };
 
             return userViewModel;
+        }
+
+        public async Task<ApplicationUserViewModel> GetApplicationUserViewModelByUserId(string userId)
+        {
+            var user = await GetApplicationUserByIdAsync(userId);
+
+            var role = (await userManager.GetRolesAsync(user)).First();
+
+            return await repository.AllReadOnly<ApplicationUser>()
+                .Where(u => u.Id == Guid.Parse(userId))
+                .Select(u => new ApplicationUserViewModel()
+                {
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    MoneyToTransfer = u.Tasks.Where(t => t.State == TaskState.Completed && t.IsPaidFor == false).Sum(t => t.Reward),
+                    BetaProgramId = u.BetaProgramId.ToString()!.ToLower(),
+                    Role = role
+                })
+                .FirstAsync();
         }
 
         public async Task<IEnumerable<ApplicationUserViewModel>> GetModeratorsByProgramId(string programId)

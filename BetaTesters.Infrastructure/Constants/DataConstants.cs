@@ -27,6 +27,12 @@
         public const int TaskDescriptionMaxLength = 100;
         public const int TaskDescriptionMinLength = 10;
 
+        public const double TaskRewardMaxValue = 999.99;
+        public const double TaskRewardMinValue = 1.00;
+
+        public const double PaymentAmountMaxValue = 999999.99;
+        public const double PaymentAmountMinValue = 1.00;
+
         public const string DateFormat = "dd/MM/yyyy HH:mm";
     } 
 }

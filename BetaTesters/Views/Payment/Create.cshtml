@@ -1,0 +1,13 @@
+﻿@model PaymentServiceModel
+@{
+	ViewBag.Title = "Make payment";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_PaymentFormPartial" model="@Model" />
+
+@section Scripts{
+	<partial name="_ValidationScriptsPartial" />
+}

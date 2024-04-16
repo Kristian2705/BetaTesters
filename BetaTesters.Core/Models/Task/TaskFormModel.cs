@@ -20,7 +20,7 @@ namespace BetaTesters.Core.Models.Task
         public string Description { get; set; } = string.Empty;
 
         [Required(ErrorMessage = RequiredMessage)]
-        [Range(0.00, 999999.99)]
+        [Range(TaskRewardMinValue, TaskRewardMaxValue)]
         public decimal Reward { get; set; }
 
         [Display(Name = "Category")]
