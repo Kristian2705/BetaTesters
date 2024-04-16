@@ -6,6 +6,7 @@ using BetaTesters.Infrastructure.Data.Enums;
 
 namespace BetaTesters.Core.Services
 {
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     public class PaymentService : IPaymentService
@@ -51,9 +52,28 @@ namespace BetaTesters.Core.Services
             await repository.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<PaymentViewModel>> GetAllSentPaymentsAsync(string ownerId)
+        public async Task<IEnumerable<PaymentViewModel>> GetAllReceivedPaymentsAsync(string receiverId)
         {
-            throw new NotImplementedException();
+            return await repository.AllReadOnly<Payment>()
+                .Where(p => p.ReceiverId == Guid.Parse(receiverId))
+                .Select(p => new PaymentViewModel()
+                {
+                    Amount = p.Money,
+                    Sender = p.Sender,
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<PaymentViewModel>> GetAllSentPaymentsAsync(string ownerId)
+        {
+            return await repository.AllReadOnly<Payment>()
+                .Where(p => p.SenderId == Guid.Parse(ownerId))
+                .Select(p => new PaymentViewModel()
+                {
+                    Amount = p.Money,
+                    Receiver = p.Receiver,
+                })
+                .ToListAsync();
         }
 
         public async Task<PaymentServiceModel> GetPaymentServiceModelByUserIdAsync(string userId)

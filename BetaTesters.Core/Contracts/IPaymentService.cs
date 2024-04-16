@@ -10,5 +10,7 @@ namespace BetaTesters.Core.Contracts
         Task CreatePaymentAsync(string receiverId, string senderId, decimal amount);
 
         Task<IEnumerable<PaymentViewModel>> GetAllSentPaymentsAsync(string ownerId);
+
+        Task<IEnumerable<PaymentViewModel>> GetAllReceivedPaymentsAsync(string receiverId);
     }
 }

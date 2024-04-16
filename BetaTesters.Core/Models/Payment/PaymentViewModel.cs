@@ -6,6 +6,8 @@ namespace BetaTesters.Core.Models.Payment
     {
         public ApplicationUser Receiver { get; set; } = null!;
 
+        public ApplicationUser Sender { get; set; } = null!;
+
         public decimal Amount { get; set; }
     }
 }

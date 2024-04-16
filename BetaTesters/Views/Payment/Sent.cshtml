@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PaymentViewModel>
+
+@{
+    ViewBag.Title = "Sent payments";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th><label>Receiver</label></th>
+                <th><label>Amount</label></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Model)
+            {
+                <tr>
+                    <td><label>@($"{payment.Receiver.FirstName} {payment.Receiver.LastName}")</label></td>
+                    <td><label>@String.Format("{0:f2}", payment.Amount)</label></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h3 class="text-center">Your currently have no sent payments!</h3>
+}
+
+

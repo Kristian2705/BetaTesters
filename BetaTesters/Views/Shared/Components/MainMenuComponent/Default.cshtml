@@ -28,13 +28,13 @@
         @if (User.IsInRole(RoleConstants.DefaultUserRole) || User.IsInRole(RoleConstants.ModeratorRole))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Received">Received Payments</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Received" asp-route-receiverId="@User.Id()">Received Payments</a>
             </li>
         }
         else
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Sent">Sent Payments</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Sent" asp-route-ownerId="@User.Id()">Sent Payments</a>
             </li>
             <li>
                 <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Mine">Made Transactions</a>

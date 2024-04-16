@@ -77,7 +77,31 @@ namespace BetaTesters.Controllers
                 return BadRequest();
             }
 
+            if(User.Id() != ownerId)
+            {
+                return Forbid();
+            }
+
             var payments = await paymentService.GetAllSentPaymentsAsync(ownerId);
+
+            return View(payments);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = $"{DefaultUserRole},{ModeratorRole}")]
+        public async Task<IActionResult> Received(string receiverId)
+        {
+            if (receiverId == null)
+            {
+                return BadRequest();
+            }
+
+            if (User.Id() != receiverId)
+            {
+                return Forbid();
+            }
+
+            var payments = await paymentService.GetAllReceivedPaymentsAsync(receiverId);
 
             return View(payments);
         }
