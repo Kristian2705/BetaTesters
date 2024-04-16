@@ -1,0 +1,48 @@
+﻿@model ApplicationUserViewModel
+@{
+    if(Model.Role == RoleConstants.DefaultUserRole)
+    {
+        ViewBag.Title = "Kick user";
+    }
+    else
+    {
+        ViewBag.Title = "Kick moderator";
+    }
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                @if(Model.Role == RoleConstants.DefaultUserRole)
+                {
+                    <h3 class="card-title text-center">User: @($"{Model.FirstName} {Model.LastName}")</h3>
+                    <p class="mb-0"><strong>Email: </strong>@Model.Email</p>
+                    <p>"Are you sure you want to <span class="text-danger mt-3 fw-bold">kick</span> this user from the program?"</p>
+                }
+                else
+                {
+                    <h3 class="card-title text-center">Moderator: @($"{Model.FirstName} {Model.LastName}")</h3>
+                    <p class="mb-0"><strong>Email: </strong>@Model.Email</p>
+                    <p>"Are you sure you want to <span class="text-danger mt-3 fw-bold">kick</span> this moderator from the program?"</p>
+                }
+            </div>
+            <div class="card-footer">
+                <form asp-route-userId="@Model.Id.ToString()" method="post">
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                    @if(Model.Role == RoleConstants.DefaultUserRole)
+                    {
+                        <a asp-action="SeeUsersInfo" asp-route-programId="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                    }
+                    else
+                    {
+                        <a asp-action="SeeModeratorsInfo" asp-route-programId="@Model.BetaProgramId" class="btn btn-secondary">Cancel</a>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

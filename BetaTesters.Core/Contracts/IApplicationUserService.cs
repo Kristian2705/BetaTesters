@@ -17,5 +17,7 @@ namespace BetaTesters.Core.Contracts
 		Task PromoteUserToModeratorAsync(ApplicationUser user);
 
         ApplicationUserViewModel GetApplicationUserViewModelByUser(ApplicationUser user);
+
+        Task KickUserFromProgramAsync(ApplicationUser user);
     }
 }

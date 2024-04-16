@@ -1,6 +1,7 @@
 ﻿using BetaTesters.Core.Contracts;
 using BetaTesters.Infrastructure.Data.Common;
 using BetaTesters.Infrastructure.Data.Models;
+using static BetaTesters.Infrastructure.Constants.RoleConstants;
 
 namespace BetaTesters.Core.Services
 {
@@ -52,7 +53,7 @@ namespace BetaTesters.Core.Services
             var usersToDisplay = new List<ApplicationUserViewModel>();
             foreach (var moderator in moderators)
             {
-                if (await userManager.IsInRoleAsync(moderator, RoleConstants.ModeratorRole))
+                if (await userManager.IsInRoleAsync(moderator, ModeratorRole))
                 {
                     var userToDisplay = new ApplicationUserViewModel()
                     {
@@ -82,7 +83,7 @@ namespace BetaTesters.Core.Services
             var usersToDisplay = new List<ApplicationUserViewModel>();
             foreach(var user in users)
             {
-                if(await userManager.IsInRoleAsync(user, RoleConstants.DefaultUserRole))
+                if(await userManager.IsInRoleAsync(user, DefaultUserRole))
                 {
                     var userToDisplay = new ApplicationUserViewModel()
                     {
@@ -108,10 +109,23 @@ namespace BetaTesters.Core.Services
             return usersToDisplay;
         }
 
+        public async Task KickUserFromProgramAsync(ApplicationUser user)
+        {
+            if (await userManager.IsInRoleAsync(user, ModeratorRole))
+            {
+                await userManager.RemoveFromRoleAsync(user, ModeratorRole);
+                await userManager.AddToRoleAsync(user, DefaultUserRole);
+            }
+
+            user.BetaProgramId = null;
+
+            await repository.SaveChangesAsync();
+        }
+
         public async Task PromoteUserToModeratorAsync(ApplicationUser user)
         {
-            await userManager.RemoveFromRoleAsync(user, RoleConstants.DefaultUserRole);
-            await userManager.AddToRoleAsync(user, RoleConstants.ModeratorRole);
+            await userManager.RemoveFromRoleAsync(user, DefaultUserRole);
+            await userManager.AddToRoleAsync(user, ModeratorRole);
 
             await repository.SaveChangesAsync();
         }

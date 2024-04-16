@@ -247,5 +247,53 @@ namespace BetaTesters.Controllers
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+        [HttpGet]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Kick(string userId)
+        {
+            var user = await applicationUserService.GetApplicationUserByIdAsync(userId);
+
+            if(await userManager.IsInRoleAsync(user, OwnerRole))
+            {
+                return Forbid();
+            }
+
+            if (await userManager.IsInRoleAsync(user, ModeratorRole) && User.IsInRole(ModeratorRole))
+            {
+                return Forbid();
+            }
+
+            var kicker = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if (user.BetaProgramId != kicker.BetaProgramId)
+            {
+                return Forbid();
+            }
+
+            string userToDisplayRole = (await userManager.GetRolesAsync(user)).First();
+
+            var userToDisplay = applicationUserService.GetApplicationUserViewModelByUser(user);
+
+            userToDisplay.Role = userToDisplayRole;
+
+            return View(userToDisplay);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
+        public async Task<IActionResult> Kick(string userId, ApplicationUserViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(userId);
+
+            await applicationUserService.KickUserFromProgramAsync(user);
+
+            return RedirectToAction(nameof(Mine));
+        }
     }
 }
