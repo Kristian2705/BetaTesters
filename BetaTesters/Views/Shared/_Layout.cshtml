@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BetaTesters.Components;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,26 +19,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="All">All Programs</a>
-                        </li>
-                        @if (User.IsInRole(RoleConstants.DefaultUserRole))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="CandidateApplication" asp-action="Mine">My Applications</a>
-                            </li>
-                        }
-                        @if (User.IsInRole(RoleConstants.OwnerRole))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Add">Create Program</a>
-                            </li>
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="BetaProgram" asp-action="Mine">My Program</a>
-                        </li>
-                    </ul>
+                    @await Component.InvokeAsync(nameof(MainMenuComponent))
                     <partial name="_LoginPartial" />
                 </div>
             </div>
