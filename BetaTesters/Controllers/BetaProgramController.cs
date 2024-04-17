@@ -110,7 +110,7 @@ namespace BetaTesters.Controllers
         {
             if (User.IsInRole(AdminRole))
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             var userId = User.Id();
@@ -262,19 +262,19 @@ namespace BetaTesters.Controllers
 
             if(await userManager.IsInRoleAsync(user, OwnerRole))
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             if (await userManager.IsInRoleAsync(user, ModeratorRole) && User.IsInRole(ModeratorRole))
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             var kicker = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
 
             if (user.BetaProgramId != kicker.BetaProgramId)
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             string userToDisplayRole = (await userManager.GetRolesAsync(user)).First();

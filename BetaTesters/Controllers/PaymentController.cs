@@ -34,7 +34,7 @@ namespace BetaTesters.Controllers
 
             if(user.BetaProgramId != sender.BetaProgramId)
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             var paymentDetails = await paymentService.GetPaymentServiceModelByUserIdAsync(userId);
@@ -79,7 +79,7 @@ namespace BetaTesters.Controllers
 
             if(User.Id() != ownerId)
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             var payments = await paymentService.GetAllSentPaymentsAsync(ownerId);
@@ -98,7 +98,7 @@ namespace BetaTesters.Controllers
 
             if (User.Id() != receiverId)
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             var payments = await paymentService.GetAllReceivedPaymentsAsync(receiverId);

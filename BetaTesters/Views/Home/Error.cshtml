@@ -1,0 +1,18 @@
+﻿@model ErrorViewModel
+
+@{
+    ViewData["Title"] = "Error";
+    string message = "Unexpected error occured! Try again later or contact an administrator!";
+    string moreInfo = string.Empty;
+    if(Model != null)
+    {
+        moreInfo = Model.ExceptionMessage;
+    }
+}
+
+<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">@message</h2>
+<h3 class="text-danger">@moreInfo</h3>
+<br />
+<br />
+<div class="text-left h4"> Go back to <a asp-controller="Home" asp-action="Index">Home</a> Page</div>

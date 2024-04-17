@@ -144,7 +144,7 @@ namespace BetaTesters.Controllers
         {
             if(userId != User.Id())
             {
-                return Forbid();
+                return Unauthorized();
             }
 
             var transactions = await transactionService.GetMyTransactionsAsync(userId);
