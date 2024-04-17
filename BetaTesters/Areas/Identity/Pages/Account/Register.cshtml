@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            <h2 class="text-center">Create a new account.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -42,14 +42,16 @@
                 <label asp-for="Input.Age"></label>
                 <span asp-validation-for="Input.Age" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="Input.AccountType"></label>
                 <select asp-for="Input.AccountType" class="form-control">
-                    <option value="@RoleConstants.OwnerRole">Owner</option>
                     <option value="@RoleConstants.DefaultUserRole">Regular user</option>
+                    <option value="@RoleConstants.OwnerRole">Owner</option>
                 </select>
                 <span asp-validation-for="Input.AccountType" class="small text-danger"></span>
             </div>
+            <br />
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>

@@ -13,7 +13,7 @@ namespace BetaTesters.Tests.Mocks
                     .UseInMemoryDatabase("BetaTestersInMemoryDb" + DateTime.Now.Ticks.ToString())
                     .Options;
 
-                return new BetaTestersDbContext(dbContextOptions, false);
+                return new BetaTestersDbContext(dbContextOptions);
             }
         }
     }
