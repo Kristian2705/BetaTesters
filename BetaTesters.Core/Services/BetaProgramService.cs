@@ -51,7 +51,7 @@ namespace BetaTesters.Core.Services
         public async Task<BetaProgram> BetaProgramByIdAsync(string id)
         {
             return await repository.AllReadOnly<BetaProgram>()
-				.FirstAsync(b => b.Id == Guid.Parse(id));
+				.FirstOrDefaultAsync(b => b.Id == Guid.Parse(id));
         }
 
         public async Task<BetaProgramDetailsServiceModel> BetaProgramByOwnerId(string ownerId)

@@ -33,7 +33,7 @@ namespace BetaTesters.Core.Services
             return await repository.All<ApplicationUser>()
                 .Where(u => u.Id == Guid.Parse(userId))
                 .Include(u => u.Tasks)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
 
         public ApplicationUserViewModel GetApplicationUserViewModelByUser(ApplicationUser user)
@@ -54,7 +54,7 @@ namespace BetaTesters.Core.Services
         {
             var user = await GetApplicationUserByIdAsync(userId);
 
-            var role = (await userManager.GetRolesAsync(user)).First();
+            var role = (await userManager.GetRolesAsync(user)).FirstOrDefault();
 
             return await repository.AllReadOnly<ApplicationUser>()
                 .Where(u => u.Id == Guid.Parse(userId))
@@ -68,7 +68,7 @@ namespace BetaTesters.Core.Services
                     BetaProgramId = u.BetaProgramId.ToString()!.ToLower(),
                     Role = role
                 })
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<ApplicationUserViewModel>> GetModeratorsByProgramId(string programId)

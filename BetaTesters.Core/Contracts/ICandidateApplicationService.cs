@@ -29,5 +29,7 @@ namespace BetaTesters.Core.Contracts
         Task ApproveApplicationAsync(string applicationId, string userId, string programId);
 
         Task<CandidateApplicationInspectModel> CandidateApplicationInspectDetailsByIdAsync(string applicationId);
+
+        Task<IEnumerable<CandidateApplication>> GetAllApplicationsByUserId(string userId);
     }
 }

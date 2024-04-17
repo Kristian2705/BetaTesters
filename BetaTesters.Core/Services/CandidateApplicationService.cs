@@ -79,7 +79,7 @@ namespace BetaTesters.Core.Services
                     Motivation = c.Motivation,
                     PhoneNumber = c.PhoneNumber,
                 })
-                .FirstAsync();
+                .FirstOrDefaultAsync();
 
             return application;
         }
@@ -108,13 +108,13 @@ namespace BetaTesters.Core.Services
                     BetaProgramId = c.BetaProgramId.ToString(),
                     Approval = c.Approval
                 })
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
 
         public CandidateApplication GetById(string id)
         {
             return repository.AllReadOnly<CandidateApplication>()
-                .First(a => a.Id == Guid.Parse(id));
+                .FirstOrDefault(a => a.Id == Guid.Parse(id));
         }
 
         public async Task<IEnumerable<CandidateApplicationInspectModel>> ApplicationsByProgramIdAsync(string programId)
@@ -156,7 +156,7 @@ namespace BetaTesters.Core.Services
                     Candidate = c.Candidate,
                     BetaProgramId = c.BetaProgramId
                 })
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<CandidateApplication>> GetAllApplicationsByUserId(string userId)

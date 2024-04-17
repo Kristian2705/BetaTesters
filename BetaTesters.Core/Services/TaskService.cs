@@ -171,7 +171,7 @@ namespace BetaTesters.Core.Services
                     ContractorId = t.ContractorId.ToString(),
                     Reward = t.Reward
                 })
-                .FirstAsync();
+                .FirstOrDefaultAsync();
         }
 
         public async System.Threading.Tasks.Task TakeTaskAsync(string taskId, string userId)
@@ -224,7 +224,7 @@ namespace BetaTesters.Core.Services
                     Reward = t.Reward,
                     CreatorId = t.CreatorId.ToString()
                 })
-                .FirstAsync();
+                .FirstOrDefaultAsync();
 
             if(task != null)
             {

@@ -9,9 +9,19 @@ namespace BetaTesters.Data
 {
     public class BetaTestersDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        public BetaTestersDbContext(DbContextOptions<BetaTestersDbContext> options)
+        public BetaTestersDbContext(DbContextOptions<BetaTestersDbContext> options, bool seedDb)
             : base(options)
         {
+            //if (Database.IsRelational())
+            //{
+            //    Database.Migrate();
+            //}
+            //else
+            //{
+            //    Database.EnsureCreated();
+            //}
+
+            //_seedDb = seedDb;
         }
 
         public DbSet<CandidateApplication> CandidateApplications { get; set; } = null!;
