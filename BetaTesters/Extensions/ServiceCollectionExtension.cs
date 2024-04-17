@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITransactionService, TransactionService>();
 
             return services;
         }

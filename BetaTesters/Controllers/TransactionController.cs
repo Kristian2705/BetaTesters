@@ -1,6 +1,7 @@
 ﻿using BetaTesters.Core.Contracts;
 using BetaTesters.Core.Models.Transaction;
 using BetaTesters.Infrastructure.Constants;
+using BetaTesters.Infrastructure.Data.Enums;
 using BetaTesters.PaymentIntegration.Stripe;
 using MessagePack.Formatters;
 using Microsoft.AspNetCore.Authorization;
@@ -18,15 +19,16 @@ namespace BetaTesters.Controllers
     {
         private readonly StripeSettings stripeSettings;
         private readonly IApplicationUserService applicationUserService;
+        private readonly ITransactionService transactionService;
 
         public TransactionController(IOptions<StripeSettings> _stripeSettings,
-            IApplicationUserService _applicationUserService)
+            IApplicationUserService _applicationUserService,
+            ITransactionService _transactionService)
         {
             stripeSettings = _stripeSettings.Value;
             applicationUserService = _applicationUserService;
+            transactionService = _transactionService;
         }
-
-        public string SessionId {  get; set; }
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -88,9 +90,43 @@ namespace BetaTesters.Controllers
 
             var service = new SessionService();
             var session = service.Create(options);
-            SessionId = session.Id;
-            
+            TempData["Session"] = session.Id;
+            TempData["TransactionUserEmail"] = model.Email;
+            TempData["TransactionUserMoney"] = model.Money.ToString();
+            TempData["TransactionType"] = model.Type;
+            TempData["TransactionUserId"] = model.UserId;
+
             return Redirect(session.Url);
         }
+
+        public async Task<IActionResult> OrderConfirmation()
+        {
+            var service = new SessionService();
+
+            Session session = service.Get(TempData["Session"].ToString());
+
+            if(session.PaymentStatus == "paid")
+            {
+                var model = new TransactionServiceModel()
+                {
+                    Email = TempData["TransactionUserEmail"].ToString(),
+                    Money = decimal.Parse(TempData["TransactionUserMoney"].ToString()),
+                    Type = (TransactionType)TempData["TransactionType"],
+                    UserId = TempData["TransactionUserId"].ToString()
+                };
+
+                await transactionService.CreateTransactionAsync(model);
+
+                return RedirectToAction(nameof(Success));
+            }
+
+            return Redirect(nameof(Cancel));
+        }
+
+        public IActionResult Success()
+            => View();
+
+        public IActionResult Cancel()
+            => View();
     }
 }
