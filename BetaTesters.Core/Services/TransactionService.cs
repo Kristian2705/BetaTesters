@@ -7,7 +7,8 @@ namespace BetaTesters.Core.Services
 {
     using BetaTesters.Infrastructure.Data.Common;
 	using Microsoft.EntityFrameworkCore;
-	using System.Threading.Tasks;
+    using Microsoft.Extensions.Caching.Memory;
+    using System.Threading.Tasks;
     public class TransactionService : ITransactionService
     {
         private readonly IRepository repository;
@@ -45,7 +46,19 @@ namespace BetaTesters.Core.Services
             await repository.SaveChangesAsync();
         }
 
-		public async Task<IEnumerable<TransactionViewModel>> GetMyTransactionsAsync(string userId)
+        public async Task<IEnumerable<AllTransactionsViewModel>> GetAllTransactionsAsync()
+        {
+            return await repository.AllReadOnly<Transaction>()
+                .Select(t => new AllTransactionsViewModel()
+                {
+                    User = t.User,
+                    Money = t.Money,
+                    Type = t.Type
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TransactionViewModel>> GetMyTransactionsAsync(string userId)
 		{
             return await repository.AllReadOnly<Transaction>()
                 .Where(t => t.UserId == Guid.Parse(userId))

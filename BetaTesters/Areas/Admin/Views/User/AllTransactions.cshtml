@@ -1,0 +1,31 @@
+﻿@model IEnumerable<AllTransactionsViewModel>
+@inject IBetaProgramService betaProgramService
+
+@{
+    ViewBag.Title = "All Transactions";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><label>Email</label></th>
+            <th><label>Full Name</label></th>
+            <th><label>Type</label></th>
+            <th><label>Amount</label></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td><label>@transaction.User.Email</label></td>
+                <td><label>@($"{transaction.User.FirstName} {transaction.User.LastName}")</label></td>
+                <td><label>@transaction.Type</label></td>
+                <td><label>@transaction.Money</label></td>
+            </tr>
+        }
+    </tbody>
+</table>

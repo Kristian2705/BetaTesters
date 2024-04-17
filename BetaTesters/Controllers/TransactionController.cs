@@ -1,4 +1,5 @@
-﻿using BetaTesters.Core.Contracts;
+﻿using BetaTesters.Areas.Admin;
+using BetaTesters.Core.Contracts;
 using BetaTesters.Core.Models.Transaction;
 using BetaTesters.Infrastructure.Constants;
 using BetaTesters.Infrastructure.Data.Enums;
@@ -6,6 +7,7 @@ using BetaTesters.PaymentIntegration.Stripe;
 using MessagePack.Formatters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using Stripe;
 using Stripe.Checkout;
@@ -20,14 +22,17 @@ namespace BetaTesters.Controllers
         private readonly StripeSettings stripeSettings;
         private readonly IApplicationUserService applicationUserService;
         private readonly ITransactionService transactionService;
+        private readonly IMemoryCache memoryCache;
 
         public TransactionController(IOptions<StripeSettings> _stripeSettings,
             IApplicationUserService _applicationUserService,
-            ITransactionService _transactionService)
+            ITransactionService _transactionService,
+            IMemoryCache _memoryCache)
         {
             stripeSettings = _stripeSettings.Value;
             applicationUserService = _applicationUserService;
             transactionService = _transactionService;
+            memoryCache = _memoryCache;
         }
 
         [HttpGet]
@@ -117,6 +122,8 @@ namespace BetaTesters.Controllers
                 };
 
                 await transactionService.CreateTransactionAsync(model);
+
+                memoryCache.Remove(AdminConstants.TransactionsCacheKey);
 
                 return RedirectToAction(nameof(Success));
             }

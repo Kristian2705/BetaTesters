@@ -8,6 +8,8 @@
 
         public const string UsersCacheKey = "UsersCacheKey";
 
+        public const string TransactionsCacheKey = "TransactionsCacheKey";
+
         public const string CategoriesCacheKey = "CategoriesCacheKey";
     }
 }

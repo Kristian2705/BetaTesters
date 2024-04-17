@@ -7,5 +7,7 @@ namespace BetaTesters.Core.Contracts
         Task CreateTransactionAsync(TransactionServiceModel model);
 
         Task<IEnumerable<TransactionViewModel>> GetMyTransactionsAsync(string userId);
+
+        Task<IEnumerable<AllTransactionsViewModel>> GetAllTransactionsAsync();
     }
 }
