@@ -10,18 +10,28 @@ namespace BetaTesters.Controllers
 {
     public class CandidateApplicationController : BaseController
     {
-        public readonly ICandidateApplicationService candidateApplicationService;
+        private readonly ICandidateApplicationService candidateApplicationService;
+        private readonly IApplicationUserService applicationUserService;
 
-        public CandidateApplicationController(ICandidateApplicationService _candidateApplicationService)
+        public CandidateApplicationController(ICandidateApplicationService _candidateApplicationService,
+            IApplicationUserService _applicationUserService)
         {
             candidateApplicationService = _candidateApplicationService;
+            applicationUserService = _applicationUserService;
         }
 
         [HttpGet]
         [NotSubmittedApplication]
         [Authorize(Roles = DefaultUserRole)]
-        public IActionResult Add(string id)
+        public async Task<IActionResult> Add(string id)
         {
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if(user.BetaProgramId != null)
+            {
+                return Unauthorized();
+            }
+
             var model = new CandidateApplicationFormModel
             {
                 BetaProgramId = id
