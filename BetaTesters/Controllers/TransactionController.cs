@@ -54,7 +54,7 @@ namespace BetaTesters.Controllers
         {
             if(!ModelState.IsValid)
             {
-                return View(model);
+                return View(nameof(Create));
             }
 
             var currency = "bgn";

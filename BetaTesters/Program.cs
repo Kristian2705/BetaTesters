@@ -1,5 +1,7 @@
 using BetaTesters.Data;
+using BetaTesters.ModelBinders;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BetaTesters
@@ -12,8 +14,13 @@ namespace BetaTesters
 
             builder.Services.AddApplicationDbContext(builder.Configuration);
             builder.Services.AddApplicationIdentity(builder.Configuration);
-            builder.Services.AddApplicationServices();
             builder.Services.AddPaymentIntegration(builder.Configuration);
+            builder.Services.AddApplicationServices();
+
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+            });
 
             var app = builder.Build();
 
