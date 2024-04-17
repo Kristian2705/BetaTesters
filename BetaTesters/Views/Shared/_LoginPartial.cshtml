@@ -20,7 +20,7 @@
     if (User.IsInRole(RoleConstants.OwnerRole))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Transaction" asp-action="Create">Add funds</a>
+            <a class="nav-link text-dark" asp-controller="Transaction" asp-action="Create">Create Transaction</a>
         </li>
     }
     if(!User.IsInRole(RoleConstants.AdminRole))

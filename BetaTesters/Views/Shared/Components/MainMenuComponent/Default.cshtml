@@ -39,7 +39,7 @@
                     <a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Sent" asp-route-ownerId="@User.Id()">Sent Payments</a>
                 </li>
                 <li>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Mine">Made Transactions</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Mine" asp-route-userId="@User.Id()">Made Transactions</a>
                 </li>
             }
         }

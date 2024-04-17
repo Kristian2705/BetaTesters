@@ -20,5 +20,8 @@ namespace BetaTesters.Infrastructure.Data.Models
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Money { get; set; }
+
+        [Required]
+        public string SessionId { get; set; } = string.Empty;
     }
 }

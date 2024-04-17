@@ -16,5 +16,7 @@ namespace BetaTesters.Core.Models.Transaction
         [Required(ErrorMessage = RequiredMessage)]
         [Range(TransactionAmountMinValue, TransactionAmountMaxValue)]
         public decimal Money { get; set; }
+
+        public string? SessionId { get; set; }
     }
 }

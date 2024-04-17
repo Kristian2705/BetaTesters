@@ -6,7 +6,8 @@ using BetaTesters.Infrastructure.Data.Enums;
 namespace BetaTesters.Core.Services
 {
     using BetaTesters.Infrastructure.Data.Common;
-    using System.Threading.Tasks;
+	using Microsoft.EntityFrameworkCore;
+	using System.Threading.Tasks;
     public class TransactionService : ITransactionService
     {
         private readonly IRepository repository;
@@ -25,7 +26,8 @@ namespace BetaTesters.Core.Services
             {
                 Money = model.Money,
                 Type = model.Type,
-                UserId = Guid.Parse(model.UserId)
+                UserId = Guid.Parse(model.UserId),
+                SessionId = model.SessionId
             };
 
             var user = await applicationUserService.GetApplicationUserByIdAsync(model.UserId);
@@ -42,5 +44,18 @@ namespace BetaTesters.Core.Services
             
             await repository.SaveChangesAsync();
         }
-    }
+
+		public async Task<IEnumerable<TransactionViewModel>> GetMyTransactionsAsync(string userId)
+		{
+            return await repository.AllReadOnly<Transaction>()
+                .Where(t => t.UserId == Guid.Parse(userId))
+                .Select(t => new TransactionViewModel()
+                {
+                    Money = t.Money,
+                    SessionId = t.SessionId,
+                    Type = t.Type
+                })
+                .ToListAsync();
+		}
+	}
 }

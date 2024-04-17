@@ -112,7 +112,8 @@ namespace BetaTesters.Controllers
                     Email = TempData["TransactionUserEmail"].ToString(),
                     Money = decimal.Parse(TempData["TransactionUserMoney"].ToString()),
                     Type = (TransactionType)TempData["TransactionType"],
-                    UserId = TempData["TransactionUserId"].ToString()
+                    UserId = TempData["TransactionUserId"].ToString(),
+                    SessionId = session.PaymentIntentId
                 };
 
                 await transactionService.CreateTransactionAsync(model);
@@ -120,13 +121,28 @@ namespace BetaTesters.Controllers
                 return RedirectToAction(nameof(Success));
             }
 
-            return Redirect(nameof(Cancel));
+            return RedirectToAction(nameof(Cancel));
         }
 
+        [HttpGet]
         public IActionResult Success()
             => View();
 
+        [HttpGet]
         public IActionResult Cancel()
             => View();
+
+        [HttpGet]
+        public async Task<IActionResult> Mine(string userId)
+        {
+            if(userId != User.Id())
+            {
+                return Forbid();
+            }
+
+            var transactions = await transactionService.GetMyTransactionsAsync(userId);
+
+            return View(transactions);
+        }
     }
 }
