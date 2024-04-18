@@ -48,7 +48,7 @@ Access for every other role and steps to use the app:
   - when you fill it you can go to 'my applications' and see that it is there
   - you can edit or delete it
   - you can also candidate for other programs but note that when you are accepted in a program, all other applications are automatically deleted
-  Now it is time for a moderator or an owner of the program you just applied for to login:
+Now it is time for a moderator or an owner of the program you just applied for to login:
   - they can go to 'my program' and there see all the access they have
   - when you press applications you can see the submitted application and approve it or reject it
   - if you reject a user, they can candidate as if they haven't submitted anything
@@ -61,7 +61,7 @@ Access for every other role and steps to use the app:
   - when 'complete' is pressed, the task is now 'completed' and no one can take it anymore
   - if you decide to leave, you'll have no program and you can go through the steps all over again(If you have 'in progress' tasks an error should be displayed which will tell you to complete your tasks before leaving)
   - if you are a moderator and decide to leave, you become a 'default user'
- Now if you are logged in as moderator:
+Now if you are logged in as moderator:
   - you can add tasks, review user applications and see users info and kick them(for the 'kick' the same logic as 'leave' is used)
   - Note that 'money to transfer' is calculated by the user's completed tasks' rewards but it will be mentioned when we get to the owner functionalities
   - if you decide to add a task as a moderator, a form should be displayed and when you fill it and go to 'all tasks' it will not be there
@@ -81,7 +81,9 @@ Now if you are an owner:
 If you reached this far, you are probably wondering what happens if the owner, who is the only one who can pay, runs out of money(balance becomes 0.00)
   - you can go to create transaction
   - you can enter the amount and decide what type it will be: an addition or withdrawal(the second one simulates the act of taking money out of your balance into real life)
+
 !!!Important!!!
+
 The following is about Stripe functionality. If you didn't manage to run it, I'll show it during the demonstration as I mentioned above
   - After pressing 'Check out', you will be redirected to the stripe check out page
   - if you decide to cancel the transaction, you can press the arrow in the upper left corner
