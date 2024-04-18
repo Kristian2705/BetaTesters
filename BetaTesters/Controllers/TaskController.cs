@@ -26,6 +26,11 @@ namespace BetaTesters.Controllers
         [HttpGet]
         public async Task<IActionResult> All(string id, [FromQuery] AllTasksQueryModel query)
         {
+            if(id == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
 
             if (user.BetaProgramId.ToString() != id)
@@ -57,6 +62,18 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Add(string programId)
         {
+            if(programId == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if(user.BetaProgramId.ToString() != programId)
+            {
+                return Unauthorized();
+            }
+
             var model = new TaskFormModel()
             {
                 ProgramId = programId,
@@ -114,6 +131,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Edit(string taskId)
         {
+            if(taskId == null)
+            {
+                return BadRequest();
+            }
+
             if(await taskService.ExistsAsync(taskId) == false)
             {
                 return BadRequest();
@@ -132,7 +154,6 @@ namespace BetaTesters.Controllers
             {
                 return BadRequest();
             }
-            //Moderators can edit a task even if they are not the creators of it
 
             if (User.IsInRole(ModeratorRole))
             {
@@ -149,6 +170,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Edit(string taskId, TaskFormModel model)
         {
+            if (taskId == null)
+            {
+                return BadRequest();
+            }
+
             if (await taskService.ExistsAsync(taskId) == false)
             {
                 return BadRequest();
@@ -191,6 +217,18 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> VisitWaitlist(string programId)
         {
+            if(programId == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if (user.BetaProgramId.ToString() != programId)
+            {
+                return Unauthorized();
+            }
+
             var tasks = await taskService.TaskWaitListByProgramIdAsync(programId);
 
             return View(tasks);
@@ -200,7 +238,19 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Approve(string taskId)
         {
+            if(taskId == null)
+            {
+                return BadRequest();
+            }
+
             var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if(user.BetaProgramId != task.BetaProgramId)
+            {
+                return Unauthorized();
+            }
 
             if (task.Approval != Approval.ToBeReviewed)
             {
@@ -214,7 +264,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Approve(string taskId, TaskInspectViewModel model)
         {
-            if (model == null)
+            if (model == null || taskId == null)
             {
                 return BadRequest();
             }
@@ -228,7 +278,19 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Reject(string taskId)
         {
+            if (taskId == null)
+            {
+                return BadRequest();
+            }
+
             var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if (user.BetaProgramId != task.BetaProgramId)
+            {
+                return Unauthorized();
+            }
 
             if (task.Approval != Approval.ToBeReviewed)
             {
@@ -242,7 +304,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Reject(string taskId, TaskInspectViewModel model)
         {
-            if (model == null)
+            if (model == null || taskId == null)
             {
                 return BadRequest();
             }
@@ -256,7 +318,19 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Take(string taskId)
         {
+            if(taskId == null)
+            {
+                return BadRequest();
+            }
+
             var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if (user.BetaProgramId != task.BetaProgramId)
+            {
+                return Unauthorized();
+            }
 
             if (task.Approval != Approval.Accepted && task.State != TaskState.Available)
             {
@@ -270,7 +344,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Take(string taskId, TaskInspectViewModel model)
         {
-            if (model == null)
+            if (model == null || taskId == null)
             {
                 return BadRequest();
             }
@@ -284,6 +358,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Complete(string taskId)
         {
+            if (taskId == null)
+            {
+                return BadRequest();
+            }
+
             var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
 
             if (task.Approval != Approval.Accepted && task.State != TaskState.InProgress)
@@ -305,7 +384,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Complete(string taskId, TaskInspectViewModel model)
         {
-            if (model == null)
+            if (model == null || taskId == null)
             {
                 return BadRequest();
             }
@@ -319,6 +398,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Mine(string programId)
         {
+            if(programId == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
 
             if(user.BetaProgramId.ToString() != programId)
@@ -335,6 +419,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Forfeit(string taskId)
         {
+            if(taskId == null)
+            {
+                return BadRequest();
+            }
+
             var task = await taskService.TaskInspectViewModelByIdAsync(taskId);
 
             if (task.Approval != Approval.Accepted && task.State != TaskState.InProgress)
@@ -356,7 +445,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Forfeit(string taskId, TaskInspectViewModel model)
         {
-            if (model == null)
+            if (model == null || taskId == null)
             {
                 return BadRequest();
             }

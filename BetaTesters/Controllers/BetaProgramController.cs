@@ -137,16 +137,16 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> SeeUsersInfo(string programId)
         {
+            if (programId == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
 
             if (user.BetaProgramId != Guid.Parse(programId))
             {
                 return Unauthorized();
-            }
-
-            if (programId == null)
-            {
-                return BadRequest();
             }
 
             var usersInProgram = await applicationUserService.GetUsersByProgramId(programId);
@@ -158,16 +158,16 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> SeeModeratorsInfo(string programId)
         {
+            if (programId == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
 
             if(user.BetaProgramId != Guid.Parse(programId))
             {
                 return Unauthorized();
-            }
-
-            if (programId == null)
-            {
-                return BadRequest();
             }
 
             var moderatorsInProgram = await applicationUserService.GetModeratorsByProgramId(programId);
@@ -179,6 +179,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = OwnerRole)]
         public async Task<IActionResult> Promote(string userId)
         {
+            if(userId == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(userId);
 
             var owner = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
@@ -223,7 +228,7 @@ namespace BetaTesters.Controllers
                 return BadRequest();
             }
 
-            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+            var user = await applicationUserService.GetApplicationUserWithTasksByIdAsync(User.Id());
 
             if(user.BetaProgramId != Guid.Parse(programId))
             {
@@ -258,6 +263,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Kick(string userId)
         {
+            if(userId == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(userId);
 
             if(await userManager.IsInRoleAsync(user, OwnerRole))

@@ -25,6 +25,11 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Add(string id)
         {
+            if(id == null)
+            {
+                return BadRequest();
+            }
+
             var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
 
             if(user.BetaProgramId != null)
@@ -70,6 +75,7 @@ namespace BetaTesters.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = DefaultUserRole)]
         public async Task<IActionResult> Mine()
         {
             var userId = User.Id();
@@ -83,6 +89,11 @@ namespace BetaTesters.Controllers
         [IsNotReviewed]
         public async Task<IActionResult> Edit(string id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             if (await candidateApplicationService.ExistsAsync(id) == false)
             {
                 return BadRequest();
@@ -102,6 +113,11 @@ namespace BetaTesters.Controllers
         [IsNotReviewed]
 		public async Task<IActionResult> Edit(string id, CandidateApplicationFormModel application)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             if (await candidateApplicationService.ExistsAsync(id) == false)
 			{
 				return BadRequest();
@@ -125,6 +141,11 @@ namespace BetaTesters.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(string id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
             if (candidateApplicationService.GetById(id).CandidateId != Guid.Parse(User.Id()))
             {
                 return Unauthorized();
@@ -138,14 +159,14 @@ namespace BetaTesters.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(CandidateApplicationViewModel model)
         {
-            if (candidateApplicationService.GetById(model.Id.ToString()).CandidateId != Guid.Parse(User.Id()))
-            {
-                return Unauthorized();
-            }
-
             if (model == null)
             {
                 return BadRequest();
+            }
+
+            if (candidateApplicationService.GetById(model.Id.ToString()).CandidateId != Guid.Parse(User.Id()))
+            {
+                return Unauthorized();
             }
 
             await candidateApplicationService.DeleteAsync(model.Id.ToString());
@@ -157,6 +178,18 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> AllCurrentProgram(string id)
         {
+            if (id == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
+            if(user.BetaProgramId.ToString() != id)
+            {
+                return Unauthorized();
+            }
+
             var models = await candidateApplicationService.ApplicationsByProgramIdAsync(id);
 
             return View(models);
@@ -166,7 +199,19 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Approve(string id)
         {
+            if(id == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
             var application = await candidateApplicationService.CandidateApplicationInspectDetailsByIdAsync(id);
+
+            if(user.BetaProgramId != application.BetaProgramId)
+            {
+                return Unauthorized();
+            }
             
             return View(application);
         }
@@ -175,7 +220,7 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Approve(string candidateId, CandidateApplicationInspectModel model)
         {
-            if(model == null)
+            if(model == null || candidateId == null)
             {
                 return BadRequest();
             }
@@ -191,7 +236,19 @@ namespace BetaTesters.Controllers
         [Authorize(Roles = $"{ModeratorRole},{OwnerRole}")]
         public async Task<IActionResult> Reject(string id)
         {
+            if(id == null)
+            {
+                return BadRequest();
+            }
+
+            var user = await applicationUserService.GetApplicationUserByIdAsync(User.Id());
+
             var application = await candidateApplicationService.CandidateApplicationInspectDetailsByIdAsync(id);
+
+            if (user.BetaProgramId != application.BetaProgramId)
+            {
+                return Unauthorized();
+            }
 
             return View(application);
         }
