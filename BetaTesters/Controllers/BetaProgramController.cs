@@ -26,7 +26,6 @@ namespace BetaTesters.Controllers
             userManager = _userManager;
         }
 
-        //The details button for the programs should be implemented later
         [HttpGet]
 		[AllowAnonymous]
         public async Task<IActionResult> All([FromQuery]AllBetaProgramsQueryModel query)

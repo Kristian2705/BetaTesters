@@ -167,7 +167,6 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "useroff@mail.com".ToUpper(),
                 FirstName = "User",
                 LastName = "Userov",
-                //PhoneNumber = "0881234567",
                 Age = 18
             };
 
@@ -185,7 +184,6 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "modoff@mail.com".ToUpper(),
                 FirstName = "Moderator",
                 LastName = "Modov",
-                //PhoneNumber = "0891234561",
                 Age = 22,
                 BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e")
             };
@@ -204,7 +202,6 @@ namespace BetaTesters.Infrastructure.Data.Models.SeedDatabase
                 NormalizedEmail = "owneroff@mail.com".ToUpper(),
                 FirstName = "Owner",
                 LastName = "Ownerov",
-                //PhoneNumber = "0891231456",
                 Age = 31,
                 BetaProgramId = Guid.Parse("f47b6e5c-46b8-4961-a809-787515b7d37e"),
                 Balance = 500.00m

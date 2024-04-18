@@ -46,7 +46,6 @@ namespace BetaTesters.Controllers
         }
 
 
-        //When an application is sent to another program and they accept you in the first one, the others should be automatically deleted
         [HttpPost]
         [NotSubmittedApplication]
         [Authorize(Roles = DefaultUserRole)]
