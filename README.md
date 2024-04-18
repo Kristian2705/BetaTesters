@@ -48,7 +48,9 @@ Access for every other role and steps to use the app:
   - when you fill it you can go to 'my applications' and see that it is there
   - you can edit or delete it
   - you can also candidate for other programs but note that when you are accepted in a program, all other applications are automatically deleted
+
 Now it is time for a moderator or an owner of the program you just applied for to login:
+
   - they can go to 'my program' and there see all the access they have
   - when you press applications you can see the submitted application and approve it or reject it
   - if you reject a user, they can candidate as if they haven't submitted anything
@@ -61,7 +63,9 @@ Now it is time for a moderator or an owner of the program you just applied for t
   - when 'complete' is pressed, the task is now 'completed' and no one can take it anymore
   - if you decide to leave, you'll have no program and you can go through the steps all over again(If you have 'in progress' tasks an error should be displayed which will tell you to complete your tasks before leaving)
   - if you are a moderator and decide to leave, you become a 'default user'
+
 Now if you are logged in as moderator:
+
   - you can add tasks, review user applications and see users info and kick them(for the 'kick' the same logic as 'leave' is used)
   - Note that 'money to transfer' is calculated by the user's completed tasks' rewards but it will be mentioned when we get to the owner functionalities
   - if you decide to add a task as a moderator, a form should be displayed and when you fill it and go to 'all tasks' it will not be there
@@ -69,7 +73,9 @@ Now if you are logged in as moderator:
   - if you login as an owner and go to 'task waitlist', the submitted task should be there (you can once again approve it or reject it)
   - when a submitted task is approved, it can now be seen in 'all tasks' as 'available' and assign date - the moment it is approved
   - Note that moderators can edit only their created tasks (if they are available)
+
 Now if you are an owner:
+
   - you can edit every single task that is available
   - you can add a task and it will be immediately displayed in 'all tasks' (the tasks created by owners don't go through reviewing)
   - if you go  to 'all users', you will see 2 new buttons - pay and promote
@@ -78,7 +84,9 @@ Now if you are an owner:
   - when you pay the user, you can go to 'sent payments' and see the details of the payment (from default user's POV, they can go to my payments and see the details)
   - if you go to 'all moderators' you will see some info about them and 2 buttons: pay and kick
   - when you pay a moderator, you can enter manually the amount you want to transfer(everything else is the same about the payment functionality)
+
 If you reached this far, you are probably wondering what happens if the owner, who is the only one who can pay, runs out of money(balance becomes 0.00)
+
   - you can go to create transaction
   - you can enter the amount and decide what type it will be: an addition or withdrawal(the second one simulates the act of taking money out of your balance into real life)
 
@@ -88,7 +96,9 @@ The following is about Stripe functionality. If you didn't manage to run it, I'l
   - After pressing 'Check out', you will be redirected to the stripe check out page
   - if you decide to cancel the transaction, you can press the arrow in the upper left corner
   - then you will be redirected to a 'fail' page
-  Back to the Stripe check out:
+
+Back to the Stripe check out:
+
   - the email is automatically entered (the current owner's email)
   - you should just enter some credentials (card number: 4242 4242 4242 4242, date: any valid date, CCV: any three-digit number)
   - the name does not matter
