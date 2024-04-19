@@ -12,6 +12,10 @@ Necessary NuGet packages:
     !!!Note: (Just download the stripe package so that the application can build itself correctly. The demo of stripe could be done during the exam because it requires secret and public key and proper localhost port)
 
 
+!!!Important!!!
+Please apply my migrations when seeding the DB
+
+
 Roles:
 - Default user:
   - email: useroff@mail.com
