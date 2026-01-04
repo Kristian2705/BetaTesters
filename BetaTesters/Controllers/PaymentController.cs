@@ -48,7 +48,7 @@ namespace BetaTesters.Controllers
         {
             if(model.Money == 0)
             {
-                return BadRequest("Your payment's amount should be over 0.00 BGN");
+                return BadRequest("Your payment's amount should be over 0.00 EUR");
             }
 
             if(!ModelState.IsValid)

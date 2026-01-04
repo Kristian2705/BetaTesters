@@ -57,7 +57,7 @@ namespace BetaTesters.Controllers
                 return View(nameof(Create));
             }
 
-            var currency = "bgn";
+            var currency = "eur";
 
             var successUrl = $"https://localhost:7231/Transaction/OrderConfirmation";
             var cancelUrl = $"https://localhost:7231/Transaction/Cancel";
